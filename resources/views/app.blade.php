@@ -6,7 +6,9 @@
         <title>Laravel</title>
     </head>
     <body>
-        <div id="app"></div>
+        <div id="app">
+            <app></app>
+        </div>
         <script src="{{ mix('js/admin.js') }}"></script>
     </body>
 </html>

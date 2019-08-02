@@ -4,20 +4,35 @@
  * application frontend using useful Laravel and JavaScript libraries.
  */
 
-require('./bootstrap');
-
 import Vue from 'vue';
 import Vuetify from 'vuetify';
-
-import Routes from '@js/routes.js';
-import App from '@js/views/App';
+import Routes from 'vue-router';
 
 Vue.use(Vuetify);
+Vue.use(Routes);
+
+import App from './components/App'
+import Hello from './components/Hello'
+import Home from './components/Home'
+
+const router = new Routes({
+    mode: 'history',
+    routes: [
+        {
+            path: '/admin/',
+            name: 'home',
+            component: Home
+        },
+        {
+            path: '/admin/hello',
+            name: 'hello',
+            component: Hello,
+        },
+    ],
+});
 
 const app = new Vue({
     el: '#app',
-    router: Routes,
-    render: h => h(App),
-})
-
-export default app;
+    components: { App },
+    router,
+});
