@@ -24,6 +24,9 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "bootstrap-vue": "^2.0.0-rc.28",
+        "nprogress": "^0.2.0",
+        "vue-image-crop-upload": "^2.5.0",
         "vue-router": "^3.0.7",
         "vuetify": "^2.0.4"
     }
