@@ -11,9 +11,10 @@ import Routes from 'vue-router';
 Vue.use(Vuetify);
 Vue.use(Routes);
 
-import App from './components/App'
-import Hello from './components/Hello'
-import Home from './components/Home'
+import App from './components/admin/App'
+import Hello from './components/admin/Hello'
+import Home from './components/admin/Home'
+import Login from './components/admin/Login'
 
 const router = new Routes({
     mode: 'history',
@@ -27,6 +28,11 @@ const router = new Routes({
             path: '/admin/hello',
             name: 'hello',
             component: Hello,
+        },
+        {
+            path: '/admin/login',
+            name: 'login',
+            component: Login,
         },
     ],
 });
