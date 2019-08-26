@@ -5,11 +5,11 @@
  */
 
 import Vue from 'vue';
-import Vuetify from 'vuetify';
 import Routes from 'vue-router';
+import BootstrapVue from 'bootstrap-vue'
 
-Vue.use(Vuetify);
 Vue.use(Routes);
+Vue.use(BootstrapVue)
 
 import App from './components/admin/App'
 import Hello from './components/admin/Hello'
