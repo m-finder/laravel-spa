@@ -1,0 +1,183 @@
+body {
+  margin: 0;
+}
+
+.login-page {
+  background-color: #f1f2f7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+
+.login-page .translate-left,
+.login-page .translate-right {
+  padding: 0;
+  display: block;
+  height: 100%;
+  will-change: auto;
+  transform: translateX(0px);
+  transition: transform 0.6s ease-in-out;
+}
+
+.login-page .switch-left {
+  transform: translateX(525px);
+}
+
+.login-page .switch-right {
+  transform: translateX(-375px);
+}
+
+.login-page .login-wrap {
+  overflow: hidden;
+  width: 900px;
+  height: 400px;
+  background: #fff;
+  border-radius: 4px;
+  transform: translateY(-10px);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 0 3px 0 rgba(0, 0, 0, 0.04);
+}
+
+.login-page .login-wrap .logo {
+  padding-top: 5px;
+  text-align: center;
+}
+
+.login-page .login-wrap .logo img {
+  width: 73px;
+  height: 73px;
+  display: inline-block;
+  fill: currentColor;
+}
+
+.login-page .login-wrap .title {
+  font-weight: bold;
+  color: #D70700;
+  font-size: 22px;
+}
+
+.login-page .login-wrap .title .subtitle {
+  color: #000000a3;
+}
+
+.login-page .login-wrap .title a {
+  cursor: cell;
+}
+
+.login-page .login-wrap .title a:before {
+  content: "[";
+  opacity: 0;
+  margin-right: 10px;
+  transform: translateX(-10px);
+  transition: transform 0.2s, opacity 0.2s;
+}
+
+.login-page .login-wrap .title a:after {
+  content: "]";
+  opacity: 0;
+  margin-left: 10px;
+  transform: translateX(10px);
+  transition: transform 0.2s, opacity 0.2s;
+}
+
+.login-page .login-wrap .title a:hover:after,
+.login-page .login-wrap .title a:hover:before {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+@media screen and (max-width: 768px) {
+  .switch-left {
+    transform: translateX(0px) !important;
+  }
+}
+
+.login-wrap .forget-wrap-title {
+  padding-top: 30px;
+  padding-left: 15px;
+}
+
+.login-wrap .forget-form {
+  padding: 20px 30px 30px;
+  padding-bottom: 0;
+}
+
+.login-wrap .login-form {
+  padding: 30px;
+  padding-bottom: 0;
+}
+
+.get-code {
+  text-align: right;
+}
+
+.login-wrap .login-footer {
+  padding: 0 30px;
+}
+
+.login-wrap .login-footer .forget-pwd {
+  text-align: right;
+}
+
+.login-wrap .login-footer .forget-pwd span {
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  color: #606266;
+}
+
+.login-wrap .wallpaper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.login-wrap .wallpaper {
+  background-image: url(/images/loginwallpaper.jpg?79d658cbb22444dbf038f89b0ed0c965);
+  background-size: cover;
+}
+
+.el-button--primary {
+  color: #fff;
+  background-color: #D70700;
+  border-color: #D70700;
+}
+
+.el-button--primary:focus,
+.el-button--primary:hover {
+  background: #D70700;
+  border-color: #D70700;
+  color: #fff;
+  opacity: 0.8;
+}
+
+.el-form-item.is-success .el-input__inner,
+.el-form-item.is-success .el-input__inner:focus,
+.el-form-item.is-success .el-textarea__inner,
+.el-form-item.is-success .el-textarea__inner:focus {
+  border-color: #D70700;
+}
+
+/* navbar */
+
+.el-header {
+  line-height: 60px;
+  background: #fff;
+  box-sizing: border-box;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.left-logo {
+  width: 35px;
+  height: 35px;
+  vertical-align: middle;
+}
+
+.container,
+.container .row {
+  height: 100%;
+}
+
