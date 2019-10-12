@@ -145,6 +145,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     console.log('Component mounted.');
@@ -153,14 +161,18 @@ __webpack_require__.r(__webpack_exports__);
     return {
       switchLeft: false,
       form: {
-        email: null
-      }
+        email: null,
+        password: null
+      },
+      error: {
+        email: '',
+        password: ''
+      },
+      emailState: null,
+      passwordState: null
     };
   },
   computed: {
-    emailState: function emailState() {
-      return false;
-    },
     translateLeft: function translateLeft() {
       return {
         'translate-left': true,
@@ -177,6 +189,24 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   watch: {
+    'form.email': function formEmail(value) {
+      var reg = /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+
+      if (value.length > 0 && !reg.test(value)) {
+        this.error.email = '请输入正确的邮箱地址';
+        this.emailState = false;
+      } else {
+        this.emailState = true;
+      }
+    },
+    'form.password': function formPassword(value) {
+      if (value.length > 32 || value.length < 6) {
+        this.error.password = '密码应为长度 6 - 32 位的字符串';
+        this.passwordState = false;
+      } else {
+        this.passwordState = true;
+      }
+    },
     $route: {
       handler: function handler(route) {
         // 第三步 获取重定向路由
@@ -28218,7 +28248,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 exports.push([module.i, "@import url(/css/login.css);", ""]);
 
 // module
-exports.push([module.i, "", ""]);
+exports.push([module.i, "[v-cloak][data-v-072da70e] {\n  display: none;\n}", ""]);
 
 // exports
 
@@ -32724,16 +32754,14 @@ var render = function() {
       [
         _c(
           "b-container",
+          { class: _vm.translateLeft },
           [
             _c(
               "b-row",
               [
                 _c(
                   "b-col",
-                  {
-                    class: _vm.translateLeft,
-                    attrs: { sm: 12, xs: 12, md: 5, lg: 5, xl: 5 }
-                  },
+                  { attrs: { sm: 12, xs: 12, md: 5, lg: 5, xl: 5 } },
                   [
                     _c("div", { staticClass: "logo" }, [
                       _c("img", { attrs: { src: "/favicon.ico", alt: "" } }),
@@ -32756,33 +32784,93 @@ var render = function() {
                           "b-form",
                           [
                             _c(
-                              "label",
-                              {
-                                staticClass: "sr-only",
-                                attrs: { for: "email" }
-                              },
-                              [_vm._v("登录邮箱")]
+                              "b-form-group",
+                              [
+                                _c(
+                                  "label",
+                                  {
+                                    staticClass: "sr-only",
+                                    attrs: { for: "email" }
+                                  },
+                                  [_vm._v("登录邮箱")]
+                                ),
+                                _vm._v(" "),
+                                _c("b-input", {
+                                  staticClass: "mb-2 mr-sm-2 mb-sm-0",
+                                  attrs: {
+                                    id: "email",
+                                    placeholder: "登录邮箱",
+                                    "aria-describedby":
+                                      "input-live-help email-feedback",
+                                    state: _vm.emailState
+                                  },
+                                  model: {
+                                    value: _vm.form.email,
+                                    callback: function($$v) {
+                                      _vm.$set(_vm.form, "email", $$v)
+                                    },
+                                    expression: "form.email"
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c(
+                                  "b-form-invalid-feedback",
+                                  { attrs: { id: "email-feedback" } },
+                                  [
+                                    _vm._v(
+                                      "\n                                    " +
+                                        _vm._s(_vm.error.email) +
+                                        "\n                                "
+                                    )
+                                  ]
+                                )
+                              ],
+                              1
                             ),
                             _vm._v(" "),
-                            _c("b-input", {
-                              staticClass: "mb-2 mr-sm-2 mb-sm-0",
-                              attrs: {
-                                id: "email",
-                                placeholder: "登录邮箱",
-                                "aria-describedby":
-                                  "input-live-help email-feedback",
-                                state: _vm.emailState
-                              }
-                            }),
-                            _vm._v(" "),
                             _c(
-                              "b-form-invalid-feedback",
-                              { attrs: { id: "email-feedback" } },
+                              "b-form-group",
                               [
-                                _vm._v(
-                                  "\n                                Enter at least 3 letters\n                            "
+                                _c(
+                                  "label",
+                                  {
+                                    staticClass: "sr-only",
+                                    attrs: { for: "password" }
+                                  },
+                                  [_vm._v("登录密码")]
+                                ),
+                                _vm._v(" "),
+                                _c("b-input", {
+                                  staticClass: "mb-2 mr-sm-2 mb-sm-0",
+                                  attrs: {
+                                    id: "password",
+                                    placeholder: "登录密码",
+                                    "aria-describedby":
+                                      "input-live-help password-feedback",
+                                    state: _vm.passwordState
+                                  },
+                                  model: {
+                                    value: _vm.form.password,
+                                    callback: function($$v) {
+                                      _vm.$set(_vm.form, "password", $$v)
+                                    },
+                                    expression: "form.password"
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c(
+                                  "b-form-invalid-feedback",
+                                  { attrs: { id: "password-feedback" } },
+                                  [
+                                    _vm._v(
+                                      "\n                                    " +
+                                        _vm._s(_vm.error.password) +
+                                        "\n                                "
+                                    )
+                                  ]
                                 )
-                              ]
+                              ],
+                              1
                             )
                           ],
                           1
