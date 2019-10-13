@@ -4,25 +4,36 @@
 @import 'variables';
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
-@import '~bootstrap-vue/src/index';
+@import '~bootstrap-vue/src/index.scss';
+@import 'login';
 
-body {
-  height: 100%;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-  font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
-}
-
-label {
-  font-weight: 700;
+* {
+    margin: 0;
+    padding: 0;
 }
 
 html {
-  height: 100%;
-  box-sizing: border-box;
+    height: 100%;
+    box-sizing: border-box;
 }
 
-#app{
-  height: 100%;
+body {
+    height: 100%;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
+}
+
+#app {
+    height: 100%;
+}
+
+.invalid-feedback{
+    display: block;
+    min-height: 20px;
+}
+
+.disabled{
+    cursor: not-allowed;
 }

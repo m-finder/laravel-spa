@@ -1,7 +1,3 @@
-body {
-  margin: 0;
-}
-
 .login-page {
   background-color: #f1f2f7;
   display: flex;
@@ -41,7 +37,7 @@ body {
 }
 
 .login-page .login-wrap .logo {
-  padding-top: 5px;
+  padding: 25px 0;
   text-align: center;
 }
 
@@ -105,7 +101,7 @@ body {
 }
 
 .login-wrap .login-form {
-  padding: 30px;
+  padding: 15px 30px;
   padding-bottom: 0;
 }
 
@@ -117,11 +113,7 @@ body {
   padding: 0 30px;
 }
 
-.login-wrap .login-footer .forget-pwd {
-  text-align: right;
-}
-
-.login-wrap .login-footer .forget-pwd span {
+.forget {
   cursor: pointer;
   font-size: 14px;
   font-weight: 500;
@@ -179,5 +171,9 @@ body {
 .container,
 .container .row {
   height: 100%;
+}
+
+.rember-box {
+  margin-top: 20px;
 }
 

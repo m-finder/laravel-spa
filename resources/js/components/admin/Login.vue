@@ -1,9 +1,9 @@
 <template>
-    <div class="login-page">
-        <div class="login-wrap">
-            <b-container :class="translateLeft" >
-                <b-row>
-                    <b-col :sm="12" :xs="12" :md="5" :lg="5" :xl="5">
+    <b-container class="login-page" fluid>
+        <b-container class="login-wrap">
+            <b-row>
+                <b-col :class="translateLeft" :sm="12" :xs="12" :md="5" :lg="5" :xl="5">
+                    <div v-if="notForget">
                         <div class="logo">
                             <img src="/favicon.ico" alt="">
                             <div class="title">
@@ -12,52 +12,99 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="login-form">
-                            <b-form>
-                                <b-form-group>
-                                    <label class="sr-only" for="email">登录邮箱</label>
-                                    <b-input id="email" v-model="form.email" class="mb-2 mr-sm-2 mb-sm-0" placeholder="登录邮箱" aria-describedby="input-live-help email-feedback" :state="emailState"/>
-                                    <b-form-invalid-feedback id="email-feedback" v-cloak>
-                                        {{ error.email }}
-                                    </b-form-invalid-feedback>
-                                </b-form-group>
-                                <b-form-group>
-                                    <label class="sr-only" for="password">登录密码</label>
-                                    <b-input id="password" v-model="form.password" class="mb-2 mr-sm-2 mb-sm-0" placeholder="登录密码" aria-describedby="input-live-help password-feedback" :state="passwordState"/>
-                                    <b-form-invalid-feedback id="password-feedback" v-cloak>
-                                        {{ error.password }}
-                                    </b-form-invalid-feedback>
-                                </b-form-group>
-                            </b-form>
+                        <b-form @submit="onSubmit" class="login-form">
+                            <b-form-input v-model="form.email" :state="emailState"
+                                          aria-describedby="input-live-help email-feedback" placeholder="登录邮箱" trim/>
+                            <b-form-invalid-feedback id="email-feedback">
+                                {{ error.email }}
+                            </b-form-invalid-feedback>
+                            <b-form-input type="password" v-model="form.password" :state="passwordState"
+                                          aria-describedby="input-live-help password-feedback" placeholder="登录密码"
+                                          trim/>
+                            <b-form-invalid-feedback id="password-feedback">
+                                {{ error.password }}
+                            </b-form-invalid-feedback>
+                            <b-button type="submit" block variant="outline-primary" :disabled="disabled">
+                                <span v-if="loading" class="spinner-border spinner-border-sm"></span>
+                                {{ text }}
+                            </b-button>
+                            <b-row class="rember-box">
+                                <b-col>
+                                    <b-form-checkbox v-model="form.status" >
+                                        记住我
+                                    </b-form-checkbox>
+                                </b-col>
+                                <b-col class="text-right">
+                                    <a class="forget" @click="wrapSwitch(false)">忘记密码？</a>
+                                </b-col>
+                            </b-row>
+                        </b-form>
+                    </div>
+                    <div v-else>
+                        <div class="title forget-wrap-title">
+                            <a>
+                                <span>Laravel  Admin  </span><span class="subtitle">spa</span>
+                            </a>
                         </div>
-                    </b-col>
-                    <b-col :class="translateRight" :sm="0" :xs="0" :md="7" :lg="7" :xl="7">
-                        <div class="wallpaper"/>
-                    </b-col>
-                </b-row>
-            </b-container>
-        </div>
-    </div>
+                        <b-form @submit="onForgetSubmit" class="forget-form">
+                            <b-form-input v-model="forgetForm.email" :state="emailState"
+                                          aria-describedby="input-live-help email-feedback" placeholder="登录邮箱" trim/>
+                            <b-form-invalid-feedback id="email-feedback">
+                                {{ error.email }}
+                            </b-form-invalid-feedback>
+                            <b-form-input type="password" v-model="form.password" :state="passwordState"
+                                          aria-describedby="input-live-help password-feedback" placeholder="登录密码"
+                                          trim/>
+                            <b-form-invalid-feedback id="password-feedback">
+                                {{ error.password }}
+                            </b-form-invalid-feedback>
+                            <b-row class="rember-box">
+                                <b-col>
+                                    <b-button type="button" block @click="wrapSwitch(true)" variant="outline-primary">
+                                        返回
+                                    </b-button>
+                                </b-col>
+                                <b-col class="text-right">
+                                    <b-button type="submit" block variant="outline-primary" :disabled="disabled">
+                                        <span v-if="loading" class="spinner-border spinner-border-sm"></span>
+                                        {{ text }}
+                                    </b-button>
+                                </b-col>
+                            </b-row>
+                        </b-form>
+                    </div>
+                </b-col>
+                <b-col :class="translateRight" :sm="0" :xs="0" :md="7" :lg="7" :xl="7">
+                    <div class="wallpaper"/>
+                </b-col>
+            </b-row>
+        </b-container>
+    </b-container>
 </template>
 
 <script>
     export default {
-        mounted() {
-            console.log('Component mounted.')
-        },
         data() {
             return {
+                text: '登录',
+                loading: false,
+                disabled: false,
                 switchLeft: false,
+                notForget: true,
                 form: {
                     email: null,
-                    password: null
+                    password: null,
+                    status: true
                 },
                 error: {
                     email: '',
                     password: ''
                 },
                 emailState: null,
-                passwordState: null
+                passwordState: null,
+                forgetForm: {
+                    email: null
+                }
             }
         },
         computed: {
@@ -78,36 +125,73 @@
         },
         watch: {
             'form.email': function (value) {
-                let reg = /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
-                if (value.length > 0 && !reg.test(value)) {
-                    this.error.email = '请输入正确的邮箱地址';
-                    this.emailState = false
-                } else {
-                    this.emailState = true
-                }
+                value.length === 0 ? this.emailState = this.error.email = null : this.checkEmail(value)
             },
             'form.password': function (value) {
-                if (value.length > 32 || value.length < 6) {
-                    this.error.password = '密码应为长度 6 - 32 位的字符串';
-                    this.passwordState = false
-                } else {
-                    this.passwordState = true
+                value.length === 0  ? this.passwordState =this.error.password = null :  this.checkPassword(value)
+            },
+        },
+        methods: {
+            wrapSwitch(state) {
+                this.switchLeft = !this.switchLeft;
+                this.switchRight = !this.switchRight;
+                setTimeout(() => {
+                    this.notForget = state
+                    // this.$refs['ruleForm'].resetFields()
+                    // this.$refs['forgetRuleForm'].resetFields()
+                }, 300)
+            },
+            checkEmail: function (value) {
+                let reg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                let email = reg.test(value);
+                this.error.email = email ? null : '请输入正确的邮箱地址';
+                this.emailState = email ? true : false;
+                if (!email) {
+                    this.restForm()
+                }
+                return email;
+            },
+            checkPassword: function (value) {
+                let password = value === null ? false : (value.length >= 6 && value.length <= 32);
+                this.error.password = password ? null : '密码应为长度 6 - 32 位的字符串';
+                this.passwordState = password ? true : false;
+                if (!password) {
+                    this.restForm()
+                }
+                return password;
+            },
+            onSubmit: function (evt) {
+                evt.preventDefault();
+                this.loginSubmit();
+                let email = this.form.email;
+                let password = this.form.password;
+                let emailCheck = this.checkEmail(email);
+                let passwordCheck = this.checkPassword(password);
+                if (emailCheck && passwordCheck) {
+                    alert(JSON.stringify(this.form))
                 }
             },
-            $route: {
-                handler: function (route) {
-                    // 第三步 获取重定向路由
-                    this.redirect = route.query && route.query.redirect
-                },
-                immediate: true
+            onForgetSubmit: function(evt){
+                evt.preventDefault();
+                console.log(this.forgetForm)
+            },
+            loginSubmit: function () {
+                this.loading = true;
+                this.disabled = true;
+                this.text = '登录中...';
+            },
+            restForm: function () {
+                this.loading = false;
+                this.disabled = false;
+                this.text = '登录';
             }
         }
     }
 </script>
 
 <style lang="scss" scoped>
-    @import "/css/login.css";
-    [v-cloak] {
-        display: none;
-    }
+    /*
+        login.scss 在这里直接 import 的话，页面刷新时会闪烁
+        全部复制到这里的话，图片地址不好处理
+     */
 </style>

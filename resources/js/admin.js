@@ -7,9 +7,11 @@
 import Vue from 'vue';
 import Routes from 'vue-router';
 import BootstrapVue from 'bootstrap-vue'
-
+import NProgress from 'nprogress' // progress bar
+import 'nprogress/nprogress.css' // progress bar style
+NProgress.configure({ showSpinner: false });
 Vue.use(Routes);
-Vue.use(BootstrapVue)
+Vue.use(BootstrapVue);
 
 import App from './components/admin/App'
 import Hello from './components/admin/Hello'
@@ -17,24 +19,32 @@ import Home from './components/admin/Home'
 import Login from './components/admin/Login'
 
 const router = new Routes({
-    mode: 'history',
     routes: [
         {
-            path: '/admin/',
+            path: '/',
             name: 'home',
             component: Home
         },
         {
-            path: '/admin/hello',
+            path: '/hello',
             name: 'hello',
             component: Hello,
         },
         {
-            path: '/admin/login',
+            path: '/login',
             name: 'login',
             component: Login,
         },
     ],
+});
+
+router.beforeEach(async(to, from, next) => {
+    NProgress.start();
+    next()
+});
+
+router.afterEach(() => {
+    NProgress.done()
 });
 
 const app = new Vue({
