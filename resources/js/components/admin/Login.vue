@@ -40,6 +40,8 @@
                             </b-row>
                         </b-form>
                     </div>
+
+                    <!-- 忘记密码 -->
                     <div v-else>
                         <div class="title forget-wrap-title">
                             <a>
@@ -47,16 +49,16 @@
                             </a>
                         </div>
                         <b-form @submit="onForgetSubmit" class="forget-form">
-                            <b-form-input v-model="forgetForm.email" :state="emailState"
-                                          aria-describedby="input-live-help email-feedback" placeholder="登录邮箱" trim/>
-                            <b-form-invalid-feedback id="email-feedback">
-                                {{ error.email }}
+                            <b-form-input v-model="forgetForm.email" :state="forgetEmailState"
+                                          aria-describedby="input-live-help forget-email-feedback" placeholder="登录邮箱" trim/>
+                            <b-form-invalid-feedback id="forget-email-feedback">
+                                {{ error.forgetEmail }}
                             </b-form-invalid-feedback>
-                            <b-form-input type="password" v-model="form.password" :state="passwordState"
-                                          aria-describedby="input-live-help password-feedback" placeholder="登录密码"
+                            <b-form-input type="password" v-model="form.password" :state="forgetPasswordState"
+                                          aria-describedby="input-live-help forget-password-feedback" placeholder="登录密码"
                                           trim/>
-                            <b-form-invalid-feedback id="password-feedback">
-                                {{ error.password }}
+                            <b-form-invalid-feedback id="forget-password-feedback">
+                                {{ error.forgetPassword }}
                             </b-form-invalid-feedback>
                             <b-row class="rember-box">
                                 <b-col>
@@ -98,10 +100,14 @@
                 },
                 error: {
                     email: '',
-                    password: ''
+                    password: '',
+                    forgetEmail: '',
+                    forgetPassword: ''
                 },
                 emailState: null,
                 passwordState: null,
+                forgetEmailState: null,
+                forgetPasswordState: null,
                 forgetForm: {
                     email: null
                 }
