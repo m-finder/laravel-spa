@@ -13112,7 +13112,7 @@ input[type=color].form-control:disabled {
 }
 
 .login-wrap .wallpaper {
-  background-image: url(/images/loginwallpaper.jpg?79d658cbb22444dbf038f89b0ed0c965);
+  background-image: url(/images/login-wallpaper.jpg?79d658cbb22444dbf038f89b0ed0c965);
   background-size: cover;
 }
 

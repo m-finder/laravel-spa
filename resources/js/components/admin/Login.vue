@@ -30,7 +30,7 @@
                             </b-button>
                             <b-row class="rember-box">
                                 <b-col>
-                                    <b-form-checkbox v-model="form.status" >
+                                    <b-form-checkbox v-model="form.status">
                                         记住我
                                     </b-form-checkbox>
                                 </b-col>
@@ -50,7 +50,8 @@
                         </div>
                         <b-form @submit="onForgetSubmit" class="forget-form">
                             <b-form-input v-model="forgetForm.email" :state="forgetEmailState"
-                                          aria-describedby="input-live-help forget-email-feedback" placeholder="登录邮箱" trim/>
+                                          aria-describedby="input-live-help forget-email-feedback" placeholder="登录邮箱"
+                                          trim/>
                             <b-form-invalid-feedback id="forget-email-feedback">
                                 {{ error.forgetEmail }}
                             </b-form-invalid-feedback>
@@ -85,6 +86,8 @@
 </template>
 
 <script>
+    import api from '../../api/login'
+
     export default {
         data() {
             return {
@@ -134,7 +137,7 @@
                 value.length === 0 ? this.emailState = this.error.email = null : this.checkEmail(value)
             },
             'form.password': function (value) {
-                value.length === 0  ? this.passwordState =this.error.password = null :  this.checkPassword(value)
+                value.length === 0 ? this.passwordState = this.error.password = null : this.checkPassword(value)
             },
         },
         methods: {
@@ -174,10 +177,13 @@
                 let emailCheck = this.checkEmail(email);
                 let passwordCheck = this.checkPassword(password);
                 if (emailCheck && passwordCheck) {
-                    alert(JSON.stringify(this.form))
+                    // alert(JSON.stringify(this.form))
+                    api.login(this.form).then((response) => {
+                        console.log(response)
+                    })
                 }
             },
-            onForgetSubmit: function(evt){
+            onForgetSubmit: function (evt) {
                 evt.preventDefault();
                 console.log(this.forgetForm)
             },

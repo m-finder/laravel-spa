@@ -123,6 +123,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+!(function webpackMissingModule() { var e = new Error("Cannot find module '../api/login'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
 //
 //
 //
@@ -207,6 +208,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -222,10 +227,14 @@ __webpack_require__.r(__webpack_exports__);
       },
       error: {
         email: '',
-        password: ''
+        password: '',
+        forgetEmail: '',
+        forgetPassword: ''
       },
       emailState: null,
       passwordState: null,
+      forgetEmailState: null,
+      forgetPasswordState: null,
       forgetForm: {
         email: null
       }
@@ -298,7 +307,10 @@ __webpack_require__.r(__webpack_exports__);
       var passwordCheck = this.checkPassword(password);
 
       if (emailCheck && passwordCheck) {
-        alert(JSON.stringify(this.form));
+        // alert(JSON.stringify(this.form))
+        !(function webpackMissingModule() { var e = new Error("Cannot find module '../api/login'"); e.code = 'MODULE_NOT_FOUND'; throw e; }()).login(this.form).then(function (response) {
+          console.log(response);
+        });
       }
     },
     onForgetSubmit: function onForgetSubmit(evt) {
@@ -34521,9 +34533,9 @@ var render = function() {
                             [
                               _c("b-form-input", {
                                 attrs: {
-                                  state: _vm.emailState,
+                                  state: _vm.forgetEmailState,
                                   "aria-describedby":
-                                    "input-live-help email-feedback",
+                                    "input-live-help forget-email-feedback",
                                   placeholder: "登录邮箱",
                                   trim: ""
                                 },
@@ -34538,11 +34550,11 @@ var render = function() {
                               _vm._v(" "),
                               _c(
                                 "b-form-invalid-feedback",
-                                { attrs: { id: "email-feedback" } },
+                                { attrs: { id: "forget-email-feedback" } },
                                 [
                                   _vm._v(
                                     "\n                            " +
-                                      _vm._s(_vm.error.email) +
+                                      _vm._s(_vm.error.forgetEmail) +
                                       "\n                        "
                                   )
                                 ]
@@ -34551,9 +34563,9 @@ var render = function() {
                               _c("b-form-input", {
                                 attrs: {
                                   type: "password",
-                                  state: _vm.passwordState,
+                                  state: _vm.forgetPasswordState,
                                   "aria-describedby":
-                                    "input-live-help password-feedback",
+                                    "input-live-help forget-password-feedback",
                                   placeholder: "登录密码",
                                   trim: ""
                                 },
@@ -34568,11 +34580,11 @@ var render = function() {
                               _vm._v(" "),
                               _c(
                                 "b-form-invalid-feedback",
-                                { attrs: { id: "password-feedback" } },
+                                { attrs: { id: "forget-password-feedback" } },
                                 [
                                   _vm._v(
                                     "\n                            " +
-                                      _vm._s(_vm.error.password) +
+                                      _vm._s(_vm.error.forgetPassword) +
                                       "\n                        "
                                   )
                                 ]
@@ -49857,7 +49869,7 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /var/www/laravel-admin-spa/resources/js/admin.js */"./resources/js/admin.js");
+module.exports = __webpack_require__(/*! /var/www/laravel-spa/resources/js/admin.js */"./resources/js/admin.js");
 
 
 /***/ })
