@@ -82,12 +82,20 @@
                 </b-col>
             </b-row>
         </b-container>
+        <div class="alert-panel">
+            <b-alert v-for="(alert, index) in alerts" v-bind:key="index" :variant="alert.type"
+                     :show="alert.show" @dismissed="alert.down=0"
+                     @dismiss-count-down="countDownChanged($event,index)" dismissible>
+                {{ alert.msg }}
+                <b-progress variant="primary" :max="alert.show" :value="alert.down" height="4px"/>
+            </b-alert>
+        </div>
     </b-container>
 </template>
 
 <script>
     import api from '../../api/login'
-
+    import storage from '../../storage'
     export default {
         data() {
             return {
@@ -96,6 +104,7 @@
                 disabled: false,
                 switchLeft: false,
                 notForget: true,
+                alerts: [],
                 form: {
                     email: null,
                     password: null,
@@ -177,9 +186,22 @@
                 let emailCheck = this.checkEmail(email);
                 let passwordCheck = this.checkPassword(password);
                 if (emailCheck && passwordCheck) {
-                    // alert(JSON.stringify(this.form))
                     api.login(this.form).then((response) => {
-                        console.log(response)
+                        console.log(response);
+                        if (response.data.code == 0) {
+                            let data = {'token':response.data.data};
+                            this.form.status === true ? storage.set(data) : storage.sessionSet(data);
+                            // location.href = '/admin'
+                        } else {
+                            this.restForm();
+                            this.alerts.push({
+                                'type': response.data.msg_type,
+                                'msg': response.data.msg,
+                                'show': 10,
+                                'down': 0
+                            });
+
+                        }
                     })
                 }
             },
@@ -196,7 +218,10 @@
                 this.loading = false;
                 this.disabled = false;
                 this.text = '登录';
-            }
+            },
+            countDownChanged(dismissCountDown, index) {
+                this.alerts[index].down = dismissCountDown
+            },
         }
     }
 </script>

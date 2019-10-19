@@ -1867,6 +1867,15 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _api_login__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../api/login */ "./resources/js/api/login.js");
+/* harmony import */ var _storage__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../storage */ "./resources/js/storage.js");
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -1955,6 +1964,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1963,6 +1973,7 @@ __webpack_require__.r(__webpack_exports__);
       disabled: false,
       switchLeft: false,
       notForget: true,
+      alerts: [],
       form: {
         email: null,
         password: null,
@@ -2042,6 +2053,8 @@ __webpack_require__.r(__webpack_exports__);
       return password;
     },
     onSubmit: function onSubmit(evt) {
+      var _this2 = this;
+
       evt.preventDefault();
       this.loginSubmit();
       var email = this.form.email;
@@ -2050,9 +2063,24 @@ __webpack_require__.r(__webpack_exports__);
       var passwordCheck = this.checkPassword(password);
 
       if (emailCheck && passwordCheck) {
-        // alert(JSON.stringify(this.form))
         _api_login__WEBPACK_IMPORTED_MODULE_0__["default"].login(this.form).then(function (response) {
           console.log(response);
+
+          if (response.data.code == 0) {
+            var data = {
+              'token': response.data.data
+            };
+            _this2.form.status === true ? _storage__WEBPACK_IMPORTED_MODULE_1__["default"].set(data) : _storage__WEBPACK_IMPORTED_MODULE_1__["default"].sessionSet(data); // location.href = '/admin'
+          } else {
+            _this2.restForm();
+
+            _this2.alerts.push({
+              'type': response.data.msg_type,
+              'msg': response.data.msg,
+              'show': 10,
+              'down': 0
+            });
+          }
         });
       }
     },
@@ -2069,6 +2097,9 @@ __webpack_require__.r(__webpack_exports__);
       this.loading = false;
       this.disabled = false;
       this.text = '登录';
+    },
+    countDownChanged: function countDownChanged(dismissCountDown, index) {
+      this.alerts[index].down = dismissCountDown;
     }
   }
 });
@@ -36442,6 +36473,41 @@ var render = function() {
           )
         ],
         1
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "alert-panel" },
+        _vm._l(_vm.alerts, function(alert, index) {
+          return _c(
+            "b-alert",
+            {
+              key: index,
+              attrs: { variant: alert.type, show: alert.show, dismissible: "" },
+              on: {
+                dismissed: function($event) {
+                  alert.down = 0
+                },
+                "dismiss-count-down": function($event) {
+                  return _vm.countDownChanged($event, index)
+                }
+              }
+            },
+            [
+              _vm._v("\n            " + _vm._s(alert.msg) + "\n            "),
+              _c("b-progress", {
+                attrs: {
+                  variant: "primary",
+                  max: alert.show,
+                  value: alert.down,
+                  height: "4px"
+                }
+              })
+            ],
+            1
+          )
+        }),
+        1
       )
     ],
     1
@@ -51650,6 +51716,97 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Login_vue_vue_type_template_id_072da70e_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
+
+/***/ }),
+
+/***/ "./resources/js/storage.js":
+/*!*********************************!*\
+  !*** ./resources/js/storage.js ***!
+  \*********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+var storage = window.localStorage;
+var sessionStorage = window.sessionStorage;
+var table = 'laravel-storage';
+/* harmony default export */ __webpack_exports__["default"] = ({
+  set: function set(settings) {
+    if (!window.JSON || !window.JSON.parse) return;
+    settings = _typeof(settings) === 'object' ? settings : {
+      key: settings
+    };
+    var data = storage[table] ? JSON.parse(storage[table]) : {};
+
+    if ('value' in settings) {
+      data[settings.key] = settings.value;
+    } else {
+      Object.keys(settings).forEach(function (item, index) {
+        data[item] = settings[item];
+      });
+    }
+
+    storage[table] = JSON.stringify(data);
+  },
+  get: function get(key) {
+    var data = JSON.parse(storage.getItem(table));
+
+    try {
+      return data[key];
+    } catch (e) {
+      return null;
+    }
+  },
+  remove: function remove() {
+    var key = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+
+    if (key === null) {
+      storage.removeItem(table);
+    } else {
+      var data = JSON.parse(storage[table]);
+      delete data[key];
+    }
+  },
+  sessionSet: function sessionSet(settings) {
+    if (!window.JSON || !window.JSON.parse) return;
+    settings = _typeof(settings) === 'object' ? settings : {
+      key: settings
+    };
+    var data = sessionStorage[table] ? JSON.parse(sessionStorage[table]) : {};
+
+    if ('value' in settings) {
+      data[settings.key] = settings.value;
+    } else {
+      Object.keys(settings).forEach(function (item, index) {
+        data[item] = settings[item];
+      });
+    }
+
+    sessionStorage[table] = JSON.stringify(data);
+  },
+  sessionGet: function sessionGet(key) {
+    var data = JSON.parse(sessionStorage.getItem(table));
+
+    try {
+      return data[key];
+    } catch (e) {
+      return null;
+    }
+  },
+  sessionRemove: function sessionRemove() {
+    var key = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+
+    if (key === null) {
+      sessionStorage.removeItem(table);
+    } else {
+      var data = JSON.parse(sessionStorage[table]);
+      delete data[key];
+    }
+  }
+});
 
 /***/ }),
 

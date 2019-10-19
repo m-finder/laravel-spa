@@ -21,7 +21,7 @@ class Controller extends BaseController
     const MSG_TYPE_SUCCESS = "success";
     const MSG_TYPE_INFO = "info";
     const MSG_TYPE_WARNING = "warning";
-    const MSG_TYPE_ERROR = "error";
+    const MSG_TYPE_ERROR = "danger";
 
     /**
      * json 返回

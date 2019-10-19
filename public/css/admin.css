@@ -13193,3 +13193,8 @@ body {
   cursor: not-allowed;
 }
 
+.alert-panel {
+  position: absolute;
+  right: 2px;
+}
+
