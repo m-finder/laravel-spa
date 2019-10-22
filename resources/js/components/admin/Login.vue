@@ -189,9 +189,17 @@
                     api.login(this.form).then((response) => {
                         console.log(response);
                         if (response.data.code == 0) {
+                            this.alerts.push({
+                                'type': response.data.msg_type,
+                                'msg': response.data.msg,
+                                'show': 10,
+                                'down': 0
+                            });
                             let data = {'token':response.data.data};
-                            this.form.status === true ? storage.set(data) : storage.sessionSet(data);
-                            // location.href = '/admin'
+                            this.form.status === true
+                                ? storage.set(data)
+                                : (storage.remove(),storage.sessionSet(data))
+                            this.$router.push({ path: this.redirect || '/' })
                         } else {
                             this.restForm();
                             this.alerts.push({

@@ -2067,10 +2067,21 @@ __webpack_require__.r(__webpack_exports__);
           console.log(response);
 
           if (response.data.code == 0) {
+            _this2.alerts.push({
+              'type': response.data.msg_type,
+              'msg': response.data.msg,
+              'show': 10,
+              'down': 0
+            });
+
             var data = {
               'token': response.data.data
             };
-            _this2.form.status === true ? _storage__WEBPACK_IMPORTED_MODULE_1__["default"].set(data) : _storage__WEBPACK_IMPORTED_MODULE_1__["default"].sessionSet(data); // location.href = '/admin'
+            _this2.form.status === true ? _storage__WEBPACK_IMPORTED_MODULE_1__["default"].set(data) : (_storage__WEBPACK_IMPORTED_MODULE_1__["default"].remove(), _storage__WEBPACK_IMPORTED_MODULE_1__["default"].sessionSet(data));
+
+            _this2.$router.push({
+              path: _this2.redirect || '/'
+            });
           } else {
             _this2.restForm();
 
@@ -51329,10 +51340,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var nprogress__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(nprogress__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var nprogress_nprogress_css__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! nprogress/nprogress.css */ "./node_modules/nprogress/nprogress.css");
 /* harmony import */ var nprogress_nprogress_css__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(nprogress_nprogress_css__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _components_admin_App__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/admin/App */ "./resources/js/components/admin/App.vue");
-/* harmony import */ var _components_admin_Hello__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/admin/Hello */ "./resources/js/components/admin/Hello.vue");
-/* harmony import */ var _components_admin_Home__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/admin/Home */ "./resources/js/components/admin/Home.vue");
-/* harmony import */ var _components_admin_Login__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/admin/Login */ "./resources/js/components/admin/Login.vue");
+/* harmony import */ var _storage__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./storage */ "./resources/js/storage.js");
+/* harmony import */ var _components_admin_App__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/admin/App */ "./resources/js/components/admin/App.vue");
+/* harmony import */ var _components_admin_Hello__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/admin/Hello */ "./resources/js/components/admin/Hello.vue");
+/* harmony import */ var _components_admin_Home__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/admin/Home */ "./resources/js/components/admin/Home.vue");
+/* harmony import */ var _components_admin_Login__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/admin/Login */ "./resources/js/components/admin/Login.vue");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -51351,6 +51363,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
  // progress bar style
 
+
 nprogress__WEBPACK_IMPORTED_MODULE_4___default.a.configure({
   showSpinner: false
 });
@@ -51364,15 +51377,15 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_2__["default"]({
   routes: [{
     path: '/',
     name: 'home',
-    component: _components_admin_Home__WEBPACK_IMPORTED_MODULE_8__["default"]
+    component: _components_admin_Home__WEBPACK_IMPORTED_MODULE_9__["default"]
   }, {
     path: '/hello',
     name: 'hello',
-    component: _components_admin_Hello__WEBPACK_IMPORTED_MODULE_7__["default"]
+    component: _components_admin_Hello__WEBPACK_IMPORTED_MODULE_8__["default"]
   }, {
     path: '/login',
     name: 'login',
-    component: _components_admin_Login__WEBPACK_IMPORTED_MODULE_9__["default"]
+    component: _components_admin_Login__WEBPACK_IMPORTED_MODULE_10__["default"]
   }]
 });
 router.beforeEach(
@@ -51386,7 +51399,15 @@ function () {
         switch (_context.prev = _context.next) {
           case 0:
             nprogress__WEBPACK_IMPORTED_MODULE_4___default.a.start();
-            next();
+
+            if (_storage__WEBPACK_IMPORTED_MODULE_6__["default"].get('token')) {
+              to.path === '/login' ? next('/') : next();
+              nprogress__WEBPACK_IMPORTED_MODULE_4___default.a.done();
+            } else {
+              console.log('login');
+              to.path === '/login' ? next() : next("/login?redirect=".concat(to.path));
+              nprogress__WEBPACK_IMPORTED_MODULE_4___default.a.done();
+            }
 
           case 2:
           case "end":
@@ -51406,7 +51427,7 @@ router.afterEach(function () {
 var app = new vue__WEBPACK_IMPORTED_MODULE_1___default.a({
   el: '#app',
   components: {
-    App: _components_admin_App__WEBPACK_IMPORTED_MODULE_6__["default"]
+    App: _components_admin_App__WEBPACK_IMPORTED_MODULE_7__["default"]
   },
   router: router
 });

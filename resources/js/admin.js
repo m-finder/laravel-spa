@@ -9,6 +9,7 @@ import Routes from 'vue-router';
 import BootstrapVue from 'bootstrap-vue'
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css' // progress bar style
+import storage from "./storage";
 NProgress.configure({ showSpinner: false });
 Vue.use(Routes);
 Vue.use(BootstrapVue);
@@ -17,6 +18,7 @@ import App from './components/admin/App'
 import Hello from './components/admin/Hello'
 import Home from './components/admin/Home'
 import Login from './components/admin/Login'
+
 
 const router = new Routes({
     routes: [
@@ -40,7 +42,14 @@ const router = new Routes({
 
 router.beforeEach(async(to, from, next) => {
     NProgress.start();
-    next()
+    if(storage.get('token')){
+        to.path === '/login' ? next('/') : next();
+        NProgress.done()
+    }else{
+        console.log('login')
+        to.path === '/login' ? next() : next(`/login?redirect=${to.path}`);
+        NProgress.done();
+    }
 });
 
 router.afterEach(() => {
