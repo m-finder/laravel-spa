@@ -15,17 +15,27 @@ Vue.use(Routes);
 Vue.use(BootstrapVue);
 
 import App from './components/admin/App'
+import Layout from './components/admin/layout/Layout'
 import Hello from './components/admin/Hello'
 import Home from './components/admin/Home'
-import Login from './components/admin/Login'
+import Login from './components/admin/login/Login'
 
 
 const router = new Routes({
     routes: [
         {
             path: '/',
-            name: 'home',
-            component: Home
+            name: 'root',
+            component: Layout,
+            redirect: 'home',
+            children: [
+                {
+                    path: 'home',
+                    component: Home,
+                    name: 'Home',
+                    meta: { title: 'Home'}
+                }
+            ]
         },
         {
             path: '/hello',

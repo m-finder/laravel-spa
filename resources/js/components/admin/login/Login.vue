@@ -94,8 +94,8 @@
 </template>
 
 <script>
-    import api from '../../api/login'
-    import storage from '../../storage'
+    import api from '../../../api/login'
+    import storage from '../../../storage'
     export default {
         data() {
             return {
