@@ -32,7 +32,7 @@ const router = new Routes({
                 {
                     path: 'home',
                     component: Home,
-                    name: 'Home',
+                    name: 'home',
                     meta: { title: 'Home'}
                 }
             ]

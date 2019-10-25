@@ -1,6 +1,8 @@
 <template>
     <section class="app-main">
-        <router-view :key="key"/>
+        <keep-alive :include="cachedViews">
+            <router-view :key="key"/>
+        </keep-alive>
     </section>
 </template>
 <script>
@@ -9,6 +11,9 @@
         computed: {
             key() {
                 return this.$route.fullPath
+            },
+            cachedViews() {
+                // return this.$store.state.tagsView.cachedViews
             }
         }
     }
