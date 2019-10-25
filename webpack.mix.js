@@ -17,17 +17,22 @@ mix.js('resources/js/app.js', 'public/js')
     .sass('resources/sass/admin.scss', 'public/css');
 
 mix.listen('configReady', (webpackConfig) => {
-    // Create SVG sprites
-    webpackConfig.module.rules.unshift({
-        test: /\.svg$/,
-        loader: 'svg-sprite-loader',
-        include: /(resources\/icons\/svg)/,
-        options: {
-            symbolId: 'icon-[name]',
-        }
-    });
-
     // Exclude 'svg' folder from font loader
-    let fontLoaderConfig = webpackConfig.module.rules.find(rule => String(rule.test) === String(/\.(woff2?|ttf|eot|svg|otf)$/));
-    fontLoaderConfig.exclude = /(resources\/icons\/svg)/;
+    let fontLoaderConfig = webpackConfig.module.rules.find(rule => String(rule.test) === String(/(\.(png|jpe?g|gif|webp)$|^((?!font).)*\.svg$)/));
+    fontLoaderConfig.exclude = /(resources\/icons)/;
+});
+
+mix.webpackConfig({
+    module: {
+        rules: [
+            {
+                test: /\.svg$/,
+                loader: 'svg-sprite-loader',
+                include: [path.resolve(__dirname, 'resources/icons/svg')],
+                options: {
+                    symbolId: 'icon-[name]'
+                }
+            }
+        ],
+    }
 });

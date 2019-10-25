@@ -24,6 +24,9 @@
         min-height: calc(100vh - 84px);
         width: 100%;
         position: relative;
-        overflow: hidden;
+        overflow-x: hidden;
+        overflow-y: auto;
+        height: 100%;
+        display: block;
     }
 </style>

@@ -1,8 +1,10 @@
 <template>
     <section class="nav-wrap">
         <b-navbar toggleable="lg" type="light">
-            <b-navbar-brand href="#">
-                <img src="../../../../../images/avatar.png" class="logo" alt="">
+            <b-navbar-brand  @click.prevent="switchNavBar">
+                <transition name="fade">
+                    <svg-icon class="nav-status" :icon-class="status"/>
+                </transition>
             </b-navbar-brand>
 
             <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
@@ -43,7 +45,14 @@
 <script>
     export default {
         data() {
-            return {}
+            return {
+                status: 'on'
+            }
+        },
+        methods: {
+            switchNavBar: function () {
+                this.status = this.status == 'on' ? 'off' : 'on';
+            }
         }
     }
 </script>
@@ -52,8 +61,10 @@
     .nav-wrap{
         background: #ffffff;
     }
-    .logo{
-        width: 30px;
-        height: 30px;
+    .nav-status{
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+        fill: #666;
     }
 </style>

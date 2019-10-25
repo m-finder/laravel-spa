@@ -35,5 +35,6 @@
         position: absolute;
         right: 0;
         width: calc(100vw - 200px);
+        height: 100%;
     }
 </style>

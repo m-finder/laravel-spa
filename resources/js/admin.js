@@ -10,7 +10,9 @@ import BootstrapVue from 'bootstrap-vue'
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css' // progress bar style
 import storage from "./storage";
-NProgress.configure({ showSpinner: false });
+import store from './store'
+
+NProgress.configure({showSpinner: false});
 Vue.use(Routes);
 Vue.use(BootstrapVue);
 
@@ -19,6 +21,7 @@ import Layout from './components/admin/layout/Layout'
 import Hello from './components/admin/Hello'
 import Home from './components/admin/Home'
 import Login from './components/admin/login/Index'
+import Icons from './components/admin/icons/Index'
 
 import '../icons'
 
@@ -34,29 +37,50 @@ const router = new Routes({
                     path: 'home',
                     component: Home,
                     name: 'home',
-                    meta: { title: 'Home'}
+                    meta: {title: 'Home'}
                 }
             ]
         },
         {
             path: '/hello',
-            name: 'hello',
-            component: Hello,
+            component: Layout,
+            redirect: '/hello/index',
+            children: [
+                {
+                    path: 'index',
+                    component: Hello,
+                    name: 'hello',
+                    meta: {title: 'hello'}
+                }
+            ]
         },
         {
             path: '/login',
             name: 'login',
             component: Login,
         },
+        {
+            path: '/icons',
+            component: Layout,
+            redirect: '/icons/index',
+            children: [
+                {
+                    path: 'index',
+                    component: Icons,
+                    name: 'icons',
+                    meta: {title: 'Icons'}
+                }
+            ]
+        },
     ],
 });
 
-router.beforeEach(async(to, from, next) => {
+router.beforeEach(async (to, from, next) => {
     NProgress.start();
-    if(storage.get('token')){
+    if (storage.get('user-info')) {
         to.path === '/login' ? next('/') : next();
         NProgress.done()
-    }else{
+    } else {
         console.log('login')
         to.path === '/login' ? next() : next(`/login?redirect=${to.path}`);
         NProgress.done();
@@ -69,6 +93,7 @@ router.afterEach(() => {
 
 const app = new Vue({
     el: '#app',
-    components: { App },
+    store,
+    components: {App},
     router,
 });

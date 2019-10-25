@@ -23,6 +23,7 @@ body {
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
     font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
+    overflow: hidden;
 }
 
 #app {
@@ -41,4 +42,8 @@ body {
 .alert-panel{
     position: absolute;
     right: 2px;
+}
+svg{
+    width: 30px;
+    height: 30px;
 }

@@ -195,7 +195,7 @@
                                 'show': 10,
                                 'down': 0
                             });
-                            let data = {'token':response.data.data};
+                            let data = {'user-info':response.data.data};
                             this.form.status === true
                                 ? storage.set(data)
                                 : (storage.remove(),storage.sessionSet(data))
