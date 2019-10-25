@@ -18,8 +18,9 @@ import App from './components/admin/App'
 import Layout from './components/admin/layout/Layout'
 import Hello from './components/admin/Hello'
 import Home from './components/admin/Home'
-import Login from './components/admin/login/Login'
+import Login from './components/admin/login/Index'
 
+import '../icons'
 
 const router = new Routes({
     routes: [

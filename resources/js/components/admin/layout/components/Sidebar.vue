@@ -3,6 +3,7 @@
         <b-nav vertical class="w-25">
             <b-navbar-brand href="#">
                 <img src="../../../../../images/avatar.png" class="logo" alt="">
+                BootstrapVue
             </b-navbar-brand>
             <b-nav-item active>Active</b-nav-item>
             <b-nav-item>Link</b-nav-item>
@@ -16,3 +17,9 @@
         name: 'Sidebar',
     }
 </script>
+<style lang="scss" scoped>
+    .logo{
+        width: 30px;
+        height: 30px;
+    }
+</style>
