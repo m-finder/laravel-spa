@@ -1928,7 +1928,14 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components */ "./resources/js/components/admin/layout/components/index.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components */ "./resources/js/components/admin/layout/components/index.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -1939,12 +1946,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Layout',
   components: {
-    'side-bar': _components__WEBPACK_IMPORTED_MODULE_0__["Sidebar"],
-    'nav-bar': _components__WEBPACK_IMPORTED_MODULE_0__["Navbar"],
-    'app-main': _components__WEBPACK_IMPORTED_MODULE_0__["AppMain"]
+    'side-bar': _components__WEBPACK_IMPORTED_MODULE_1__["Sidebar"],
+    'nav-bar': _components__WEBPACK_IMPORTED_MODULE_1__["Navbar"],
+    'app-main': _components__WEBPACK_IMPORTED_MODULE_1__["AppMain"]
+  },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['sidebar']), {
+    isCollapse: function isCollapse() {
+      return this.sidebar.opened;
+    }
+  }),
+  watch: {
+    isCollapse: function isCollapse(value) {
+      console.log(value);
+    }
   }
 });
 
@@ -1959,6 +1977,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
 //
 //
 //
@@ -1988,6 +2008,13 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -2030,17 +2057,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       status: 'on'
     };
   },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['sidebar'])),
   methods: {
-    switchNavBar: function switchNavBar() {
-      this.status = this.status == 'on' ? 'off' : 'on';
+    toggleSideBar: function toggleSideBar() {
+      this.$store.dispatch('app/toggleSideBar');
     }
   }
 });
@@ -2056,6 +2083,13 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -2069,8 +2103,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'Sidebar'
+  name: 'Sidebar',
+  data: function data() {
+    return {};
+  },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['sidebar']), {
+    isCollapse: function isCollapse() {
+      return this.sidebar.opened;
+    }
+  }),
+  watch: {
+    isCollapse: function isCollapse(value) {
+      console.log(value);
+    }
+  }
 });
 
 /***/ }),
@@ -30595,7 +30643,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, ".app-wrapper[data-v-617ec194] {\n  width: 100%;\n  height: 100%;\n  position: relative;\n}\n.sidebar-container[data-v-617ec194] {\n  position: absolute;\n  left: 0;\n  top: 0;\n  width: 200px;\n}\n.main-container[data-v-617ec194] {\n  position: absolute;\n  right: 0;\n  width: calc(100vw - 200px);\n  height: 100%;\n}", ""]);
+exports.push([module.i, ".app-wrapper[data-v-617ec194] {\n  width: 100%;\n  height: 100%;\n  position: relative;\n}\n.sidebar-container[data-v-617ec194] {\n  position: absolute;\n  left: 0;\n  top: 0;\n  overflow: hidden;\n  transition: width 0.2s;\n}\n.side-bar-open[data-v-617ec194] {\n  width: 200px;\n}\n.side-bar-close[data-v-617ec194] {\n  width: 68px;\n}\n.main-container[data-v-617ec194] {\n  position: absolute;\n  right: 0;\n  height: 100%;\n  transition: width 0.2s;\n}\n.main-container-close[data-v-617ec194] {\n  width: calc(100vw - 200px);\n}\n.main-container-open[data-v-617ec194] {\n  width: calc(100vw - 132px);\n}", ""]);
 
 // exports
 
@@ -38027,11 +38075,19 @@ var render = function() {
     "section",
     { staticClass: "app-wrapper" },
     [
-      _c("side-bar", { staticClass: "sidebar-container" }),
+      _c("side-bar", {
+        class:
+          "sidebar-container " +
+          [_vm.isCollapse ? " side-bar-open" : " side-bar-close"]
+      }),
       _vm._v(" "),
       _c(
         "section",
-        { staticClass: "main-container" },
+        {
+          class:
+            "main-container " +
+            [_vm.isCollapse ? "main-container-close" : "main-container-open"]
+        },
         [_c("nav-bar"), _vm._v(" "), _c("app-main")],
         1
       )
@@ -38066,9 +38122,16 @@ var render = function() {
     { staticClass: "app-main" },
     [
       _c(
-        "keep-alive",
-        { attrs: { include: _vm.cachedViews } },
-        [_c("router-view", { key: _vm.key })],
+        "transition",
+        { attrs: { name: "fade-transform", mode: "out-in" } },
+        [
+          _c(
+            "keep-alive",
+            { attrs: { include: _vm.cachedViews } },
+            [_c("router-view", { key: _vm.key })],
+            1
+          )
+        ],
         1
       )
     ],
@@ -38111,22 +38174,15 @@ var render = function() {
               on: {
                 click: function($event) {
                   $event.preventDefault()
-                  return _vm.switchNavBar($event)
+                  return _vm.toggleSideBar($event)
                 }
               }
             },
             [
-              _c(
-                "transition",
-                { attrs: { name: "fade" } },
-                [
-                  _c("svg-icon", {
-                    staticClass: "nav-status",
-                    attrs: { "icon-class": _vm.status }
-                  })
-                ],
-                1
-              )
+              _c("svg-icon", {
+                staticClass: "nav-status",
+                attrs: { "icon-class": _vm.sidebar.opened ? "on" : "off" }
+              })
             ],
             1
           ),
@@ -57009,8 +57065,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var state = {
   sidebar: {
-    opened: _storage__WEBPACK_IMPORTED_MODULE_0__["default"].get('sidebarStatus') ? !!+_storage__WEBPACK_IMPORTED_MODULE_0__["default"].get('sidebarStatus') : true,
-    withoutAnimation: false
+    opened: _storage__WEBPACK_IMPORTED_MODULE_0__["default"].get('sidebarStatus') ? !!+_storage__WEBPACK_IMPORTED_MODULE_0__["default"].get('sidebarStatus') : true
   },
   device: 'desktop',
   size: _storage__WEBPACK_IMPORTED_MODULE_0__["default"].get('size') || 'medium'
@@ -57029,7 +57084,6 @@ var mutations = {
   CLOSE_SIDEBAR: function CLOSE_SIDEBAR(state, withoutAnimation) {
     _storage__WEBPACK_IMPORTED_MODULE_0__["default"].set('sidebarStatus', 0);
     state.sidebar.opened = false;
-    state.sidebar.withoutAnimation = withoutAnimation;
   },
   TOGGLE_DEVICE: function TOGGLE_DEVICE(state, device) {
     state.device = device;
@@ -57044,18 +57098,13 @@ var actions = {
     var commit = _ref.commit;
     commit('TOGGLE_SIDEBAR');
   },
-  closeSideBar: function closeSideBar(_ref2, _ref3) {
+  closeSideBar: function closeSideBar(_ref2) {
     var commit = _ref2.commit;
-    var withoutAnimation = _ref3.withoutAnimation;
-    commit('CLOSE_SIDEBAR', withoutAnimation);
+    commit('CLOSE_SIDEBAR');
   },
-  toggleDevice: function toggleDevice(_ref4, device) {
-    var commit = _ref4.commit;
+  toggleDevice: function toggleDevice(_ref3, device) {
+    var commit = _ref3.commit;
     commit('TOGGLE_DEVICE', device);
-  },
-  setSize: function setSize(_ref5, size) {
-    var commit = _ref5.commit;
-    commit('SET_SIZE', size);
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = ({

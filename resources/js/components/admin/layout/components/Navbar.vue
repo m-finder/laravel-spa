@@ -1,10 +1,8 @@
 <template>
     <section class="nav-wrap">
         <b-navbar toggleable="lg" type="light">
-            <b-navbar-brand  @click.prevent="switchNavBar">
-                <transition name="fade">
-                    <svg-icon class="nav-status" :icon-class="status"/>
-                </transition>
+            <b-navbar-brand  @click.prevent="toggleSideBar">
+                <svg-icon class="nav-status" :icon-class="sidebar.opened ? 'on' : 'off'"/>
             </b-navbar-brand>
 
             <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
@@ -43,16 +41,22 @@
     </section>
 </template>
 <script>
+    import { mapGetters } from 'vuex'
     export default {
         data() {
             return {
                 status: 'on'
             }
         },
+        computed: {
+            ...mapGetters([
+                'sidebar',
+            ])
+        },
         methods: {
-            switchNavBar: function () {
-                this.status = this.status == 'on' ? 'off' : 'on';
-            }
+            toggleSideBar() {
+                this.$store.dispatch('app/toggleSideBar')
+            },
         }
     }
 </script>

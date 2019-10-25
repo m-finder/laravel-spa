@@ -12,8 +12,26 @@
     </div>
 </template>
 <script>
+    import { mapGetters } from 'vuex'
     export default {
         name: 'Sidebar',
+        data(){
+            return{
+            }
+        },
+        computed: {
+            ...mapGetters([
+                'sidebar'
+            ]),
+            isCollapse() {
+                return this.sidebar.opened
+            }
+        },
+        watch: {
+            isCollapse: function (value) {
+                console.log(value)
+            }
+        }
     }
 </script>
 <style lang="scss" scoped>

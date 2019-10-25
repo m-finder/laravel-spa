@@ -1,13 +1,14 @@
 <template>
     <section class="app-wrapper">
-        <side-bar class="sidebar-container"/>
-        <section class="main-container">
+        <side-bar :class="'sidebar-container ' + [isCollapse ? ' side-bar-open' : ' side-bar-close']"/>
+        <section :class="'main-container ' + [isCollapse ? 'main-container-close': 'main-container-open']">
             <nav-bar/>
             <app-main/>
         </section>
     </section>
 </template>
 <script>
+    import {mapGetters} from 'vuex'
     import {Navbar, Sidebar, AppMain} from './components'
 
     export default {
@@ -17,6 +18,19 @@
             'nav-bar': Navbar,
             'app-main': AppMain,
         },
+        computed: {
+            ...mapGetters([
+                'sidebar'
+            ]),
+            isCollapse() {
+                return this.sidebar.opened
+            }
+        },
+        watch: {
+            isCollapse: function (value) {
+                console.log(value)
+            }
+        }
     }
 </script>
 <style lang="scss" scoped>
@@ -25,16 +39,36 @@
         height: 100%;
         position: relative;
     }
-    .sidebar-container{
+
+    .sidebar-container {
         position: absolute;
         left: 0;
         top: 0;
-        width:200px;
+        overflow: hidden;
+        transition: width 0.2s;
     }
-    .main-container{
+
+    .side-bar-open {
+        width: 200px;
+    }
+
+    .side-bar-close {
+        width: 68px;
+    }
+
+    .main-container {
         position: absolute;
         right: 0;
-        width: calc(100vw - 200px);
         height: 100%;
+        transition: width 0.2s;
+    }
+
+    .main-container-close {
+        width: calc(100vw - 200px);
+    }
+
+    .main-container-open {
+
+        width: calc(100vw - 132px);
     }
 </style>
