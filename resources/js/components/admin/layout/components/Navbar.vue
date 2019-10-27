@@ -1,8 +1,8 @@
 <template>
     <section class="nav-wrap">
         <b-navbar toggleable="lg" type="light">
-            <b-navbar-brand  @click.prevent="toggleSideBar">
-                <svg-icon class="nav-status" :icon-class="sidebar.opened ? 'on' : 'off'"/>
+            <b-navbar-brand  @click="toggleSideBar">
+                <svg-vue class="nav-status" :icon="status"/>
             </b-navbar-brand>
 
             <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
@@ -51,7 +51,15 @@
         computed: {
             ...mapGetters([
                 'sidebar',
-            ])
+            ]),
+            isCollapse() {
+                return this.sidebar.opened
+            }
+        },
+        watch: {
+            isCollapse: function (value) {
+                this.status = value ? 'on' : 'off'
+            }
         },
         methods: {
             toggleSideBar() {

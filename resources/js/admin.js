@@ -11,19 +11,17 @@ import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css' // progress bar style
 import storage from "./storage";
 import store from './store'
-
+import SvgVue from 'svg-vue';
 NProgress.configure({showSpinner: false});
 Vue.use(Routes);
 Vue.use(BootstrapVue);
+Vue.use(SvgVue);
 
 import App from './components/admin/App'
 import Layout from './components/admin/layout/Layout'
 import Hello from './components/admin/Hello'
 import Home from './components/admin/Home'
 import Login from './components/admin/login/Index'
-import Icons from './components/admin/icons/Index'
-
-import '../icons'
 
 const router = new Routes({
     routes: [
@@ -58,19 +56,6 @@ const router = new Routes({
             path: '/login',
             name: 'login',
             component: Login,
-        },
-        {
-            path: '/icons',
-            component: Layout,
-            redirect: '/icons/index',
-            children: [
-                {
-                    path: 'index',
-                    component: Icons,
-                    name: 'icons',
-                    meta: {title: 'Icons'}
-                }
-            ]
         },
     ],
 });

@@ -1,5 +1,5 @@
 const mix = require('laravel-mix');
-
+require('laravel-mix-svg-vue');
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -14,25 +14,16 @@ const mix = require('laravel-mix');
 mix.js('resources/js/app.js', 'public/js')
     .sass('resources/sass/app.scss', 'public/css')
     .js('resources/js/admin.js', 'public/js')
-    .sass('resources/sass/admin.scss', 'public/css');
+    .sass('resources/sass/admin.scss', 'public/css')
+    .svgVue({
+        svgPath: 'resources/icons',
+        extract: false,
+        svgoSettings: [
+            { removeTitle: true },
+            { removeViewBox: true },
+            { removeDimensions: true }
+        ]
+    });
 
-mix.listen('configReady', (webpackConfig) => {
-    // Exclude 'svg' folder from font loader
-    let fontLoaderConfig = webpackConfig.module.rules.find(rule => String(rule.test) === String(/(\.(png|jpe?g|gif|webp)$|^((?!font).)*\.svg$)/));
-    fontLoaderConfig.exclude = /(resources\/icons)/;
-});
-
-mix.webpackConfig({
-    module: {
-        rules: [
-            {
-                test: /\.svg$/,
-                loader: 'svg-sprite-loader',
-                include: [path.resolve(__dirname, 'resources/icons/svg')],
-                options: {
-                    symbolId: 'icon-[name]'
-                }
-            }
-        ],
-    }
-});
+mix.browserSync('admin.test');
+mix.version();

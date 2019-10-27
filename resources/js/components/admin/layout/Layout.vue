@@ -26,11 +26,6 @@
                 return this.sidebar.opened
             }
         },
-        watch: {
-            isCollapse: function (value) {
-                console.log(value)
-            }
-        }
     }
 </script>
 <style lang="scss" scoped>
@@ -69,6 +64,6 @@
 
     .main-container-open {
 
-        width: calc(100vw - 132px);
+        width: calc(100vw - 68px);
     }
 </style>
