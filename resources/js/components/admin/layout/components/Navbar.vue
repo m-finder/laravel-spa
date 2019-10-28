@@ -37,7 +37,6 @@
                     <b-nav-item-dropdown class="bv-d-md-down-none" right>
                         <template v-slot:button-content>
                             <img :src="'/images/avatar.png'" class="img-avatar" alt=""/>
-                            <em>{{ userInfo.name }}</em>
                         </template>
                         <b-dropdown-item href="#">资料设置</b-dropdown-item>
                         <b-dropdown-item href="#">密码设置</b-dropdown-item>

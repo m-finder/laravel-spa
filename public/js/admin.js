@@ -2072,7 +2072,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2112,12 +2111,6 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -36985,9 +36978,7 @@ var render = function() {
                             _c("img", {
                               staticClass: "img-avatar",
                               attrs: { src: "/images/avatar.png", alt: "" }
-                            }),
-                            _vm._v(" "),
-                            _c("em", [_vm._v(_vm._s(_vm.userInfo.name))])
+                            })
                           ]
                         },
                         proxy: true
@@ -37051,29 +37042,6 @@ var render = function() {
     },
     [
       _c(
-        "b-nav",
-        { attrs: { vertical: "" } },
-        [
-          _c(
-            "b-nav-item",
-            {
-              attrs: { to: "/home", exact: "", "exact-active-class": "active" }
-            },
-            [_vm._v("Home")]
-          ),
-          _vm._v(" "),
-          _c("b-nav-item", { attrs: { to: "/hello", exact: "" } }, [
-            _vm._v("Hello World")
-          ]),
-          _vm._v(" "),
-          _c("b-nav-item", { attrs: { to: "/icons", exact: "" } }, [
-            _vm._v("svg")
-          ])
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
         "ul",
         { staticClass: "nav" },
         [
@@ -37121,8 +37089,7 @@ var render = function() {
         ],
         2
       )
-    ],
-    1
+    ]
   )
 }
 var staticRenderFns = []

@@ -1,11 +1,5 @@
 <template>
     <div class="sidebar-container" :class="{ 'side-bar-close' : !isCollapse }">
-        <b-nav vertical>
-            <b-nav-item to="/home" exact exact-active-class="active">Home</b-nav-item>
-            <b-nav-item to="/hello" exact>Hello World</b-nav-item>
-            <b-nav-item to="/icons" exact>svg</b-nav-item>
-        </b-nav>
-
         <ul class="nav">
             <template v-for="(item, index) in nav.items">
                 <template v-if="item.title">
