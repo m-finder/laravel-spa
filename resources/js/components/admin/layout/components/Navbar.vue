@@ -2,7 +2,7 @@
     <section class="nav-wrap">
         <header class="header navbar">
             <b-navbar-brand class="bv-d-md-down-none" display="lg">
-                <img src="../../../../../images/avatar.png" class="logo d-inline-block align-bottom" alt="">
+                <img :src="'/images/avatar.png'" class="logo d-inline-block align-bottom" alt="">
                 BootstrapVue
             </b-navbar-brand>
 
@@ -36,7 +36,7 @@
 
                     <b-nav-item-dropdown class="bv-d-md-down-none" right>
                         <template v-slot:button-content>
-                            <img src="../../../../../images/avatar.png" class="img-avatar" alt=""/>
+                            <img :src="'/images/avatar.png'" class="img-avatar" alt=""/>
                             <em>{{ userInfo.name }}</em>
                         </template>
                         <b-dropdown-item href="#">资料设置</b-dropdown-item>
