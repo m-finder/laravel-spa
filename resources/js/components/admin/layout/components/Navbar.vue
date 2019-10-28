@@ -1,51 +1,61 @@
 <template>
     <section class="nav-wrap">
-        <b-navbar toggleable="lg" type="light">
-            <b-navbar-brand  @click="toggleSideBar">
-                <svg-vue class="nav-status" :icon="status"/>
+        <header class="header navbar">
+            <b-navbar-brand class="bv-d-md-down-none" display="lg">
+                <img src="../../../../../images/avatar.png" class="logo d-inline-block align-bottom" alt="">
+                BootstrapVue
             </b-navbar-brand>
 
-            <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+            <button class="d-lg-none navbar-toggler" type="button" display="md" mobile @click="toggleSideBar">
+                <svg-vue class="nav-status " icon="menu"/>
+            </button>
 
-            <b-collapse id="nav-collapse" is-nav>
-                <b-navbar-nav>
-                    <b-nav-item href="#">Link</b-nav-item>
-                    <b-nav-item href="#" disabled>Disabled</b-nav-item>
+            <button class="bv-d-md-down-none navbar-toggler" type="button" display="lg" @click="toggleSideBar">
+                <svg-vue class="nav-status " icon="menu"/>
+            </button>
+
+            <b-navbar class="navbar-expand mr-auto p-0">
+                <b-navbar-nav class="bv-d-md-down-none">
+                    <b-nav-item class="px-3" href="#">Link</b-nav-item>
+                    <b-nav-item class="px-3" href="#" disabled>Disabled</b-nav-item>
                 </b-navbar-nav>
+            </b-navbar>
 
-                <!-- Right aligned nav items -->
-                <b-navbar-nav class="ml-auto">
-                    <b-nav-form>
-                        <b-form-input size="sm" class="mr-sm-2" placeholder="Search"></b-form-input>
-                        <b-button size="sm" class="my-2 my-sm-0" type="submit">Search</b-button>
-                    </b-nav-form>
+            <b-navbar class="navbar-expand p-0">
+                <b-navbar-nav class="ml-auto ">
+                    <b-nav-item class="bv-d-md-down-none">
+                        <i class="icon-bell"></i>
+                        <b-badge pill variant="danger">5</b-badge>
+                    </b-nav-item>
+                    <b-nav-item class="bv-d-md-down-none">
+                        <i class="icon-list"></i>
+                    </b-nav-item>
+                    <b-nav-item class="bv-d-md-down-none">
+                        <i class="icon-location-pin"></i>
+                    </b-nav-item>
 
-                    <b-nav-item-dropdown text="Lang" right>
-                        <b-dropdown-item href="#">EN</b-dropdown-item>
-                        <b-dropdown-item href="#">ES</b-dropdown-item>
-                        <b-dropdown-item href="#">RU</b-dropdown-item>
-                        <b-dropdown-item href="#">FA</b-dropdown-item>
-                    </b-nav-item-dropdown>
-
-                    <b-nav-item-dropdown right>
-                        <!-- Using 'button-content' slot -->
+                    <b-nav-item-dropdown class="bv-d-md-down-none" right>
                         <template v-slot:button-content>
-                            <em>User</em>
+                            <img src="../../../../../images/avatar.png" class="img-avatar" alt=""/>
+                            <em>{{ userInfo.name }}</em>
                         </template>
-                        <b-dropdown-item href="#">Profile</b-dropdown-item>
-                        <b-dropdown-item href="#">Sign Out</b-dropdown-item>
+                        <b-dropdown-item href="#">资料设置</b-dropdown-item>
+                        <b-dropdown-item href="#">密码设置</b-dropdown-item>
+                        <b-dropdown-item href="#">退出登陆</b-dropdown-item>
                     </b-nav-item-dropdown>
                 </b-navbar-nav>
-            </b-collapse>
-        </b-navbar>
+            </b-navbar>
+        </header>
     </section>
 </template>
 <script>
-    import { mapGetters } from 'vuex'
+    import {mapGetters} from 'vuex'
+    import storage from '../../../../storage'
+
     export default {
         data() {
             return {
-                status: 'on'
+                userInfo: storage.get('user-info') || storage.sessionGet('user-info')
             }
         },
         computed: {
@@ -56,11 +66,6 @@
                 return this.sidebar.opened
             }
         },
-        watch: {
-            isCollapse: function (value) {
-                this.status = value ? 'on' : 'off'
-            }
-        },
         methods: {
             toggleSideBar() {
                 this.$store.dispatch('app/toggleSideBar')
@@ -69,14 +74,31 @@
     }
 </script>
 
-<style scoped>
-    .nav-wrap{
+<style lang="scss" scoped>
+    .nav-wrap {
         background: #ffffff;
     }
-    .nav-status{
-        width: 20px;
-        height: 20px;
-        cursor: pointer;
-        fill: #666;
+
+    .logo {
+        width: 30px;
+        height: 30px;
+    }
+
+    .navbar-toggler {
+        outline: none;
+
+        .nav-status {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            fill: #666;
+        }
+    }
+
+    .img-avatar {
+        height: 35px;
+        margin: 0 10px;
+        max-width: 100%;
+        border-radius: 50em;
     }
 </style>

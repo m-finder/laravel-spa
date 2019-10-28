@@ -13677,6 +13677,10 @@ body {
   height: 100%;
 }
 
+a {
+  color: #666;
+}
+
 .invalid-feedback {
   display: block;
   min-height: 20px;

@@ -19,11 +19,10 @@ mix.js('resources/js/app.js', 'public/js')
         svgPath: 'resources/icons',
         extract: false,
         svgoSettings: [
-            { removeTitle: true },
-            { removeViewBox: true },
-            { removeDimensions: true }
+            {removeTitle: true},
+            {removeViewBox: true},
+            {removeDimensions: true}
         ]
     });
 
-mix.browserSync('admin.test');
 mix.version();

@@ -22,6 +22,7 @@ import Layout from './components/admin/layout/Layout'
 import Hello from './components/admin/Hello'
 import Home from './components/admin/Home'
 import Login from './components/admin/login/Index'
+import Icon from './components/admin/icons/Index'
 
 const router = new Routes({
     routes: [
@@ -56,6 +57,19 @@ const router = new Routes({
             path: '/login',
             name: 'login',
             component: Login,
+        },
+        {
+            path: '/icon',
+            component: Layout,
+            redirect: '/icon/index',
+            children: [
+                {
+                    path: 'index',
+                    component: Icon,
+                    name: 'icon',
+                    meta: {title: 'Icon'}
+                }
+            ]
         },
     ],
 });
