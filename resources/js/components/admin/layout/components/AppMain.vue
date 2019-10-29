@@ -1,5 +1,5 @@
 <template>
-    <section class="app-main">
+    <section class="app-main" :class="{'app-main-close': !isCollapse}">
         <transition name="fade-transform" mode="out-in">
             <keep-alive :include="cachedViews">
                 <router-view :key="key"/>
@@ -42,5 +42,8 @@
         padding: 25px;
         transition: width 0.2s;
         background: rgba(255,255,255,.1)
+    }
+    .app-main-close{
+        width: calc(100vw - 68px);
     }
 </style>
