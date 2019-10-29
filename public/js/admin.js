@@ -2061,12 +2061,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2106,6 +2100,8 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
 //
 //
 //
@@ -30643,7 +30639,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../../node_module
 
 
 // module
-exports.push([module.i, ".nav-wrap[data-v-006e676f] {\n  background: #ffffff;\n}\n.navbar-toggler[data-v-006e676f] {\n  outline: none;\n}\n.navbar-toggler .nav-status[data-v-006e676f] {\n  width: 20px;\n  height: 20px;\n  cursor: pointer;\n  fill: #666;\n}\n.img-avatar[data-v-006e676f] {\n  height: 35px;\n  margin: 0 10px;\n  max-width: 100%;\n  border-radius: 50em;\n}", ""]);
+exports.push([module.i, ".nav-wrap[data-v-006e676f] {\n  /*background: #ffffff;*/\n}\n.navbar-toggler[data-v-006e676f] {\n  outline: none;\n}\n.navbar-toggler .nav-status[data-v-006e676f] {\n  width: 20px;\n  height: 20px;\n  cursor: pointer;\n  fill: #666;\n}\n.img-avatar[data-v-006e676f] {\n  height: 22px;\n  margin: 0 10px;\n  max-width: 100%;\n  border-radius: 50%;\n}\n.nav-item[data-v-006e676f] {\n  position: relative;\n}\n.nav-item .badge[data-v-006e676f] {\n  position: absolute;\n  top: 50%;\n  left: 50%;\n  margin-top: -16px;\n  margin-left: 0;\n}", ""]);
 
 // exports
 
@@ -30662,7 +30658,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../../node_module
 
 
 // module
-exports.push([module.i, ".sidebar-container[data-v-7e76a80d] {\n  position: absolute;\n  left: 0;\n  top: 0;\n  overflow: hidden;\n  -webkit-transition: width 0.2s;\n  transition: width 0.2s;\n  width: 200px;\n  background: #2f353a;\n  color: #ffffff;\n}\n.side-bar-close[data-v-7e76a80d] {\n  width: 68px;\n}\n.logo[data-v-7e76a80d] {\n  width: 30px;\n  height: 30px;\n}\n.navbar-brand[data-v-7e76a80d] {\n  margin-right: 0;\n}\na[data-v-7e76a80d] {\n  color: rgba(255, 255, 255, 0.7);\n}\na[data-v-7e76a80d]:hover {\n  color: #ffffff;\n}", ""]);
+exports.push([module.i, ".sidebar-container[data-v-7e76a80d] {\n  position: absolute;\n  left: 0;\n  top: 0;\n  overflow: hidden;\n  -webkit-transition: width 0.2s;\n  transition: width 0.2s;\n  width: 200px;\n  background: rgba(0, 0, 0, 0.1);\n  height: 100vh;\n  /*background: #2f353a;*/\n  /*color: #ffffff;*/\n}\n.side-bar-close[data-v-7e76a80d] {\n  width: 68px;\n}\n.logo[data-v-7e76a80d] {\n  width: 30px;\n  height: 30px;\n}\n.navbar-brand[data-v-7e76a80d] {\n  margin-right: 0;\n}\n.nav-item[data-v-7e76a80d]:hover {\n  background: rgba(255, 255, 255, 0.1);\n}\n\n/*a{*/\n/*    color: rgba(255,255,255,.7);*/\n/*    &:hover{*/\n/*        color: #ffffff;*/\n/*    }*/\n/*}*/", ""]);
 
 // exports
 
@@ -30757,7 +30753,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../../node_module
 
 
 // module
-exports.push([module.i, "\n.app-main[data-v-79f54daa] {\n    /*84 = navbar + tags-view = 50 +34 */\n    min-height: calc(100vh - 84px);\n    width: calc(100vw - 200px);\n    position: absolute;\n    right: 0;\n    overflow-x: hidden;\n    overflow-y: auto;\n    height: 100%;\n    display: block;\n    padding: 25px;\n    -webkit-transition: width 0.2s;\n    transition: width 0.2s;\n}\n", ""]);
+exports.push([module.i, "\n.app-main[data-v-79f54daa] {\n    /*84 = navbar + tags-view = 50 +34 */\n    min-height: calc(100vh - 84px);\n    width: calc(100vw - 200px);\n    position: absolute;\n    right: 0;\n    overflow-x: hidden;\n    overflow-y: auto;\n    height: 100%;\n    display: block;\n    padding: 25px;\n    -webkit-transition: width 0.2s;\n    transition: width 0.2s;\n    background: rgba(255,255,255,.1)\n}\n", ""]);
 
 // exports
 
@@ -36874,11 +36870,10 @@ var render = function() {
         _vm._v(" "),
         _c(
           "b-navbar",
-          { staticClass: "navbar-expand mr-auto p-0" },
+          { staticClass: "mr-auto p-0 bv-d-md-down-none" },
           [
             _c(
               "b-navbar-nav",
-              { staticClass: "bv-d-md-down-none" },
               [
                 _c(
                   "b-nav-item",
@@ -36900,17 +36895,15 @@ var render = function() {
         _vm._v(" "),
         _c(
           "b-navbar",
-          { staticClass: "navbar-expand p-0" },
+          { staticClass: "justify-content-end p-0 bv-d-md-down-none" },
           [
             _c(
               "b-navbar-nav",
-              { staticClass: "justify-content-end" },
               [
                 _c(
                   "b-nav-item",
-                  { staticClass: "bv-d-md-down-none" },
                   [
-                    _c("i", { staticClass: "icon-bell" }),
+                    _c("svg-vue", { attrs: { icon: "message" } }),
                     _vm._v(" "),
                     _c("b-badge", { attrs: { pill: "", variant: "danger" } }, [
                       _vm._v("5")
@@ -36918,14 +36911,6 @@ var render = function() {
                   ],
                   1
                 ),
-                _vm._v(" "),
-                _c("b-nav-item", { staticClass: "bv-d-md-down-none" }, [
-                  _c("i", { staticClass: "icon-list" })
-                ]),
-                _vm._v(" "),
-                _c("b-nav-item", { staticClass: "bv-d-md-down-none" }, [
-                  _c("i", { staticClass: "icon-location-pin" })
-                ]),
                 _vm._v(" "),
                 _c(
                   "b-nav-item-dropdown",
@@ -37003,18 +36988,25 @@ var render = function() {
       class: { "side-bar-close": !_vm.isCollapse }
     },
     [
-      _c("b-navbar-brand", [
-        _c("img", {
-          staticClass: "logo d-inline-block align-bottom",
-          attrs: { src: "/favicon.ico", alt: "" }
-        }),
-        _vm._v(" "),
-        _vm.isCollapse
-          ? _c("span", { staticClass: "bv-d-md-down-none" }, [
-              _vm._v("\n            M-laravel-spa\n        ")
-            ])
-          : _vm._e()
-      ]),
+      _c(
+        "header",
+        { staticClass: "header navbar" },
+        [
+          _c("b-navbar-brand", [
+            _c("img", {
+              staticClass: "logo d-inline-block align-bottom",
+              attrs: { src: "/favicon.ico", alt: "" }
+            }),
+            _vm._v(" "),
+            _vm.isCollapse
+              ? _c("span", { staticClass: "bv-d-md-down-none" }, [
+                  _vm._v("\n                M-laravel-spa\n            ")
+                ])
+              : _vm._e()
+          ])
+        ],
+        1
+      ),
       _vm._v(" "),
       _c(
         "b-nav",
@@ -37026,7 +37018,7 @@ var render = function() {
                 ? [
                     _c(
                       "li",
-                      { staticClass: "nav-item" },
+                      { staticClass: "nav-item " },
                       [
                         _c(
                           "a",
@@ -37039,7 +37031,7 @@ var render = function() {
                                 expression: "index + '-' + item.name"
                               }
                             ],
-                            staticClass: "nav-link",
+                            staticClass: "nav-link dropdown-toggle",
                             attrs: { href: "#" }
                           },
                           [_vm._v("1" + _vm._s(item.name))]
@@ -53548,7 +53540,6 @@ var map = {
 	"./excel.svg": "./resources/icons/excel.svg",
 	"./eye.svg": "./resources/icons/eye.svg",
 	"./form.svg": "./resources/icons/form.svg",
-	"./guide 2.svg": "./resources/icons/guide 2.svg",
 	"./guide.svg": "./resources/icons/guide.svg",
 	"./icon.svg": "./resources/icons/icon.svg",
 	"./international.svg": "./resources/icons/international.svg",
@@ -53621,7 +53612,6 @@ var map = {
 	"./excel.svg": "./resources/icons/excel.svg",
 	"./eye.svg": "./resources/icons/eye.svg",
 	"./form.svg": "./resources/icons/form.svg",
-	"./guide 2.svg": "./resources/icons/guide 2.svg",
 	"./guide.svg": "./resources/icons/guide.svg",
 	"./icon.svg": "./resources/icons/icon.svg",
 	"./international.svg": "./resources/icons/international.svg",
@@ -53851,19 +53841,6 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ("<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 128 128\"><path d=\"M84.068 23.784c-1.02 0-1.877-.32-2.572-.96a8.588 8.588 0 01-1.738-2.237 11.524 11.524 0 01-1.042-2.621c-.232-.895-.348-1.641-.348-2.238V0h.278c.834 0 1.622.085 2.363.256.742.17 1.645.575 2.711 1.214 1.066.64 2.363 1.535 3.892 2.686 1.53 1.15 3.453 2.664 5.77 4.54 2.502 2.045 4.494 3.771 5.977 5.178 1.483 1.406 2.618 2.6 3.406 3.58.787.98 1.274 1.812 1.46 2.494.185.682.277 1.278.277 1.79v2.046H84.068zM127.3 84.01c.278.682.464 1.535.556 2.558.093 1.023-.37 2.003-1.39 2.94-.463.427-.88.832-1.25 1.215-.372.384-.696.704-.974.96a6.69 6.69 0 01-.973.767l-11.816-10.741a44.331 44.331 0 001.877-1.535 31.028 31.028 0 011.737-1.406c1.112-.938 2.317-1.343 3.615-1.215 1.297.128 2.363.405 3.197.83.927.427 1.923 1.173 2.989 2.239 1.065 1.065 1.876 2.195 2.432 3.388zM78.23 95.902c2.038 0 3.752-.511 5.143-1.534l-26.969 25.83H18.037c-1.761 0-3.684-.47-5.77-1.407a24.549 24.549 0 01-5.838-3.709 21.373 21.373 0 01-4.518-5.306c-1.204-2.003-1.807-4.07-1.807-6.202V16.495c0-1.79.44-3.665 1.32-5.626A18.41 18.41 0 015.04 5.562a21.798 21.798 0 015.213-3.964C12.198.533 14.237 0 16.37 0h53.24v15.984c0 1.62.278 3.367.834 5.242a16.704 16.704 0 002.572 5.179c1.159 1.577 2.665 2.898 4.518 3.964 1.853 1.066 4.078 1.598 6.673 1.598h20.295v42.325L85.458 92.45c1.02-1.364 1.529-2.856 1.529-4.476 0-2.216-.857-4.113-2.572-5.69-1.714-1.577-3.776-2.366-6.186-2.366H26.1c-2.409 0-4.448.789-6.116 2.366-1.668 1.577-2.502 3.474-2.502 5.69 0 2.217.834 4.092 2.502 5.626 1.668 1.535 3.707 2.302 6.117 2.302h52.13zM26.1 47.951c-2.41 0-4.449.789-6.117 2.366-1.668 1.577-2.502 3.473-2.502 5.69 0 2.216.834 4.092 2.502 5.626 1.668 1.534 3.707 2.302 6.117 2.302h52.13c2.409 0 4.47-.768 6.185-2.302 1.715-1.534 2.572-3.41 2.572-5.626 0-2.217-.857-4.113-2.572-5.69-1.714-1.577-3.776-2.366-6.186-2.366H26.1zm52.407 64.063l1.807-1.663 3.476-3.196a479.75 479.75 0 004.587-4.284 500.757 500.757 0 015.004-4.667c3.985-3.666 8.48-7.758 13.485-12.276l11.677 10.741-13.485 12.404-5.004 4.603-4.587 4.22a179.46 179.46 0 00-3.267 3.068c-.88.853-1.367 1.322-1.46 1.407-.463.341-.973.703-1.529 1.087-.556.383-1.112.703-1.668.959-.556.256-1.413.575-2.572.959a83.5 83.5 0 01-3.545 1.087 72.2 72.2 0 01-3.475.895c-1.112.256-1.946.426-2.502.511-1.112.17-1.854.043-2.224-.383-.371-.426-.464-1.151-.278-2.174.092-.511.278-1.279.556-2.302.278-1.023.602-2.067.973-3.132l1.042-3.005c.325-.938.58-1.577.765-1.918a10.157 10.157 0 012.224-2.941z\"/></svg>");
-
-/***/ }),
-
-/***/ "./resources/icons/guide 2.svg":
-/*!*************************************!*\
-  !*** ./resources/icons/guide 2.svg ***!
-  \*************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1000 1000\"><path d=\"M11.576 547.9l282.848 126.404 409.285-383.26 137.057-128.341L361.234 714.22l362.77 146.362c8.742 3.327 18.733-1.33 21.855-10.644v-.666L999.985.374 10.327 514.636c-8.742 4.657-11.864 15.302-8.117 24.616 2.497 3.991 5.62 7.318 9.366 8.648zM360.61 999.626l141.112-161.663-141.112-61.206v222.869z\"/></svg>");
 
 /***/ }),
 

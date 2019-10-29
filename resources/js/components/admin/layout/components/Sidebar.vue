@@ -1,17 +1,19 @@
 <template>
     <section class="text-center sidebar-container" :class="{ 'side-bar-close' : !isCollapse }">
-        <b-navbar-brand>
-            <img :src="'/favicon.ico'" class="logo d-inline-block align-bottom" alt="">
-            <span v-if="isCollapse" class="bv-d-md-down-none">
-                M-laravel-spa
-            </span>
-        </b-navbar-brand>
+        <header class="header navbar">
+            <b-navbar-brand>
+                <img :src="'/favicon.ico'" class="logo d-inline-block align-bottom" alt="">
+                <span v-if="isCollapse" class="bv-d-md-down-none">
+                    M-laravel-spa
+                </span>
+            </b-navbar-brand>
+        </header>
 
         <b-nav vertical class="text-left" type="dark">
             <template v-for="(item, index) in nav.items">
                 <template v-if="item.children">
-                    <li class="nav-item">
-                        <a v-b-toggle="index + '-' + item.name" href="#" class="nav-link">1{{ item.name }}</a>
+                    <li class="nav-item ">
+                        <a v-b-toggle="index + '-' + item.name" href="#" class="nav-link dropdown-toggle">1{{ item.name }}</a>
                         <b-collapse :id="index + '-' + item.name">
                             <b-nav vertical>
                                 <template v-for="(children, i) in item.children">
@@ -58,8 +60,10 @@
         overflow: hidden;
         transition: width 0.2s;
         width: 200px;
-        background: #2f353a;
-        color: #ffffff;
+        background: rgba(0,0,0,.1);
+        height: 100vh;
+        /*background: #2f353a;*/
+        /*color: #ffffff;*/
     }
 
     .side-bar-close {
@@ -73,10 +77,15 @@
     .navbar-brand{
         margin-right: 0;
     }
-    a{
-        color: rgba(255,255,255,.7);
+    .nav-item{
         &:hover{
-            color: #ffffff;
+            background: rgba(255,255,255,.1)
         }
     }
+    /*a{*/
+    /*    color: rgba(255,255,255,.7);*/
+    /*    &:hover{*/
+    /*        color: #ffffff;*/
+    /*    }*/
+    /*}*/
 </style>

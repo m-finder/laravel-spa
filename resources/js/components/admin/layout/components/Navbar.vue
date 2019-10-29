@@ -9,24 +9,18 @@
                 <svg-vue class="nav-status " icon="menu"/>
             </button>
 
-            <b-navbar class="navbar-expand mr-auto p-0">
-                <b-navbar-nav class="bv-d-md-down-none">
+            <b-navbar class="mr-auto p-0 bv-d-md-down-none">
+                <b-navbar-nav>
                     <b-nav-item class="px-3" href="#">Link</b-nav-item>
                     <b-nav-item class="px-3" href="#" disabled>Disabled</b-nav-item>
                 </b-navbar-nav>
             </b-navbar>
 
-            <b-navbar class="navbar-expand p-0">
-                <b-navbar-nav class="justify-content-end">
-                    <b-nav-item class="bv-d-md-down-none">
-                        <i class="icon-bell"></i>
+            <b-navbar class="justify-content-end p-0 bv-d-md-down-none">
+                <b-navbar-nav>
+                    <b-nav-item>
+                        <svg-vue icon="message"/>
                         <b-badge pill variant="danger">5</b-badge>
-                    </b-nav-item>
-                    <b-nav-item class="bv-d-md-down-none">
-                        <i class="icon-list"></i>
-                    </b-nav-item>
-                    <b-nav-item class="bv-d-md-down-none">
-                        <i class="icon-location-pin"></i>
                     </b-nav-item>
 
                     <b-nav-item-dropdown class="bv-d-md-down-none" right>
@@ -70,10 +64,8 @@
 
 <style lang="scss" scoped>
     .nav-wrap {
-        background: #ffffff;
+        /*background: #ffffff;*/
     }
-
-
 
     .navbar-toggler {
         outline: none;
@@ -87,9 +79,19 @@
     }
 
     .img-avatar {
-        height: 35px;
+        height: 22px;
         margin: 0 10px;
         max-width: 100%;
-        border-radius: 50em;
+        border-radius: 50%;
+    }
+    .nav-item{
+        position: relative;
+        .badge{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-top: -16px;
+            margin-left: 0;
+        }
     }
 </style>
