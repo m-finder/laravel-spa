@@ -1,5 +1,5 @@
 <template>
-    <section class="app-main" :class="{'app-main-open': !isCollapse}">
+    <section class="app-main">
         <transition name="fade-transform" mode="out-in">
             <keep-alive :include="cachedViews">
                 <router-view :key="key"/>
@@ -39,9 +39,7 @@
         overflow-y: auto;
         height: 100%;
         display: block;
+        padding: 25px;
         transition: width 0.2s;
-    }
-    .app-main-open{
-        width: calc(100vw - 68px);
     }
 </style>

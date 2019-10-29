@@ -1,8 +1,8 @@
 <template>
     <section class="app-wrapper">
-        <nav-bar/>
-        <section class="main-container">
-            <side-bar/>
+        <side-bar/>
+        <section class="main-container"  :class="{'main-container-open': !isCollapse}">
+            <nav-bar/>
             <app-main/>
         </section>
     </section>
@@ -40,6 +40,9 @@
         right: 0;
         height: 100%;
         transition: width 0.2s;
-        width: 100vw;
+        width: calc(100vw - 200px);
+    }
+    .main-container-open{
+        width: calc(100vw - 68px);
     }
 </style>

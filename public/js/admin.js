@@ -2067,11 +2067,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2111,30 +2106,6 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -30653,7 +30624,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, ".app-wrapper[data-v-617ec194] {\n  width: 100%;\n  height: 100%;\n  position: relative;\n}\n.main-container[data-v-617ec194] {\n  position: absolute;\n  right: 0;\n  height: 100%;\n  -webkit-transition: width 0.2s;\n  transition: width 0.2s;\n  width: 100vw;\n}", ""]);
+exports.push([module.i, ".app-wrapper[data-v-617ec194] {\n  width: 100%;\n  height: 100%;\n  position: relative;\n}\n.main-container[data-v-617ec194] {\n  position: absolute;\n  right: 0;\n  height: 100%;\n  -webkit-transition: width 0.2s;\n  transition: width 0.2s;\n  width: calc(100vw - 200px);\n}\n.main-container-open[data-v-617ec194] {\n  width: calc(100vw - 68px);\n}", ""]);
 
 // exports
 
@@ -30672,7 +30643,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../../node_module
 
 
 // module
-exports.push([module.i, ".nav-wrap[data-v-006e676f] {\n  background: #ffffff;\n}\n.logo[data-v-006e676f] {\n  width: 30px;\n  height: 30px;\n}\n.navbar-toggler[data-v-006e676f] {\n  outline: none;\n}\n.navbar-toggler .nav-status[data-v-006e676f] {\n  width: 20px;\n  height: 20px;\n  cursor: pointer;\n  fill: #666;\n}\n.img-avatar[data-v-006e676f] {\n  height: 35px;\n  margin: 0 10px;\n  max-width: 100%;\n  border-radius: 50em;\n}", ""]);
+exports.push([module.i, ".nav-wrap[data-v-006e676f] {\n  background: #ffffff;\n}\n.navbar-toggler[data-v-006e676f] {\n  outline: none;\n}\n.navbar-toggler .nav-status[data-v-006e676f] {\n  width: 20px;\n  height: 20px;\n  cursor: pointer;\n  fill: #666;\n}\n.img-avatar[data-v-006e676f] {\n  height: 35px;\n  margin: 0 10px;\n  max-width: 100%;\n  border-radius: 50em;\n}", ""]);
 
 // exports
 
@@ -30691,7 +30662,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../../node_module
 
 
 // module
-exports.push([module.i, ".sidebar-container[data-v-7e76a80d] {\n  position: absolute;\n  left: 0;\n  top: 0;\n  overflow: hidden;\n  -webkit-transition: width 0.2s;\n  transition: width 0.2s;\n  width: 200px;\n}\n.side-bar-close[data-v-7e76a80d] {\n  width: 68px;\n}", ""]);
+exports.push([module.i, ".sidebar-container[data-v-7e76a80d] {\n  position: absolute;\n  left: 0;\n  top: 0;\n  overflow: hidden;\n  -webkit-transition: width 0.2s;\n  transition: width 0.2s;\n  width: 200px;\n  background: #2f353a;\n  color: #ffffff;\n}\n.side-bar-close[data-v-7e76a80d] {\n  width: 68px;\n}\n.logo[data-v-7e76a80d] {\n  width: 30px;\n  height: 30px;\n}\n.navbar-brand[data-v-7e76a80d] {\n  margin-right: 0;\n}\na[data-v-7e76a80d] {\n  color: rgba(255, 255, 255, 0.7);\n}\na[data-v-7e76a80d]:hover {\n  color: #ffffff;\n}", ""]);
 
 // exports
 
@@ -30786,7 +30757,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../../node_module
 
 
 // module
-exports.push([module.i, "\n.app-main[data-v-79f54daa] {\n    /*84 = navbar + tags-view = 50 +34 */\n    min-height: calc(100vh - 84px);\n    width: calc(100vw - 200px);\n    position: absolute;\n    right: 0;\n    overflow-x: hidden;\n    overflow-y: auto;\n    height: 100%;\n    display: block;\n    -webkit-transition: width 0.2s;\n    transition: width 0.2s;\n}\n.app-main-open[data-v-79f54daa]{\n    width: calc(100vw - 68px);\n}\n", ""]);
+exports.push([module.i, "\n.app-main[data-v-79f54daa] {\n    /*84 = navbar + tags-view = 50 +34 */\n    min-height: calc(100vh - 84px);\n    width: calc(100vw - 200px);\n    position: absolute;\n    right: 0;\n    overflow-x: hidden;\n    overflow-y: auto;\n    height: 100%;\n    display: block;\n    padding: 25px;\n    -webkit-transition: width 0.2s;\n    transition: width 0.2s;\n}\n", ""]);
 
 // exports
 
@@ -36784,12 +36755,15 @@ var render = function() {
     "section",
     { staticClass: "app-wrapper" },
     [
-      _c("nav-bar"),
+      _c("side-bar"),
       _vm._v(" "),
       _c(
         "section",
-        { staticClass: "main-container" },
-        [_c("side-bar"), _vm._v(" "), _c("app-main")],
+        {
+          staticClass: "main-container",
+          class: { "main-container-open": !_vm.isCollapse }
+        },
+        [_c("nav-bar"), _vm._v(" "), _c("app-main")],
         1
       )
     ],
@@ -36820,7 +36794,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "section",
-    { staticClass: "app-main", class: { "app-main-open": !_vm.isCollapse } },
+    { staticClass: "app-main" },
     [
       _c(
         "transition",
@@ -36866,18 +36840,6 @@ var render = function() {
       "header",
       { staticClass: "header navbar" },
       [
-        _c(
-          "b-navbar-brand",
-          { staticClass: "bv-d-md-down-none", attrs: { display: "lg" } },
-          [
-            _c("img", {
-              staticClass: "logo d-inline-block align-bottom",
-              attrs: { src: "/images/avatar.png", alt: "" }
-            }),
-            _vm._v("\n            BootstrapVue\n        ")
-          ]
-        ),
-        _vm._v(" "),
         _c(
           "button",
           {
@@ -36942,7 +36904,7 @@ var render = function() {
           [
             _c(
               "b-navbar-nav",
-              { staticClass: "ml-auto " },
+              { staticClass: "justify-content-end" },
               [
                 _c(
                   "b-nav-item",
@@ -37035,61 +36997,87 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "div",
+    "section",
     {
-      staticClass: "sidebar-container",
+      staticClass: "text-center sidebar-container",
       class: { "side-bar-close": !_vm.isCollapse }
     },
     [
+      _c("b-navbar-brand", [
+        _c("img", {
+          staticClass: "logo d-inline-block align-bottom",
+          attrs: { src: "/favicon.ico", alt: "" }
+        }),
+        _vm._v(" "),
+        _vm.isCollapse
+          ? _c("span", { staticClass: "bv-d-md-down-none" }, [
+              _vm._v("\n            M-laravel-spa\n        ")
+            ])
+          : _vm._e()
+      ]),
+      _vm._v(" "),
       _c(
-        "ul",
-        { staticClass: "nav" },
+        "b-nav",
+        { staticClass: "text-left", attrs: { vertical: "", type: "dark" } },
         [
           _vm._l(_vm.nav.items, function(item, index) {
             return [
-              item.title
+              item.children
                 ? [
                     _c(
                       "li",
-                      { staticClass: "nav-title" },
+                      { staticClass: "nav-item" },
                       [
-                        item.wrapper && item.wrapper.element
-                          ? [
-                              _c(
-                                item.wrapper.element,
-                                _vm._b(
-                                  { tag: "component" },
-                                  "component",
-                                  item.wrapper.attributes,
-                                  false
-                                ),
-                                [
-                                  _vm._v(
-                                    "\n                            " +
-                                      _vm._s(item.name) +
-                                      "\n                        "
-                                  )
-                                ]
-                              )
-                            ]
-                          : [
-                              _vm._v(
-                                "\n                        " +
-                                  _vm._s(item.name) +
-                                  "\n                    "
-                              )
-                            ]
+                        _c(
+                          "a",
+                          {
+                            directives: [
+                              {
+                                name: "b-toggle",
+                                rawName: "v-b-toggle",
+                                value: index + "-" + item.name,
+                                expression: "index + '-' + item.name"
+                              }
+                            ],
+                            staticClass: "nav-link",
+                            attrs: { href: "#" }
+                          },
+                          [_vm._v("1" + _vm._s(item.name))]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "b-collapse",
+                          { attrs: { id: index + "-" + item.name } },
+                          [
+                            _c(
+                              "b-nav",
+                              { attrs: { vertical: "" } },
+                              [
+                                _vm._l(item.children, function(children, i) {
+                                  return [
+                                    _c("b-nav-item", [
+                                      _vm._v("z" + _vm._s(children.name))
+                                    ])
+                                  ]
+                                })
+                              ],
+                              2
+                            )
+                          ],
+                          1
+                        )
                       ],
-                      2
+                      1
                     )
                   ]
-                : _vm._e()
+                : [_c("b-nav-item", [_vm._v("2" + _vm._s(item.name))])]
             ]
           })
         ],
         2
       )
-    ]
+    ],
+    1
   )
 }
 var staticRenderFns = []
@@ -55075,14 +55063,6 @@ __webpack_require__.r(__webpack_exports__);
       text: 'NEW'
     }
   }, {
-    title: true,
-    name: 'Theme',
-    "class": '',
-    wrapper: {
-      element: '',
-      attributes: {}
-    }
-  }, {
     name: 'Colors',
     url: '/theme/colors',
     icon: 'icon-drop'
@@ -55090,14 +55070,6 @@ __webpack_require__.r(__webpack_exports__);
     name: 'Typography',
     url: '/theme/typography',
     icon: 'icon-pencil'
-  }, {
-    title: true,
-    name: 'Components',
-    "class": '',
-    wrapper: {
-      element: '',
-      attributes: {}
-    }
   }, {
     name: 'Base',
     url: '/base',
@@ -55246,11 +55218,6 @@ __webpack_require__.r(__webpack_exports__);
       variant: 'primary',
       text: 'NEW'
     }
-  }, {
-    divider: true
-  }, {
-    title: true,
-    name: 'Extras'
   }, {
     name: 'Pages',
     url: '/pages',

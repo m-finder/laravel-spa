@@ -1,57 +1,33 @@
 <template>
-    <div class="sidebar-container" :class="{ 'side-bar-close' : !isCollapse }">
-        <ul class="nav">
+    <section class="text-center sidebar-container" :class="{ 'side-bar-close' : !isCollapse }">
+        <b-navbar-brand>
+            <img :src="'/favicon.ico'" class="logo d-inline-block align-bottom" alt="">
+            <span v-if="isCollapse" class="bv-d-md-down-none">
+                M-laravel-spa
+            </span>
+        </b-navbar-brand>
+
+        <b-nav vertical class="text-left" type="dark">
             <template v-for="(item, index) in nav.items">
-                <template v-if="item.title">
-                    <!--                        <SidebarNavTitle :key="index" :name="item.name" :classes="item.class" :wrapper="item.wrapper"/>-->
-                    <li class="nav-title">
-                        <template v-if="item.wrapper && item.wrapper.element">
-                            <component v-bind:is="item.wrapper.element" v-bind="item.wrapper.attributes">
-                                {{item.name}}
-                            </component>
-                        </template>
-                        <template v-else>
-                            {{item.name}}
-                        </template>
+                <template v-if="item.children">
+                    <li class="nav-item">
+                        <a v-b-toggle="index + '-' + item.name" href="#" class="nav-link">1{{ item.name }}</a>
+                        <b-collapse :id="index + '-' + item.name">
+                            <b-nav vertical>
+                                <template v-for="(children, i) in item.children">
+                                    <b-nav-item >z{{ children.name }}</b-nav-item>
+                                </template>
+                            </b-nav>
+                        </b-collapse>
                     </li>
                 </template>
-                <!--                    <template v-else-if="item.divider">-->
-                <!--                        <SidebarNavDivider :key="index" :classes="item.class"/>-->
-                <!--                    </template>-->
-                <!--                    <template v-else-if="item.label">-->
-                <!--                        <SidebarNavLabel :key="index" :name="item.name" :url="item.url" :icon="item.icon" :label="item.label" :classes="item.class"/>-->
-                <!--                    </template>-->
-                <!--                    <template v-else>-->
-                <!--                        <template v-if="item.children">-->
-                <!--                            &lt;!&ndash; First level dropdown &ndash;&gt;-->
-                <!--                            <SidebarNavDropdown :key="index" :name="item.name" :url="item.url" :icon="item.icon">-->
-                <!--                                <template v-for="(childL1, index1) in item.children">-->
-                <!--                                    <template v-if="childL1.children">-->
-                <!--                                        &lt;!&ndash; Second level dropdown &ndash;&gt;-->
-                <!--                                        <SidebarNavDropdown :key="index1" :name="childL1.name" :url="childL1.url" :icon="childL1.icon">-->
-                <!--                                            <li :key="index2" class="nav-item" v-for="(childL2, index2) in childL1.children">-->
-                <!--                                                <SidebarNavLink :name="childL2.name" :url="childL2.url" :icon="childL2.icon" :badge="childL2.badge" :variant="childL2.variant" :attributes="childL2.attributes" />-->
-                <!--                                            </li>-->
-                <!--                                        </SidebarNavDropdown>-->
-                <!--                                    </template>-->
-                <!--                                    <template v-else>-->
-                <!--                                        <SidebarNavItem :key="index1" :classes="item.class">-->
-                <!--                                            <SidebarNavLink :name="childL1.name" :url="childL1.url" :icon="childL1.icon" :badge="childL1.badge" :variant="childL1.variant" :attributes="childL1.attributes"/>-->
-                <!--                                        </SidebarNavItem>-->
-                <!--                                    </template>-->
-                <!--                                </template>-->
-                <!--                            </SidebarNavDropdown>-->
-                <!--                        </template>-->
-                <!--                        <template v-else>-->
-                <!--                            <SidebarNavItem :key="index" :classes="item.class">-->
-                <!--                                <SidebarNavLink :name="item.name" :url="item.url" :icon="item.icon" :badge="item.badge" :variant="item.variant" :attributes="item.attributes"/>-->
-                <!--                            </SidebarNavItem>-->
-                <!--                        </template>-->
-                <!--                    </template>-->
+                <template v-else>
+                    <b-nav-item>2{{ item.name }}</b-nav-item>
+                </template>
             </template>
-        </ul>
+        </b-nav>
 
-    </div>
+    </section>
 </template>
 <script>
     import {mapGetters} from 'vuex'
@@ -82,9 +58,25 @@
         overflow: hidden;
         transition: width 0.2s;
         width: 200px;
+        background: #2f353a;
+        color: #ffffff;
     }
 
     .side-bar-close {
         width: 68px;
+    }
+
+    .logo {
+        width: 30px;
+        height: 30px;
+    }
+    .navbar-brand{
+        margin-right: 0;
+    }
+    a{
+        color: rgba(255,255,255,.7);
+        &:hover{
+            color: #ffffff;
+        }
     }
 </style>

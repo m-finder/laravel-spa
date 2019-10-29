@@ -1,11 +1,6 @@
 <template>
     <section class="nav-wrap">
         <header class="header navbar">
-            <b-navbar-brand class="bv-d-md-down-none" display="lg">
-                <img :src="'/images/avatar.png'" class="logo d-inline-block align-bottom" alt="">
-                BootstrapVue
-            </b-navbar-brand>
-
             <button class="d-lg-none navbar-toggler" type="button" display="md" mobile @click="toggleSideBar">
                 <svg-vue class="nav-status " icon="menu"/>
             </button>
@@ -22,7 +17,7 @@
             </b-navbar>
 
             <b-navbar class="navbar-expand p-0">
-                <b-navbar-nav class="ml-auto ">
+                <b-navbar-nav class="justify-content-end">
                     <b-nav-item class="bv-d-md-down-none">
                         <i class="icon-bell"></i>
                         <b-badge pill variant="danger">5</b-badge>
@@ -78,10 +73,7 @@
         background: #ffffff;
     }
 
-    .logo {
-        width: 30px;
-        height: 30px;
-    }
+
 
     .navbar-toggler {
         outline: none;

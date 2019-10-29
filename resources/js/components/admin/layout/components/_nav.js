@@ -10,15 +10,6 @@ export default {
       }
     },
     {
-      title: true,
-      name: 'Theme',
-      class: '',
-      wrapper: {
-        element: '',
-        attributes: {}
-      }
-    },
-    {
       name: 'Colors',
       url: '/theme/colors',
       icon: 'icon-drop'
@@ -27,15 +18,6 @@ export default {
       name: 'Typography',
       url: '/theme/typography',
       icon: 'icon-pencil'
-    },
-    {
-      title: true,
-      name: 'Components',
-      class: '',
-      wrapper: {
-        element: '',
-        attributes: {}
-      }
     },
     {
       name: 'Base',
@@ -221,13 +203,6 @@ export default {
         variant: 'primary',
         text: 'NEW'
       }
-    },
-    {
-      divider: true
-    },
-    {
-      title: true,
-      name: 'Extras'
     },
     {
       name: 'Pages',
