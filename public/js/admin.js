@@ -2243,51 +2243,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -2313,9 +2268,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     toggle: function toggle(e) {
       e.preventDefault();
       e.target.parentElement.classList.toggle('open');
-    },
-    navigate: function navigate(e) {
-      console.log(e);
     }
   }
 });
@@ -30883,7 +30835,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../../node_module
 
 
 // module
-exports.push([module.i, ".sidebar-container[data-v-7e76a80d] {\n  position: absolute;\n  left: 0;\n  top: 0;\n  overflow: hidden;\n  -webkit-transition: all 0.2s;\n  transition: all 0.2s;\n  width: 200px;\n  background: rgba(0, 0, 0, 0.1);\n  height: 100vh;\n}\n.sidebar-wrapper[data-v-7e76a80d] {\n  height: 100%;\n  width: calc(100% + 30px);\n  overflow-x: hidden;\n  overflow-y: auto;\n}\n.nav-item span[data-v-7e76a80d] {\n  -webkit-transition: all 0.2s;\n  transition: all 0.2s;\n  position: absolute;\n  left: 40px;\n}\n.side-bar-close[data-v-7e76a80d] {\n  width: 68px;\n}\n.side-bar-close .nav[data-v-7e76a80d] {\n  width: 68px;\n}\n.side-bar-close .sidebar-wrapper[data-v-7e76a80d] {\n  width: 100%;\n}\n.side-bar-close .nav-item .nav-link[data-v-7e76a80d] {\n  text-align: center;\n  padding: 0.5rem 0;\n}\n.side-bar-close .nav-item span[data-v-7e76a80d] {\n  left: 200px;\n}\n.logo[data-v-7e76a80d] {\n  width: 30px;\n  height: 30px;\n}\n.navbar-brand[data-v-7e76a80d] {\n  margin-right: 0;\n}\n.nav[data-v-7e76a80d] {\n  width: 200px;\n}\n.nav-link[data-v-7e76a80d] {\n  position: relative;\n  -webkit-transition: all 0.2s;\n  transition: all 0.2s;\n}\n.nav-link[data-v-7e76a80d]:hover {\n  background: rgba(255, 255, 255, 0.1);\n}\n.nav-link:hover svg[data-v-7e76a80d] {\n  fill: #1d68a7 !important;\n}\n.dropdown-toggle[data-v-7e76a80d]::after {\n  display: block;\n  position: absolute;\n  top: 50%;\n  right: 20px;\n  -webkit-transform: translateY(-50%);\n          transform: translateY(-50%);\n  -webkit-transform: rotate(90deg);\n          transform: rotate(90deg);\n  -webkit-transition: all 0.2s;\n  transition: all 0.2s;\n}\n.nav-dropdown-items[data-v-7e76a80d] {\n  max-height: 0;\n  width: 100%;\n  padding: 0;\n  margin: 0;\n  overflow: hidden;\n  -webkit-transition: max-height 0.3s ease-in-out;\n  transition: max-height 0.3s ease-in-out;\n}\n.nav-dropdown-items .nav-item[data-v-7e76a80d] {\n  width: 100%;\n}\n.open .nav-dropdown-items[data-v-7e76a80d] {\n  max-height: 1500px;\n}\n.open .dropdown-toggle[data-v-7e76a80d]::after {\n  -webkit-transform: rotate(0deg);\n          transform: rotate(0deg);\n}\nsvg[data-v-7e76a80d] {\n  margin-top: -2px;\n  margin-right: 5px;\n  fill: #666;\n}\n.active[data-v-7e76a80d] {\n  background: rgba(255, 255, 255, 0.1);\n  position: relative;\n}\n.active .nav-dropdown-items .active[data-v-7e76a80d] {\n  color: #1d68a7 !important;\n}\n.active .nav-dropdown-items .active svg[data-v-7e76a80d] {\n  fill: #1d68a7 !important;\n}\n.active .nav-dropdown-items .active[data-v-7e76a80d]:before {\n  content: \"\";\n  height: 100%;\n  width: 3px;\n  position: absolute;\n  background: #fff;\n  left: 0;\n  top: 0;\n}\n\n/*a{*/\n/*    color: rgba(255,255,255,.7);*/\n/*    &:hover{*/\n/*        color: #ffffff;*/\n/*    }*/\n/*}*/", ""]);
+exports.push([module.i, ".sidebar-container[data-v-7e76a80d] {\n  position: absolute;\n  left: 0;\n  top: 0;\n  overflow: hidden;\n  -webkit-transition: all 0.2s;\n  transition: all 0.2s;\n  width: 200px;\n  background: rgba(0, 0, 0, 0.1);\n  height: 100vh;\n}\n.sidebar-wrapper[data-v-7e76a80d] {\n  height: 100%;\n  width: calc(100% + 30px);\n  overflow-x: hidden;\n  overflow-y: auto;\n}\n.nav-item span[data-v-7e76a80d] {\n  -webkit-transition: all 0.2s;\n  transition: all 0.2s;\n  position: absolute;\n  left: 40px;\n}\n.side-bar-close[data-v-7e76a80d] {\n  width: 68px;\n}\n.side-bar-close .nav[data-v-7e76a80d] {\n  width: 68px;\n}\n.side-bar-close .sidebar-wrapper[data-v-7e76a80d] {\n  width: 100%;\n}\n.side-bar-close .nav-item .nav-link[data-v-7e76a80d] {\n  text-align: center;\n  padding: 0.5rem 0;\n}\n.side-bar-close .nav-item span[data-v-7e76a80d] {\n  left: 200px;\n}\n.logo[data-v-7e76a80d] {\n  width: 30px;\n  height: 30px;\n}\n.navbar-brand[data-v-7e76a80d] {\n  margin-right: 0;\n}\n.nav[data-v-7e76a80d] {\n  width: 200px;\n}\n.nav-link[data-v-7e76a80d] {\n  position: relative;\n  -webkit-transition: all 0.2s;\n  transition: all 0.2s;\n}\n.nav-link[data-v-7e76a80d]:hover {\n  background: rgba(255, 255, 255, 0.1);\n}\n.nav-link:hover svg[data-v-7e76a80d] {\n  fill: #1d68a7 !important;\n}\n.dropdown-toggle[data-v-7e76a80d]::after {\n  display: block;\n  position: absolute;\n  top: 50%;\n  right: 20px;\n  -webkit-transform: translateY(-50%);\n          transform: translateY(-50%);\n  -webkit-transform: rotate(90deg);\n          transform: rotate(90deg);\n  -webkit-transition: all 0.2s;\n  transition: all 0.2s;\n}\n.nav-dropdown-items[data-v-7e76a80d] {\n  max-height: 0;\n  width: 100%;\n  padding: 0;\n  margin: 0;\n  overflow: hidden;\n  -webkit-transition: max-height 0.3s ease-in-out;\n  transition: max-height 0.3s ease-in-out;\n}\n.nav-dropdown-items .nav-item[data-v-7e76a80d] {\n  width: 100%;\n}\n.open[data-v-7e76a80d] {\n  background: rgba(255, 255, 255, 0.1);\n  position: relative;\n}\n.open .nav-dropdown-items[data-v-7e76a80d] {\n  max-height: 1500px;\n}\n.open .dropdown-toggle[data-v-7e76a80d]::after {\n  -webkit-transform: rotate(0deg);\n          transform: rotate(0deg);\n}\nsvg[data-v-7e76a80d] {\n  margin-top: -2px;\n  margin-right: 5px;\n  fill: #666;\n}\n.active[data-v-7e76a80d] {\n  color: #1d68a7 !important;\n}\n.active svg[data-v-7e76a80d] {\n  fill: #1d68a7 !important;\n}\n.active[data-v-7e76a80d]:before {\n  content: \"\";\n  height: 100%;\n  width: 3px;\n  position: absolute;\n  background: #fff;\n  left: 0;\n  top: 0;\n}", ""]);
 
 // exports
 
@@ -37299,9 +37251,7 @@ var render = function() {
                 _vm._v(" "),
                 _vm.isCollapse
                   ? _c("span", { staticClass: "bv-d-md-down-none" }, [
-                      _vm._v(
-                        "\n                    M-laravel-spa\n                "
-                      )
+                      _vm._v("\n                M-laravel-spa\n            ")
                     ])
                   : _vm._e()
               ])
@@ -37328,7 +37278,7 @@ var render = function() {
                               "a",
                               {
                                 staticClass: "nav-link dropdown-toggle",
-                                attrs: { href: "#" },
+                                attrs: { href: "#", disabled: "" },
                                 on: { click: _vm.toggle }
                               },
                               [
@@ -37336,9 +37286,9 @@ var render = function() {
                                   attrs: { icon: item.icon || "smile" }
                                 }),
                                 _vm._v(
-                                  "\n                               " +
+                                  "\n                           " +
                                     _vm._s(item.name) +
-                                    "\n                           "
+                                    "\n                       "
                                 )
                               ],
                               1
@@ -37355,10 +37305,7 @@ var render = function() {
                                   return [
                                     _c(
                                       "b-nav-item",
-                                      {
-                                        attrs: { to: children.url },
-                                        on: { click: _vm.toggle }
-                                      },
+                                      { attrs: { to: children.url } },
                                       [
                                         _c("svg-vue", {
                                           attrs: {
@@ -37366,9 +37313,9 @@ var render = function() {
                                           }
                                         }),
                                         _vm._v(
-                                          "\n                                       " +
+                                          "\n                                   " +
                                             _vm._s(children.name) +
-                                            "\n                                   "
+                                            "\n                               "
                                         )
                                       ],
                                       1
@@ -37385,10 +37332,7 @@ var render = function() {
                     : [
                         _c(
                           "b-nav-item",
-                          {
-                            attrs: { to: item.url },
-                            on: { click: _vm.toggle }
-                          },
+                          { attrs: { to: item.url } },
                           [
                             _c("svg-vue", {
                               attrs: { icon: item.icon || "smile" }
@@ -54577,7 +54521,8 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(svg_vue__WEBPACK_IMPORTED_MODULE_
 
 
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_2__["default"]({
-  linkActiveClass: 'open active',
+  linkActiveClass: 'open',
+  linkExactActiveClass: 'active',
   scrollBehavior: function scrollBehavior() {
     return {
       y: 0
@@ -55793,11 +55738,11 @@ __webpack_require__.r(__webpack_exports__);
         component: _error_404__WEBPACK_IMPORTED_MODULE_5__["default"],
         name: '404'
       }]
-    } // {
-    //     path: '*',    // 此处需特别注意至于最底部
-    //     redirect: '/error'
-    // }
-    ];
+    }, {
+      path: '*',
+      // 此处需特别注意至于最底部
+      redirect: '/error'
+    }];
   }
 });
 

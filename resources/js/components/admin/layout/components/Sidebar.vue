@@ -13,68 +13,23 @@
            <b-nav vertical class="text-left" type="dark">
                <template v-for="(item, index) in nav.items">
                    <template v-if="item.children">
-
-<!--                       <sitebar-item :href="item.url" :name="item.name" :icon="item.icon">-->
-<!--                           <li :class="[isActive && 'router-link-active', isExactActive && 'router-link-exact-active']" >-->
-<!--                               <a :href="href" @click="navigate">{{ route.fullPath }}</a>-->
-<!--                           </li>-->
-<!--                           <b-nav vertical class="nav-dropdown-items">-->
-<!--                               <template v-for="(children, i) in item.children">-->
-<!--                                   <b-nav-item :to="children.url" @click="toggle">-->
-<!--                                       <svg-vue :icon="children.icon || 'smile'"/>-->
-<!--                                       {{ children.name }}-->
-<!--                                   </b-nav-item>-->
-<!--                               </template>-->
-<!--                           </b-nav>-->
-<!--                       </sitebar-item>-->
-
                        <router-link tag="li" class="nav-item " :to="item.url" disabled >
-                           <a href="#" @click="toggle" class="nav-link dropdown-toggle">
+                           <a href="#" @click="toggle" class="nav-link dropdown-toggle" disabled>
                                <svg-vue :icon="item.icon || 'smile'"/>
                                {{ item.name }}
                            </a>
                            <b-nav vertical class="nav-dropdown-items">
                                <template v-for="(children, i) in item.children">
-                                   <b-nav-item :to="children.url" @click="toggle">
+                                   <b-nav-item :to="children.url">
                                        <svg-vue :icon="children.icon || 'smile'"/>
                                        {{ children.name }}
                                    </b-nav-item>
                                </template>
                            </b-nav>
                        </router-link>
-
-<!--                       <router-link tag="li" class="nav-item " :to="item.url" disabled>-->
-<!--                           <a href="#" @click="toggle" class="nav-link dropdown-toggle">-->
-<!--                               <svg-vue :icon="item.icon || 'smile'"/>-->
-<!--                               {{ item.name }}-->
-<!--                           </a>-->
-<!--                           <b-nav vertical class="nav-dropdown-items">-->
-<!--                               <template v-for="(children, i) in item.children">-->
-<!--                                   <b-nav-item :to="children.url" @click="toggle">-->
-<!--                                       <svg-vue :icon="children.icon || 'smile'"/>-->
-<!--                                       {{ children.name }}-->
-<!--                                   </b-nav-item>-->
-<!--                               </template>-->
-<!--                           </b-nav>-->
-<!--                       </router-link>-->
-
-<!--                       <li class="nav-item ">-->
-<!--                           <a href="#" @click="toggle" class="nav-link dropdown-toggle" active-class="active">-->
-<!--                               <svg-vue :icon="item.icon || 'smile'"/>-->
-<!--                               {{ item.name }}-->
-<!--                           </a>-->
-<!--                           <b-nav vertical class="nav-dropdown-items">-->
-<!--                               <template v-for="(children, i) in item.children">-->
-<!--                                   <b-nav-item :to="children.url" @click="toggle">-->
-<!--                                       <svg-vue :icon="children.icon || 'smile'"/>-->
-<!--                                       {{ children.name }}-->
-<!--                                   </b-nav-item>-->
-<!--                               </template>-->
-<!--                           </b-nav>-->
-<!--                       </li>-->
                    </template>
                    <template v-else>
-                       <b-nav-item :to="item.url" @click="toggle">
+                       <b-nav-item :to="item.url">
                            <svg-vue :icon="item.icon || 'smile'"/>
                            <span>{{ item.name }}</span>
                        </b-nav-item>
@@ -115,9 +70,7 @@
             toggle: function (e) {
                 e.preventDefault();
                 e.target.parentElement.classList.toggle('open');
-            },
-            navigate: function (e) {
-                console.log(e)
+
             }
         }
     }
@@ -159,7 +112,6 @@
                 text-align: center;
                 padding: 0.5rem 0;
             }
-
             span {
                 left: 200px;
             }
@@ -213,6 +165,9 @@
     }
 
     .open{
+        background: rgba(255, 255, 255, .1);
+        position: relative;
+
         .nav-dropdown-items{
             max-height: 1500px;
         }
@@ -226,31 +181,20 @@
         fill: #666;
     }
 
-    .active {
-        background: rgba(255, 255, 255, .1);
-        position: relative;
-       .nav-dropdown-items .active{
-           color: #1d68a7 !important;
-           svg {
-               fill: #1d68a7 !important;
-           }
+    .active{
+        color: #1d68a7 !important;
+        svg {
+            fill: #1d68a7 !important;
+        }
 
-           &:before {
-               content: '';
-               height: 100%;
-               width: 3px;
-               position: absolute;
-               background: #fff;
-               left: 0;
-               top: 0;
-           }
-       }
+        &:before {
+            content: '';
+            height: 100%;
+            width: 3px;
+            position: absolute;
+            background: #fff;
+            left: 0;
+            top: 0;
+        }
     }
-
-    /*a{*/
-    /*    color: rgba(255,255,255,.7);*/
-    /*    &:hover{*/
-    /*        color: #ffffff;*/
-    /*    }*/
-    /*}*/
 </style>

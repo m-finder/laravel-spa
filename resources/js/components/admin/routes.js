@@ -58,10 +58,10 @@ export default {
                     }
                 ]
             },
-            // {
-            //     path: '*',    // 此处需特别注意至于最底部
-            //     redirect: '/error'
-            // }
+            {
+                path: '*',    // 此处需特别注意至于最底部
+                redirect: '/error'
+            }
         ]
     }
 }

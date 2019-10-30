@@ -22,7 +22,8 @@ import App from './components/admin/App'
 
 
 const router = new Routes({
-    linkActiveClass: 'open active',
+    linkActiveClass: 'open',
+    linkExactActiveClass: 'active',
     scrollBehavior: () => ({ y: 0 }),
     routes: routes.routes()
 });
