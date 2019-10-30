@@ -23,7 +23,7 @@
                         <b-badge pill variant="danger">5</b-badge>
                     </b-nav-item>
 
-                    <b-nav-item-dropdown class="bv-d-md-down-none" right>
+                    <b-nav-item-dropdown class="bv-d-md-down-none ml-2 mr-2" right>
                         <template v-slot:button-content>
                             <img :src="'/images/avatar.png'" class="img-avatar" alt=""/>
                         </template>
@@ -31,6 +31,9 @@
                         <b-dropdown-item href="#">密码设置</b-dropdown-item>
                         <b-dropdown-item href="#">退出登陆</b-dropdown-item>
                     </b-nav-item-dropdown>
+                    <b-nav-item>
+                        <svg-vue icon="setting"/>
+                    </b-nav-item>
                 </b-navbar-nav>
             </b-navbar>
         </header>
