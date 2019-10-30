@@ -17,11 +17,10 @@ export default {
     {
       name: 'Base',
       url: '/base',
-      // icon: 'icon-puzzle',
       children: [
         {
           name: 'Icons',
-          url: '/icons',
+          url: '/base/icons',
           icon: 'smile'
         },
         {

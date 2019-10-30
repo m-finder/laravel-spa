@@ -14,25 +14,10 @@
                <template v-for="(item, index) in nav.items">
                    <template v-if="item.children">
 
-                       <sitebar-item :href="item.url" :name="item.name" :icon="item.icon">
+<!--                       <sitebar-item :href="item.url" :name="item.name" :icon="item.icon">-->
 <!--                           <li :class="[isActive && 'router-link-active', isExactActive && 'router-link-exact-active']" >-->
 <!--                               <a :href="href" @click="navigate">{{ route.fullPath }}</a>-->
 <!--                           </li>-->
-                           <b-nav vertical class="nav-dropdown-items">
-                               <template v-for="(children, i) in item.children">
-                                   <b-nav-item :to="children.url" @click="toggle">
-                                       <svg-vue :icon="children.icon || 'smile'"/>
-                                       {{ children.name }}
-                                   </b-nav-item>
-                               </template>
-                           </b-nav>
-                       </sitebar-item>
-
-<!--                       <router-link tag="li" class="nav-item " :to="item.url" disabled >-->
-<!--                           <a href="#" @click="toggle" class="nav-link dropdown-toggle">-->
-<!--                               <svg-vue :icon="item.icon || 'smile'"/>-->
-<!--                               {{ item.name }}-->
-<!--                           </a>-->
 <!--                           <b-nav vertical class="nav-dropdown-items">-->
 <!--                               <template v-for="(children, i) in item.children">-->
 <!--                                   <b-nav-item :to="children.url" @click="toggle">-->
@@ -41,7 +26,22 @@
 <!--                                   </b-nav-item>-->
 <!--                               </template>-->
 <!--                           </b-nav>-->
-<!--                       </router-link>-->
+<!--                       </sitebar-item>-->
+
+                       <router-link tag="li" class="nav-item " :to="item.url" disabled >
+                           <a href="#" @click="toggle" class="nav-link dropdown-toggle">
+                               <svg-vue :icon="item.icon || 'smile'"/>
+                               {{ item.name }}
+                           </a>
+                           <b-nav vertical class="nav-dropdown-items">
+                               <template v-for="(children, i) in item.children">
+                                   <b-nav-item :to="children.url" @click="toggle">
+                                       <svg-vue :icon="children.icon || 'smile'"/>
+                                       {{ children.name }}
+                                   </b-nav-item>
+                               </template>
+                           </b-nav>
+                       </router-link>
 
 <!--                       <router-link tag="li" class="nav-item " :to="item.url" disabled>-->
 <!--                           <a href="#" @click="toggle" class="nav-link dropdown-toggle">-->
@@ -226,23 +226,25 @@
         fill: #666;
     }
 
-    .router-link-active {
+    .active {
         background: rgba(255, 255, 255, .1);
         position: relative;
-        color: #1d68a7 !important;
-        svg {
-            fill: #1d68a7 !important;
-        }
+       .nav-dropdown-items .active{
+           color: #1d68a7 !important;
+           svg {
+               fill: #1d68a7 !important;
+           }
 
-        &:before {
-            content: '';
-            height: 100%;
-            width: 3px;
-            position: absolute;
-            background: #fff;
-            left: 0;
-            top: 0;
-        }
+           &:before {
+               content: '';
+               height: 100%;
+               width: 3px;
+               position: absolute;
+               background: #fff;
+               left: 0;
+               top: 0;
+           }
+       }
     }
 
     /*a{*/

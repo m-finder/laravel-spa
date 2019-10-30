@@ -35,11 +35,11 @@ export default {
             {
                 path: '/base',
                 name: 'Base',
-                redirect: '/icons',
+                redirect: '/base/icons',
                 component: Layout,
                 children: [
                     {
-                        path: '/icons',
+                        path: '/base/icons',
                         name: 'icons',
                         component: Icon,
                     }
