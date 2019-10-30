@@ -2,7 +2,17 @@
     <router-view></router-view>
 </template>
 <script>
-    export default {}
+    import storage from '../../storage'
+    export default {
+        beforeCreate() {
+            let theme = storage.get('theme')
+            if(theme){
+                document.body.classList.add(theme)
+            }else{
+                document.body.classList.add('bg-light-green')
+            }
+        }
+    }
 </script>
 
 <style scoped>

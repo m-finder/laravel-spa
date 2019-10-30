@@ -17,61 +17,14 @@ Vue.use(Routes);
 Vue.use(BootstrapVue);
 Vue.use(SvgVue);
 
+import routes from './components/admin/routes'
 import App from './components/admin/App'
-import Layout from './components/admin/layout/Layout'
-import Hello from './components/admin/Hello'
-import Home from './components/admin/Home'
-import Login from './components/admin/login/Index'
-import Icon from './components/admin/icons/Index'
+
 
 const router = new Routes({
-    routes: [
-        {
-            path: '/',
-            name: 'root',
-            component: Layout,
-            redirect: 'home',
-            children: [
-                {
-                    path: 'home',
-                    component: Home,
-                    name: 'home',
-                    meta: {title: 'Home'}
-                }
-            ]
-        },
-        {
-            path: '/hello',
-            component: Layout,
-            redirect: '/hello/index',
-            children: [
-                {
-                    path: 'index',
-                    component: Hello,
-                    name: 'hello',
-                    meta: {title: 'hello'}
-                }
-            ]
-        },
-        {
-            path: '/login',
-            name: 'login',
-            component: Login,
-        },
-        {
-            path: '/icon',
-            component: Layout,
-            redirect: '/icon/index',
-            children: [
-                {
-                    path: 'index',
-                    component: Icon,
-                    name: 'icon',
-                    meta: {title: 'Icon'}
-                }
-            ]
-        },
-    ],
+    // linkActiveClass: 'open active',
+    scrollBehavior: () => ({ y: 0 }),
+    routes: routes.routes()
 });
 
 router.beforeEach(async (to, from, next) => {

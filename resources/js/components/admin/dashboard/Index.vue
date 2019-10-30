@@ -1,9 +1,9 @@
 <template>
     <div>
         <p>This is the homepage</p>
-        <svg-vue class="nav-status" :icon="status"/>
+        <svg-vue icon="like"/>
         <p>
-            <router-link :to="{ name: 'home' }">Home</router-link> |
+            <router-link :to="{ name: 'dashboard' }">Dashboard</router-link> |
             <router-link :to="{ name: 'hello' }">Hello World</router-link>
         </p>
     </div>
@@ -12,7 +12,7 @@
     export default {
         data(){
             return {
-                status: 'qq'
+
             }
         }
     }

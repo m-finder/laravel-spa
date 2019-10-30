@@ -24,10 +24,16 @@ body {
     text-rendering: optimizeLegibility;
     font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
     overflow: hidden;
-    background: url(../images/bg.svg),radial-gradient(farthest-side ellipse at 10% 0,#e1e5e8 10%,#9aacbf);
     background-attachment: fixed;
     background-size: cover;
     background-repeat: no-repeat;
+}
+
+.bg-light-blue{
+    background: url(../images/bg.svg),radial-gradient(farthest-side ellipse at 10% 0,#e1e5e8 10%,#9aacbf);
+}
+.bg-light-green{
+    background: url(../images/bg.svg),radial-gradient(farthest-side ellipse at 10% 0,#e1e5e8 10%,#9abf9f);
 }
 
 #app {

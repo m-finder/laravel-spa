@@ -2,7 +2,7 @@
     <div>
         <div class="icon-item-box" v-for="(item,i) of iconsMap" :key="i">
             <div class="icon-item">
-                <svg-vue class="nav-status" :icon="item"/>
+                <svg-vue :icon="item"/>
             </div>
             <div>{{ item }}</div>
         </div>
@@ -11,6 +11,7 @@
 
 <script>
     import icons from './requireIcons'
+
     export default {
         name: "Index",
         data() {
@@ -22,11 +23,16 @@
 </script>
 
 <style scoped>
-    .icon-item-box{
+    .icon-item-box {
         display: inline-block;
         width: 80px;
         height: 30px;
         margin: 25px;
         text-align: center;
+    }
+
+    svg {
+        width: 30px;
+        height: 30px;
     }
 </style>

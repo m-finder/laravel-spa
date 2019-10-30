@@ -21,7 +21,8 @@ mix.js('resources/js/app.js', 'public/js')
         svgoSettings: [
             {removeTitle: true},
             {removeViewBox: true},
-            {removeDimensions: true}
+            {removeDimensions: true},
+            {removeAttrs: { attrs: '(fill|stroke)' }}
         ]
     });
 
