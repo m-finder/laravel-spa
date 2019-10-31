@@ -2252,6 +2252,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -37291,7 +37305,11 @@ var render = function() {
                               "a",
                               {
                                 staticClass: "nav-link dropdown-toggle",
-                                attrs: { href: "#", disabled: "" },
+                                attrs: {
+                                  href: "#",
+                                  id: "tooltip-" + index,
+                                  disabled: ""
+                                },
                                 on: {
                                   click: function($event) {
                                     $event.stopPropagation()
@@ -37310,35 +37328,85 @@ var render = function() {
                             ),
                             _vm._v(" "),
                             _c(
-                              "b-nav",
+                              "b-popover",
                               {
-                                staticClass: "nav-dropdown-items",
-                                attrs: { vertical: "" }
+                                attrs: {
+                                  target: "tooltip-" + index,
+                                  placement: "right",
+                                  boundary: "window",
+                                  triggers: "hover"
+                                }
                               },
                               [
-                                _vm._l(item.children, function(children, i) {
-                                  return [
-                                    _c(
-                                      "b-nav-item",
-                                      { attrs: { to: children.url } },
-                                      [
-                                        _c("svg-vue", {
-                                          attrs: {
-                                            icon: children.icon || "smile"
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        _c("span", [
-                                          _vm._v(_vm._s(children.name))
-                                        ])
-                                      ],
-                                      1
-                                    )
-                                  ]
-                                })
+                                _c(
+                                  "b-nav",
+                                  { attrs: { vertical: "" } },
+                                  [
+                                    _vm._l(item.children, function(
+                                      children,
+                                      i
+                                    ) {
+                                      return [
+                                        _c(
+                                          "b-nav-item",
+                                          { attrs: { to: children.url } },
+                                          [
+                                            _c("svg-vue", {
+                                              attrs: {
+                                                icon: children.icon || "smile"
+                                              }
+                                            }),
+                                            _vm._v(" "),
+                                            _c("span", [
+                                              _vm._v(_vm._s(children.name))
+                                            ])
+                                          ],
+                                          1
+                                        )
+                                      ]
+                                    })
+                                  ],
+                                  2
+                                )
                               ],
-                              2
-                            )
+                              1
+                            ),
+                            _vm._v(" "),
+                            _vm.isCollapse
+                              ? _c(
+                                  "b-nav",
+                                  {
+                                    staticClass: "nav-dropdown-items",
+                                    attrs: { vertical: "" }
+                                  },
+                                  [
+                                    _vm._l(item.children, function(
+                                      children,
+                                      i
+                                    ) {
+                                      return [
+                                        _c(
+                                          "b-nav-item",
+                                          { attrs: { to: children.url } },
+                                          [
+                                            _c("svg-vue", {
+                                              attrs: {
+                                                icon: children.icon || "smile"
+                                              }
+                                            }),
+                                            _vm._v(" "),
+                                            _c("span", [
+                                              _vm._v(_vm._s(children.name))
+                                            ])
+                                          ],
+                                          1
+                                        )
+                                      ]
+                                    })
+                                  ],
+                                  2
+                                )
+                              : _vm._e()
                           ],
                           1
                         )

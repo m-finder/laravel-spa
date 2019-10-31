@@ -13,12 +13,25 @@
             <b-nav vertical class="text-left" type="dark">
                 <template v-for="(item, index) in nav.items">
                     <template v-if="item.children">
-                        <router-link tag="li" class="nav-item " :to="item.url" disabled >
-                            <a href="#" class="nav-link dropdown-toggle" @click.stop="toggle($event,this)" disabled>
-                                <svg-vue :icon="item.icon || 'smile'" />
+                        <router-link tag="li" class="nav-item " :to="item.url" disabled>
+                            <a href="#" class="nav-link dropdown-toggle" :id="'tooltip-' + index"
+                               @click.stop="toggle($event,this)" disabled>
+                                <svg-vue :icon="item.icon || 'smile'"/>
                                 <span>{{ item.name }}</span>
                             </a>
-                            <b-nav vertical class="nav-dropdown-items">
+                            <b-popover :target="'tooltip-' + index" placement="right" boundary="window"
+                                       triggers="hover">
+                                <b-nav vertical>
+                                    <template v-for="(children, i) in item.children">
+                                        <b-nav-item :to="children.url">
+                                            <svg-vue :icon="children.icon || 'smile'"/>
+                                            <span>{{ children.name }}</span>
+                                        </b-nav-item>
+                                    </template>
+                                </b-nav>
+                            </b-popover>
+
+                            <b-nav v-if="isCollapse" vertical class="nav-dropdown-items">
                                 <template v-for="(children, i) in item.children">
                                     <b-nav-item :to="children.url">
                                         <svg-vue :icon="children.icon || 'smile'"/>
@@ -31,7 +44,8 @@
                     <template v-else>
                         <b-nav-item :to="item.url" :id="'tooltip-' + index">
                             <svg-vue :icon="item.icon || 'smile'"/>
-                            <b-tooltip v-if="!isCollapse" :target="'tooltip-' + index" placement="right" boundary="window"
+                            <b-tooltip v-if="!isCollapse" :target="'tooltip-' + index" placement="right"
+                                       boundary="window"
                                        triggers="hover">
                                 {{item.name}}
                             </b-tooltip>
