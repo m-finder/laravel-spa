@@ -111,6 +111,7 @@
         .header {
             text-align: left;
             padding-left: 15px;
+            margin: 15px 0;
         }
 
         .nav {
