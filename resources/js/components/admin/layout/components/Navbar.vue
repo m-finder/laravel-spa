@@ -42,6 +42,7 @@
             <p>主题设置</p>
             <div>
                 <b-button variant="outline-success" @click="setTheme('default')" block>default</b-button>
+                <b-button variant="outline-success" @click="setTheme('bg-dark-blue')" block>dark-blue</b-button>
                 <b-button variant="outline-success" @click="setTheme('bg-light-blue')" block>light-blue</b-button>
                 <b-button variant="outline-success" @click="setTheme('bg-light-green')" block>light-green</b-button>
                 <b-button variant="outline-success" @click="setTheme('bg-light-red')" block>light-red</b-button>
