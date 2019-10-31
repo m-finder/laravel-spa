@@ -5,7 +5,8 @@ const state = {
         opened: !+storage.get('sidebarStatus'),
     },
     device: 'desktop',
-    size: storage.get('size') || 'medium'
+    size: storage.get('size') || 'medium',
+    theme: storage.get('theme') || 'bd-light-blue'
 }
 
 const mutations = {
@@ -27,6 +28,10 @@ const mutations = {
     SET_SIZE: (state, size) => {
         state.size = size
         storage.set('size', size)
+    },
+    CHANGE_THEME: (state, theme) => {
+        state.theme = theme
+        storage.set('theme', theme)
     }
 }
 
@@ -39,6 +44,9 @@ const actions = {
     },
     toggleDevice({commit}, device) {
         commit('TOGGLE_DEVICE', device)
+    },
+    changeTheme({commit}, theme) {
+        commit('CHANGE_THEME', theme)
     }
 }
 

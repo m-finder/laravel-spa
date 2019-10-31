@@ -59,7 +59,6 @@
         display: block;
         padding: 25px;
         transition: width 0.2s;
-        background: rgba(255, 255, 255, .1)
     }
 
     .app-main-close {

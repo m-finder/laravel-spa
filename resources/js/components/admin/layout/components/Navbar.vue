@@ -37,6 +37,26 @@
                 </b-navbar-nav>
             </b-navbar>
         </header>
+        <div
+            style="width:200px;height:calc(100vh - 56px);position:fixed;right:0;background: #ffffff;z-index: 1027;padding:25px;">
+            <p>主题设置</p>
+            <div>
+                <b-button variant="outline-success" @click="setTheme('default')" block>default</b-button>
+                <b-button variant="outline-success" @click="setTheme('bg-light-blue')" block>light-blue</b-button>
+                <b-button variant="outline-success" @click="setTheme('bg-light-green')" block>light-green</b-button>
+                <b-button variant="outline-success" @click="setTheme('bg-light-red')" block>light-red</b-button>
+                <b-button variant="outline-success" @click="setTheme('bg-blue')" block>blue</b-button>
+                <b-button variant="outline-success" @click="setTheme('bg-indigo')" block>indigo</b-button>
+                <b-button variant="outline-success" @click="setTheme('bg-purple')" block>purple</b-button>
+                <b-button variant="outline-success" @click="setTheme('bg-red')" block>red</b-button>
+                <b-button variant="outline-success" @click="setTheme('bg-pink')" block>pink</b-button>
+                <b-button variant="outline-success" @click="setTheme('bg-orange')" block>orange</b-button>
+                <b-button variant="outline-success" @click="setTheme('bg-yellow')" block>yellow</b-button>
+                <b-button variant="outline-success" @click="setTheme('bg-green')" block>green</b-button>
+                <b-button variant="outline-success" @click="setTheme('bg-teal')" block>teal</b-button>
+                <b-button variant="outline-success" @click="setTheme('bg-cyan')" block>cyan</b-button>
+            </div>
+        </div>
     </section>
 </template>
 <script>
@@ -61,6 +81,15 @@
             toggleSideBar() {
                 this.$store.dispatch('app/toggleSideBar')
             },
+            setTheme: function (className) {
+                console.log(className)
+                if (className === 'default') {
+                    storage.remove('theme')
+                } else {
+                    storage.set({'theme': className})
+                }
+                this.$store.dispatch('app/changeTheme', className)
+            }
         }
     }
 </script>
@@ -87,9 +116,11 @@
         max-width: 100%;
         border-radius: 50%;
     }
-    .nav-item{
+
+    .nav-item {
         position: relative;
-        .badge{
+
+        .badge {
             position: absolute;
             top: 50%;
             left: 50%;

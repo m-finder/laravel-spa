@@ -29,33 +29,74 @@ body {
     background-repeat: no-repeat;
 }
 
-.bg-light-blue{
-    background: url(../images/bg.svg),radial-gradient(farthest-side ellipse at 10% 0,#e1e5e8 10%,#9aacbf);
-}
-.bg-light-green{
-    background: url(../images/bg.svg),radial-gradient(farthest-side ellipse at 10% 0,#e1e5e8 10%,#9abf9f);
+.default {
+    background: url(../images/bg.svg), radial-gradient(farthest-side ellipse at 10% 0, #e1e5e8 10%, $default);
 }
 
+.bg-light-blue {
+    background: url(../images/bg.svg), radial-gradient(farthest-side ellipse at 10% 0, #e1e5e8 10%, $light-blue);
+}
+
+.bg-light-green {
+    background: url(../images/bg.svg), radial-gradient(farthest-side ellipse at 10% 0, #e1e5e8 10%, $light-green);
+}
+
+.bg-light-red {
+    background: url(../images/bg.svg), radial-gradient(farthest-side ellipse at 10% 0, #e1e5e8 10%, $light-red);
+}
+.bg-blue {
+    background: url(../images/bg.svg), radial-gradient(farthest-side ellipse at 10% 0, #e1e5e8 10%, $blue);
+}
+.bg-indigo {
+    background: url(../images/bg.svg), radial-gradient(farthest-side ellipse at 10% 0, #e1e5e8 10%, $indigo);
+}
+.bg-red {
+    background: url(../images/bg.svg), radial-gradient(farthest-side ellipse at 10% 0, #e1e5e8 10%, $red);
+}
+.bg-orange {
+    background: url(../images/bg.svg), radial-gradient(farthest-side ellipse at 10% 0, #e1e5e8 10%, $orange);
+}
+.bg-yellow {
+    background: url(../images/bg.svg), radial-gradient(farthest-side ellipse at 10% 0, #e1e5e8 10%, $yellow);
+}
+.bg-pink {
+    background: url(../images/bg.svg), radial-gradient(farthest-side ellipse at 10% 0, #e1e5e8 10%, $pink);
+}
+.bg-purple{
+    background: url(../images/bg.svg), radial-gradient(farthest-side ellipse at 10% 0, #e1e5e8 10%, $purple);
+}
+.bg-green{
+    background: url(../images/bg.svg), radial-gradient(farthest-side ellipse at 10% 0, #e1e5e8 10%, $green);
+}
+.bg-teal{
+    background: url(../images/bg.svg), radial-gradient(farthest-side ellipse at 10% 0, #e1e5e8 10%, $teal);
+}
+.bg-cyan{
+    background: url(../images/bg.svg), radial-gradient(farthest-side ellipse at 10% 0, #e1e5e8 10%, $cyan);
+}
 #app {
     height: 100%;
 }
-a{
+
+a {
     color: #666;
 }
-.invalid-feedback{
+
+.invalid-feedback {
     display: block;
     min-height: 20px;
 }
 
-.disabled{
+.disabled {
     cursor: not-allowed;
 }
 
-.alert-panel{
+.alert-panel {
     position: absolute;
     right: 2px;
 }
-svg{
+
+svg {
     width: 16px;
     height: 16px;
     fill: #666;

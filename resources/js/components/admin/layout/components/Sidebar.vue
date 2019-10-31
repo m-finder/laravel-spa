@@ -4,7 +4,7 @@
             <header class="header">
                 <b-navbar-brand>
                     <img :src="'/favicon.ico'" class="logo d-inline-block align-bottom" alt="">
-                    <span v-if="isCollapse" class="bv-d-md-down-none">
+                    <span v-if="isCollapse">
                     M-laravel-spa
                 </span>
                 </b-navbar-brand>
@@ -13,24 +13,12 @@
             <b-nav vertical class="text-left" type="dark">
                 <template v-for="(item, index) in nav.items">
                     <template v-if="item.children">
-                        <router-link tag="li" class="nav-item " :to="item.url" disabled>
-                            <a href="#" class="nav-link dropdown-toggle" :id="'tooltip-' + index"
+                        <router-link tag="li" class="nav-item " :to="item.url" :id="'tooltip-'+index">
+                            <a href="#" class="nav-link dropdown-toggle" disabled
                                @click.stop="toggle($event,this)" disabled>
                                 <svg-vue :icon="item.icon || 'smile'"/>
                                 <span>{{ item.name }}</span>
                             </a>
-                            <b-popover :target="'tooltip-' + index" placement="right" boundary="window"
-                                       triggers="hover">
-                                <b-nav vertical>
-                                    <template v-for="(children, i) in item.children">
-                                        <b-nav-item :to="children.url">
-                                            <svg-vue :icon="children.icon || 'smile'"/>
-                                            <span>{{ children.name }}</span>
-                                        </b-nav-item>
-                                    </template>
-                                </b-nav>
-                            </b-popover>
-
                             <b-nav v-if="isCollapse" vertical class="nav-dropdown-items">
                                 <template v-for="(children, i) in item.children">
                                     <b-nav-item :to="children.url">
@@ -40,6 +28,17 @@
                                 </template>
                             </b-nav>
                         </router-link>
+
+                        <b-tooltip v-if="!isCollapse" :target="'tooltip-' + index" placement="right"
+                                   boundary="window" triggers="hover">
+                            <b-nav vertical class="tooltip-nav">
+                                <template v-for="(children, i) in item.children">
+                                    <b-nav-item :to="children.url">
+                                        {{ children.name }}
+                                    </b-nav-item>
+                                </template>
+                            </b-nav>
+                        </b-tooltip>
                     </template>
                     <template v-else>
                         <b-nav-item :to="item.url" :id="'tooltip-' + index">
@@ -60,10 +59,8 @@
 </template>
 <script>
     import {mapGetters} from 'vuex'
-    import nav from './_nav'
+    import nav from '../../nav'
     import SitebarItem from './SidebarItem'
-    import storage from '../../../../storage'
-    import store from '../../../../store'
 
     export default {
         name: 'Sidebar',
@@ -103,18 +100,23 @@
         width: 200px;
         background: rgba(0, 0, 0, .1);
         height: 100vh;
-    }
 
-    .sidebar-wrapper {
-        height: 100%;
-        width: calc(100% + 30px);
-        overflow-x: hidden;
-        overflow-y: auto;
-    }
+        .sidebar-wrapper {
+            height: 100%;
+            width: calc(100% + 30px);
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
 
-    .header {
-        text-align: left;
-        padding-left: 15px;
+        .header {
+            text-align: left;
+            padding-left: 15px;
+        }
+
+        .nav {
+            width: 200px;
+
+        }
     }
 
     .nav-item span {
@@ -122,6 +124,28 @@
         position: absolute;
         left: 40px;
     }
+
+    .tooltip-nav {
+        .nav-link {
+            color: #ffffff;
+            text-align: left;
+        }
+
+        .active {
+            color: #ffffff !important;
+
+            &:before {
+                content: '';
+                width: 0;
+            }
+        }
+
+        .open {
+            border-bottom-left-radius: 15px;
+            border-top-right-radius: 15px;
+        }
+    }
+
 
     .side-bar-close, .side-bar-close .header, .side-bar-close .nav {
         width: 68px;
@@ -158,9 +182,6 @@
         margin-right: 0;
     }
 
-    .nav {
-        width: 200px;
-    }
 
     .nav-link {
         position: relative;
@@ -199,8 +220,12 @@
     }
 
     .open {
-        background: rgba(255, 255, 255, .1);
+
         position: relative;
+
+        .dropdown-toggle {
+            background: rgba(255, 255, 255, .1)
+        }
 
         .nav-dropdown-items {
             max-height: 1500px;
@@ -219,7 +244,7 @@
 
     .active {
         color: #1d68a7 !important;
-
+        background: rgba(255, 255, 255, .1);
         svg {
             fill: #1d68a7 !important;
         }

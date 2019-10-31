@@ -3,7 +3,23 @@
 </template>
 <script>
     import storage from '../../storage'
+    import {mapGetters} from 'vuex'
+
     export default {
+        computed: {
+            ...mapGetters([
+                'theme',
+            ]),
+            changeTheme() {
+                return this.theme
+            }
+        },
+        watch:{
+            changeTheme:function (val) {
+                console.log(val)
+                document.body.className = val
+            }
+        },
         beforeCreate() {
             let theme = storage.get('theme')
             if(theme){

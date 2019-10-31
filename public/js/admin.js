@@ -1851,11 +1851,30 @@ module.exports = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _storage__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../storage */ "./resources/js/storage.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])(['theme']), {
+    changeTheme: function changeTheme() {
+      return this.theme;
+    }
+  }),
+  watch: {
+    changeTheme: function changeTheme(val) {
+      console.log(val);
+      document.body.className = val;
+    }
+  },
   beforeCreate: function beforeCreate() {
     var theme = _storage__WEBPACK_IMPORTED_MODULE_0__["default"].get('theme');
 
@@ -2164,6 +2183,26 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2180,6 +2219,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   methods: {
     toggleSideBar: function toggleSideBar() {
       this.$store.dispatch('app/toggleSideBar');
+    },
+    setTheme: function setTheme(className) {
+      console.log(className);
+
+      if (className === 'default') {
+        _storage__WEBPACK_IMPORTED_MODULE_1__["default"].remove('theme');
+      } else {
+        _storage__WEBPACK_IMPORTED_MODULE_1__["default"].set({
+          'theme': className
+        });
+      }
+
+      this.$store.dispatch('app/changeTheme', className);
     }
   }
 });
@@ -2196,10 +2248,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var _nav__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./_nav */ "./resources/js/components/admin/layout/components/_nav.js");
+/* harmony import */ var _nav__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../nav */ "./resources/js/components/admin/nav.js");
 /* harmony import */ var _SidebarItem__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./SidebarItem */ "./resources/js/components/admin/layout/components/SidebarItem.vue");
-/* harmony import */ var _storage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../storage */ "./resources/js/storage.js");
-/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../store */ "./resources/js/store/index.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -2265,9 +2315,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-
-
 
 
 
@@ -30858,7 +30905,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../../node_module
 
 
 // module
-exports.push([module.i, ".sidebar-container[data-v-7e76a80d] {\n  position: absolute;\n  left: 0;\n  top: 0;\n  overflow: hidden;\n  -webkit-transition: all 0.2s;\n  transition: all 0.2s;\n  width: 200px;\n  background: rgba(0, 0, 0, 0.1);\n  height: 100vh;\n}\n.sidebar-wrapper[data-v-7e76a80d] {\n  height: 100%;\n  width: calc(100% + 30px);\n  overflow-x: hidden;\n  overflow-y: auto;\n}\n.header[data-v-7e76a80d] {\n  text-align: left;\n  padding-left: 15px;\n}\n.nav-item span[data-v-7e76a80d] {\n  -webkit-transition: all 0.2s;\n  transition: all 0.2s;\n  position: absolute;\n  left: 40px;\n}\n.side-bar-close[data-v-7e76a80d], .side-bar-close .header[data-v-7e76a80d], .side-bar-close .nav[data-v-7e76a80d] {\n  width: 68px;\n}\n.side-bar-close .header[data-v-7e76a80d] {\n  padding-left: 0;\n  text-align: center;\n}\n.side-bar-close .nav-item .nav-link[data-v-7e76a80d] {\n  text-align: center;\n  padding: 0.5rem 0;\n}\n.side-bar-close .nav-item span[data-v-7e76a80d] {\n  left: 200px;\n}\n.side-bar-close .dropdown-toggle[data-v-7e76a80d]::after {\n  display: none;\n}\n.logo[data-v-7e76a80d] {\n  width: 30px;\n  height: 30px;\n}\n.navbar-brand[data-v-7e76a80d] {\n  margin-right: 0;\n}\n.nav[data-v-7e76a80d] {\n  width: 200px;\n}\n.nav-link[data-v-7e76a80d] {\n  position: relative;\n  -webkit-transition: all 0.2s;\n  transition: all 0.2s;\n}\n.nav-link[data-v-7e76a80d]:hover {\n  background: rgba(255, 255, 255, 0.1);\n}\n.nav-link:hover svg[data-v-7e76a80d] {\n  fill: #1d68a7 !important;\n}\n.dropdown-toggle[data-v-7e76a80d]::after {\n  display: block;\n  position: absolute;\n  top: 50%;\n  right: 20px;\n  -webkit-transform: translateY(-50%);\n          transform: translateY(-50%);\n  -webkit-transform: rotate(90deg);\n          transform: rotate(90deg);\n  -webkit-transition: all 0.2s;\n  transition: all 0.2s;\n}\n.nav-dropdown-items[data-v-7e76a80d] {\n  max-height: 0;\n  width: 100%;\n  padding: 0;\n  margin: 0;\n  overflow: hidden;\n  -webkit-transition: max-height 0.3s ease-in-out;\n  transition: max-height 0.3s ease-in-out;\n}\n.nav-dropdown-items .nav-item[data-v-7e76a80d] {\n  width: 100%;\n}\n.open[data-v-7e76a80d] {\n  background: rgba(255, 255, 255, 0.1);\n  position: relative;\n}\n.open .nav-dropdown-items[data-v-7e76a80d] {\n  max-height: 1500px;\n}\n.open .dropdown-toggle[data-v-7e76a80d]::after {\n  -webkit-transform: rotate(0deg);\n          transform: rotate(0deg);\n}\nsvg[data-v-7e76a80d] {\n  margin-top: -2px;\n  margin-right: 5px;\n  fill: #666;\n}\n.active[data-v-7e76a80d] {\n  color: #1d68a7 !important;\n}\n.active svg[data-v-7e76a80d] {\n  fill: #1d68a7 !important;\n}\n.active[data-v-7e76a80d]:before {\n  content: \"\";\n  height: 100%;\n  width: 3px;\n  position: absolute;\n  background: #fff;\n  left: 0;\n  top: 0;\n}", ""]);
+exports.push([module.i, ".sidebar-container[data-v-7e76a80d] {\n  position: absolute;\n  left: 0;\n  top: 0;\n  overflow: hidden;\n  -webkit-transition: all 0.2s;\n  transition: all 0.2s;\n  width: 200px;\n  background: rgba(0, 0, 0, 0.1);\n  height: 100vh;\n}\n.sidebar-container .sidebar-wrapper[data-v-7e76a80d] {\n  height: 100%;\n  width: calc(100% + 30px);\n  overflow-x: hidden;\n  overflow-y: auto;\n}\n.sidebar-container .header[data-v-7e76a80d] {\n  text-align: left;\n  padding-left: 15px;\n}\n.sidebar-container .nav[data-v-7e76a80d] {\n  width: 200px;\n}\n.nav-item span[data-v-7e76a80d] {\n  -webkit-transition: all 0.2s;\n  transition: all 0.2s;\n  position: absolute;\n  left: 40px;\n}\n.tooltip-nav .nav-link[data-v-7e76a80d] {\n  color: #ffffff;\n  text-align: left;\n}\n.tooltip-nav .active[data-v-7e76a80d] {\n  color: #ffffff !important;\n}\n.tooltip-nav .active[data-v-7e76a80d]:before {\n  content: \"\";\n  width: 0;\n}\n.tooltip-nav .open[data-v-7e76a80d] {\n  border-bottom-left-radius: 15px;\n  border-top-right-radius: 15px;\n}\n.side-bar-close[data-v-7e76a80d], .side-bar-close .header[data-v-7e76a80d], .side-bar-close .nav[data-v-7e76a80d] {\n  width: 68px;\n}\n.side-bar-close .header[data-v-7e76a80d] {\n  padding-left: 0;\n  text-align: center;\n}\n.side-bar-close .nav-item .nav-link[data-v-7e76a80d] {\n  text-align: center;\n  padding: 0.5rem 0;\n}\n.side-bar-close .nav-item span[data-v-7e76a80d] {\n  left: 200px;\n}\n.side-bar-close .dropdown-toggle[data-v-7e76a80d]::after {\n  display: none;\n}\n.logo[data-v-7e76a80d] {\n  width: 30px;\n  height: 30px;\n}\n.navbar-brand[data-v-7e76a80d] {\n  margin-right: 0;\n}\n.nav-link[data-v-7e76a80d] {\n  position: relative;\n  -webkit-transition: all 0.2s;\n  transition: all 0.2s;\n}\n.nav-link[data-v-7e76a80d]:hover {\n  background: rgba(255, 255, 255, 0.1);\n}\n.nav-link:hover svg[data-v-7e76a80d] {\n  fill: #1d68a7 !important;\n}\n.dropdown-toggle[data-v-7e76a80d]::after {\n  display: block;\n  position: absolute;\n  top: 50%;\n  right: 20px;\n  -webkit-transform: translateY(-50%);\n          transform: translateY(-50%);\n  -webkit-transform: rotate(90deg);\n          transform: rotate(90deg);\n  -webkit-transition: all 0.2s;\n  transition: all 0.2s;\n}\n.nav-dropdown-items[data-v-7e76a80d] {\n  max-height: 0;\n  width: 100%;\n  padding: 0;\n  margin: 0;\n  overflow: hidden;\n  -webkit-transition: max-height 0.3s ease-in-out;\n  transition: max-height 0.3s ease-in-out;\n}\n.nav-dropdown-items .nav-item[data-v-7e76a80d] {\n  width: 100%;\n}\n.open[data-v-7e76a80d] {\n  position: relative;\n}\n.open .dropdown-toggle[data-v-7e76a80d] {\n  background: rgba(255, 255, 255, 0.1);\n}\n.open .nav-dropdown-items[data-v-7e76a80d] {\n  max-height: 1500px;\n}\n.open .dropdown-toggle[data-v-7e76a80d]::after {\n  -webkit-transform: rotate(0deg);\n          transform: rotate(0deg);\n}\nsvg[data-v-7e76a80d] {\n  margin-top: -2px;\n  margin-right: 5px;\n  fill: #666;\n}\n.active[data-v-7e76a80d] {\n  color: #1d68a7 !important;\n  background: rgba(255, 255, 255, 0.1);\n}\n.active svg[data-v-7e76a80d] {\n  fill: #1d68a7 !important;\n}\n.active[data-v-7e76a80d]:before {\n  content: \"\";\n  height: 100%;\n  width: 3px;\n  position: absolute;\n  background: #fff;\n  left: 0;\n  top: 0;\n}", ""]);
 
 // exports
 
@@ -30953,7 +31000,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../../node_module
 
 
 // module
-exports.push([module.i, "\n.app-main[data-v-79f54daa] {\n    /*84 = navbar + tags-view = 50 +34 */\n    min-height: calc(100vh - 84px);\n    width: calc(100vw - 200px);\n    position: absolute;\n    right: 0;\n    overflow-x: hidden;\n    overflow-y: auto;\n    height: 100%;\n    display: block;\n    padding: 25px;\n    -webkit-transition: width 0.2s;\n    transition: width 0.2s;\n    background: rgba(255, 255, 255, .1)\n}\n.app-main-close[data-v-79f54daa] {\n    width: calc(100vw - 68px);\n}\n.content[data-v-79f54daa]{\n    padding: 0.75rem 1rem;\n}\n", ""]);
+exports.push([module.i, "\n.app-main[data-v-79f54daa] {\n    /*84 = navbar + tags-view = 50 +34 */\n    min-height: calc(100vh - 84px);\n    width: calc(100vw - 200px);\n    position: absolute;\n    right: 0;\n    overflow-x: hidden;\n    overflow-y: auto;\n    height: 100%;\n    display: block;\n    padding: 25px;\n    -webkit-transition: width 0.2s;\n    transition: width 0.2s;\n}\n.app-main-close[data-v-79f54daa] {\n    width: calc(100vw - 68px);\n}\n.content[data-v-79f54daa]{\n    padding: 0.75rem 1rem;\n}\n", ""]);
 
 // exports
 
@@ -37230,6 +37277,212 @@ var render = function() {
         )
       ],
       1
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticStyle: {
+          width: "200px",
+          height: "calc(100vh - 56px)",
+          position: "fixed",
+          right: "0",
+          background: "#ffffff",
+          "z-index": "1027",
+          padding: "25px"
+        }
+      },
+      [
+        _c("p", [_vm._v("主题设置")]),
+        _vm._v(" "),
+        _c(
+          "div",
+          [
+            _c(
+              "b-button",
+              {
+                attrs: { variant: "outline-success", block: "" },
+                on: {
+                  click: function($event) {
+                    return _vm.setTheme("default")
+                  }
+                }
+              },
+              [_vm._v("default")]
+            ),
+            _vm._v(" "),
+            _c(
+              "b-button",
+              {
+                attrs: { variant: "outline-success", block: "" },
+                on: {
+                  click: function($event) {
+                    return _vm.setTheme("bg-light-blue")
+                  }
+                }
+              },
+              [_vm._v("light-blue")]
+            ),
+            _vm._v(" "),
+            _c(
+              "b-button",
+              {
+                attrs: { variant: "outline-success", block: "" },
+                on: {
+                  click: function($event) {
+                    return _vm.setTheme("bg-light-green")
+                  }
+                }
+              },
+              [_vm._v("light-green")]
+            ),
+            _vm._v(" "),
+            _c(
+              "b-button",
+              {
+                attrs: { variant: "outline-success", block: "" },
+                on: {
+                  click: function($event) {
+                    return _vm.setTheme("bg-light-red")
+                  }
+                }
+              },
+              [_vm._v("light-red")]
+            ),
+            _vm._v(" "),
+            _c(
+              "b-button",
+              {
+                attrs: { variant: "outline-success", block: "" },
+                on: {
+                  click: function($event) {
+                    return _vm.setTheme("bg-blue")
+                  }
+                }
+              },
+              [_vm._v("blue")]
+            ),
+            _vm._v(" "),
+            _c(
+              "b-button",
+              {
+                attrs: { variant: "outline-success", block: "" },
+                on: {
+                  click: function($event) {
+                    return _vm.setTheme("bg-indigo")
+                  }
+                }
+              },
+              [_vm._v("indigo")]
+            ),
+            _vm._v(" "),
+            _c(
+              "b-button",
+              {
+                attrs: { variant: "outline-success", block: "" },
+                on: {
+                  click: function($event) {
+                    return _vm.setTheme("bg-purple")
+                  }
+                }
+              },
+              [_vm._v("purple")]
+            ),
+            _vm._v(" "),
+            _c(
+              "b-button",
+              {
+                attrs: { variant: "outline-success", block: "" },
+                on: {
+                  click: function($event) {
+                    return _vm.setTheme("bg-red")
+                  }
+                }
+              },
+              [_vm._v("red")]
+            ),
+            _vm._v(" "),
+            _c(
+              "b-button",
+              {
+                attrs: { variant: "outline-success", block: "" },
+                on: {
+                  click: function($event) {
+                    return _vm.setTheme("bg-pink")
+                  }
+                }
+              },
+              [_vm._v("pink")]
+            ),
+            _vm._v(" "),
+            _c(
+              "b-button",
+              {
+                attrs: { variant: "outline-success", block: "" },
+                on: {
+                  click: function($event) {
+                    return _vm.setTheme("bg-orange")
+                  }
+                }
+              },
+              [_vm._v("orange")]
+            ),
+            _vm._v(" "),
+            _c(
+              "b-button",
+              {
+                attrs: { variant: "outline-success", block: "" },
+                on: {
+                  click: function($event) {
+                    return _vm.setTheme("bg-yellow")
+                  }
+                }
+              },
+              [_vm._v("yellow")]
+            ),
+            _vm._v(" "),
+            _c(
+              "b-button",
+              {
+                attrs: { variant: "outline-success", block: "" },
+                on: {
+                  click: function($event) {
+                    return _vm.setTheme("bg-green")
+                  }
+                }
+              },
+              [_vm._v("green")]
+            ),
+            _vm._v(" "),
+            _c(
+              "b-button",
+              {
+                attrs: { variant: "outline-success", block: "" },
+                on: {
+                  click: function($event) {
+                    return _vm.setTheme("bg-teal")
+                  }
+                }
+              },
+              [_vm._v("teal")]
+            ),
+            _vm._v(" "),
+            _c(
+              "b-button",
+              {
+                attrs: { variant: "outline-success", block: "" },
+                on: {
+                  click: function($event) {
+                    return _vm.setTheme("bg-cyan")
+                  }
+                }
+              },
+              [_vm._v("cyan")]
+            )
+          ],
+          1
+        )
+      ]
     )
   ])
 }
@@ -37277,7 +37530,7 @@ var render = function() {
                 }),
                 _vm._v(" "),
                 _vm.isCollapse
-                  ? _c("span", { staticClass: "bv-d-md-down-none" }, [
+                  ? _c("span", [
                       _vm._v("\n                M-laravel-spa\n            ")
                     ])
                   : _vm._e()
@@ -37298,7 +37551,11 @@ var render = function() {
                           "router-link",
                           {
                             staticClass: "nav-item ",
-                            attrs: { tag: "li", to: item.url, disabled: "" }
+                            attrs: {
+                              tag: "li",
+                              to: item.url,
+                              id: "tooltip-" + index
+                            }
                           },
                           [
                             _c(
@@ -37307,7 +37564,7 @@ var render = function() {
                                 staticClass: "nav-link dropdown-toggle",
                                 attrs: {
                                   href: "#",
-                                  id: "tooltip-" + index,
+                                  disabled: "",
                                   disabled: ""
                                 },
                                 on: {
@@ -37323,51 +37580,6 @@ var render = function() {
                                 }),
                                 _vm._v(" "),
                                 _c("span", [_vm._v(_vm._s(item.name))])
-                              ],
-                              1
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "b-popover",
-                              {
-                                attrs: {
-                                  target: "tooltip-" + index,
-                                  placement: "right",
-                                  boundary: "window",
-                                  triggers: "hover"
-                                }
-                              },
-                              [
-                                _c(
-                                  "b-nav",
-                                  { attrs: { vertical: "" } },
-                                  [
-                                    _vm._l(item.children, function(
-                                      children,
-                                      i
-                                    ) {
-                                      return [
-                                        _c(
-                                          "b-nav-item",
-                                          { attrs: { to: children.url } },
-                                          [
-                                            _c("svg-vue", {
-                                              attrs: {
-                                                icon: children.icon || "smile"
-                                              }
-                                            }),
-                                            _vm._v(" "),
-                                            _c("span", [
-                                              _vm._v(_vm._s(children.name))
-                                            ])
-                                          ],
-                                          1
-                                        )
-                                      ]
-                                    })
-                                  ],
-                                  2
-                                )
                               ],
                               1
                             ),
@@ -37409,7 +37621,52 @@ var render = function() {
                               : _vm._e()
                           ],
                           1
-                        )
+                        ),
+                        _vm._v(" "),
+                        !_vm.isCollapse
+                          ? _c(
+                              "b-tooltip",
+                              {
+                                attrs: {
+                                  target: "tooltip-" + index,
+                                  placement: "right",
+                                  boundary: "window",
+                                  triggers: "hover"
+                                }
+                              },
+                              [
+                                _c(
+                                  "b-nav",
+                                  {
+                                    staticClass: "tooltip-nav",
+                                    attrs: { vertical: "" }
+                                  },
+                                  [
+                                    _vm._l(item.children, function(
+                                      children,
+                                      i
+                                    ) {
+                                      return [
+                                        _c(
+                                          "b-nav-item",
+                                          { attrs: { to: children.url } },
+                                          [
+                                            _vm._v(
+                                              "\n                                    " +
+                                                _vm._s(children.name) +
+                                                "\n                                "
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    })
+                                  ],
+                                  2
+                                )
+                              ],
+                              1
+                            )
+                          : _vm._e()
                       ]
                     : [
                         _c(
@@ -55574,101 +55831,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/admin/layout/components/_nav.js":
-/*!*****************************************************************!*\
-  !*** ./resources/js/components/admin/layout/components/_nav.js ***!
-  \*****************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ({
-  items: [{
-    name: 'Dashboard',
-    url: '/dashboard',
-    icon: 'dashboard',
-    badge: {
-      variant: 'primary',
-      text: 'NEW'
-    }
-  }, {
-    name: 'Hello Word',
-    url: '/hello',
-    icon: 'smile'
-  }, {
-    name: 'Base',
-    url: '/base',
-    children: [{
-      name: 'Icons',
-      url: '/base/icons',
-      icon: 'smile'
-    }, {
-      name: 'Cards',
-      url: '/base/cards' // icon: 'icon-puzzle'
-
-    }, {
-      name: 'Carousels',
-      url: '/base/carousels' // icon: 'icon-puzzle'
-
-    }, {
-      name: 'Collapses',
-      url: '/base/collapses' // icon: 'icon-puzzle'
-
-    }, {
-      name: 'Forms',
-      url: '/base/forms' // icon: 'icon-puzzle'
-
-    }, {
-      name: 'Jumbotrons',
-      url: '/base/jumbotrons' // icon: 'icon-puzzle'
-
-    }, {
-      name: 'List Groups',
-      url: '/base/list-groups' // icon: 'icon-puzzle'
-
-    }, {
-      name: 'Navs',
-      url: '/base/navs' // icon: 'icon-puzzle'
-
-    }, {
-      name: 'Navbars',
-      url: '/base/navbars' // icon: 'icon-puzzle'
-
-    }, {
-      name: 'Paginations',
-      url: '/base/paginations' // icon: 'icon-puzzle'
-
-    }, {
-      name: 'Popovers',
-      url: '/base/popovers' // icon: 'icon-puzzle'
-
-    }, {
-      name: 'Progress Bars',
-      url: '/base/progress-bars' // icon: 'icon-puzzle'
-
-    }, {
-      name: 'Switches',
-      url: '/base/switches' // icon: 'icon-puzzle'
-
-    }, {
-      name: 'Tables',
-      url: '/base/tables' // icon: 'icon-puzzle'
-
-    }, {
-      name: 'Tabs',
-      url: '/base/tabs' // icon: 'icon-puzzle'
-
-    }, {
-      name: 'Tooltips',
-      url: '/base/tooltips' // icon: 'icon-puzzle'
-
-    }]
-  }]
-});
-
-/***/ }),
-
 /***/ "./resources/js/components/admin/layout/components/index.js":
 /*!******************************************************************!*\
   !*** ./resources/js/components/admin/layout/components/index.js ***!
@@ -55777,6 +55939,45 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Index_vue_vue_type_template_id_0d579311_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/nav.js":
+/*!**********************************************!*\
+  !*** ./resources/js/components/admin/nav.js ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  items: [{
+    name: 'Dashboard',
+    url: '/dashboard',
+    icon: 'dashboard',
+    badge: {
+      variant: 'primary',
+      text: 'NEW'
+    }
+  }, {
+    name: 'Hello Word',
+    url: '/hello',
+    icon: 'smile'
+  }, {
+    name: 'Base',
+    url: '/base',
+    children: [{
+      name: 'Icons',
+      url: '/base/icons',
+      icon: 'smile'
+    }, {
+      name: 'Test',
+      url: '/base/test',
+      icon: 'smile'
+    }]
+  }]
+});
 
 /***/ }),
 
@@ -55961,6 +56162,9 @@ var getters = {
   },
   size: function size(state) {
     return state.app.size;
+  },
+  theme: function theme(state) {
+    return state.app.theme;
   } // device: state => state.app.device,
   // visitedViews: state => state.tagsView.visitedViews,
   // cachedViews: state => state.tagsView.cachedViews,
@@ -56063,7 +56267,8 @@ var state = {
     opened: !+_storage__WEBPACK_IMPORTED_MODULE_0__["default"].get('sidebarStatus')
   },
   device: 'desktop',
-  size: _storage__WEBPACK_IMPORTED_MODULE_0__["default"].get('size') || 'medium'
+  size: _storage__WEBPACK_IMPORTED_MODULE_0__["default"].get('size') || 'medium',
+  theme: _storage__WEBPACK_IMPORTED_MODULE_0__["default"].get('theme') || 'bd-light-blue'
 };
 var mutations = {
   TOGGLE_SIDEBAR: function TOGGLE_SIDEBAR(state) {
@@ -56091,6 +56296,10 @@ var mutations = {
   SET_SIZE: function SET_SIZE(state, size) {
     state.size = size;
     _storage__WEBPACK_IMPORTED_MODULE_0__["default"].set('size', size);
+  },
+  CHANGE_THEME: function CHANGE_THEME(state, theme) {
+    state.theme = theme;
+    _storage__WEBPACK_IMPORTED_MODULE_0__["default"].set('theme', theme);
   }
 };
 var actions = {
@@ -56105,6 +56314,10 @@ var actions = {
   toggleDevice: function toggleDevice(_ref3, device) {
     var commit = _ref3.commit;
     commit('TOGGLE_DEVICE', device);
+  },
+  changeTheme: function changeTheme(_ref4, theme) {
+    var commit = _ref4.commit;
+    commit('CHANGE_THEME', theme);
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = ({
