@@ -1,42 +1,46 @@
 <template>
     <section class="text-center sidebar-container" :class="{ 'side-bar-close' : !isCollapse }">
-       <div class="sidebar-wrapper">
-           <header class="header navbar">
-               <b-navbar-brand>
-                   <img :src="'/favicon.ico'" class="logo d-inline-block align-bottom" alt="">
-                   <span v-if="isCollapse" class="bv-d-md-down-none">
+        <div class="sidebar-wrapper">
+            <header class="header">
+                <b-navbar-brand>
+                    <img :src="'/favicon.ico'" class="logo d-inline-block align-bottom" alt="">
+                    <span v-if="isCollapse" class="bv-d-md-down-none">
                     M-laravel-spa
                 </span>
-               </b-navbar-brand>
-           </header>
+                </b-navbar-brand>
+            </header>
 
-           <b-nav vertical class="text-left" type="dark">
-               <template v-for="(item, index) in nav.items">
-                   <template v-if="item.children">
-                       <router-link tag="li" class="nav-item " :to="item.url" disabled >
-                           <a href="#" @click="toggle" class="nav-link dropdown-toggle" disabled>
-                               <svg-vue :icon="item.icon || 'smile'"/>
-                               {{ item.name }}
-                           </a>
-                           <b-nav vertical class="nav-dropdown-items">
-                               <template v-for="(children, i) in item.children">
-                                   <b-nav-item :to="children.url">
-                                       <svg-vue :icon="children.icon || 'smile'"/>
-                                       {{ children.name }}
-                                   </b-nav-item>
-                               </template>
-                           </b-nav>
-                       </router-link>
-                   </template>
-                   <template v-else>
-                       <b-nav-item :to="item.url">
-                           <svg-vue :icon="item.icon || 'smile'"/>
-                           <span>{{ item.name }}</span>
-                       </b-nav-item>
-                   </template>
-               </template>
-           </b-nav>
-       </div>
+            <b-nav vertical class="text-left" type="dark">
+                <template v-for="(item, index) in nav.items">
+                    <template v-if="item.children">
+                        <router-link tag="li" class="nav-item " :to="item.url" disabled >
+                            <a href="#" class="nav-link dropdown-toggle" @click.stop="toggle($event,this)" disabled>
+                                <svg-vue :icon="item.icon || 'smile'" />
+                                <span>{{ item.name }}</span>
+                            </a>
+                            <b-nav vertical class="nav-dropdown-items">
+                                <template v-for="(children, i) in item.children">
+                                    <b-nav-item :to="children.url">
+                                        <svg-vue :icon="children.icon || 'smile'"/>
+                                        <span>{{ children.name }}</span>
+                                    </b-nav-item>
+                                </template>
+                            </b-nav>
+                        </router-link>
+                    </template>
+                    <template v-else>
+                        <b-nav-item :to="item.url" :id="'tooltip-' + index">
+                            <svg-vue :icon="item.icon || 'smile'"/>
+                            <b-tooltip v-if="!isCollapse" :target="'tooltip-' + index" placement="right" boundary="window"
+                                       triggers="hover">
+                                {{item.name}}
+                            </b-tooltip>
+                            <span>{{ item.name }}</span>
+                        </b-nav-item>
+                    </template>
+                </template>
+            </b-nav>
+        </div>
 
     </section>
 </template>
@@ -44,6 +48,8 @@
     import {mapGetters} from 'vuex'
     import nav from './_nav'
     import SitebarItem from './SidebarItem'
+    import storage from '../../../../storage'
+    import store from '../../../../store'
 
     export default {
         name: 'Sidebar',
@@ -53,9 +59,7 @@
         data() {
             return {
                 nav: nav,
-                active: null,
-                isActive: true,
-                href: '/dashboard'
+                status: 1,
             }
         },
         computed: {
@@ -87,34 +91,47 @@
         height: 100vh;
     }
 
-    .sidebar-wrapper{
-        height:100%;
+    .sidebar-wrapper {
+        height: 100%;
         width: calc(100% + 30px);
         overflow-x: hidden;
         overflow-y: auto;
     }
-    .nav-item span{
+
+    .header {
+        text-align: left;
+        padding-left: 15px;
+    }
+
+    .nav-item span {
         transition: all 0.2s;
         position: absolute;
         left: 40px;
     }
 
-    .side-bar-close {
+    .side-bar-close, .side-bar-close .header, .side-bar-close .nav {
         width: 68px;
-        .nav{
-            width: 68px;
+    }
+
+    .side-bar-close {
+        .header {
+            padding-left: 0;
+            text-align: center;
         }
-        .sidebar-wrapper{
-            width: 100%;
-        }
+
         .nav-item {
             .nav-link {
                 text-align: center;
                 padding: 0.5rem 0;
             }
+
             span {
                 left: 200px;
             }
+        }
+
+        .dropdown-toggle::after {
+            display: none;
         }
     }
 
@@ -127,12 +144,14 @@
         margin-right: 0;
     }
 
-    .nav{
+    .nav {
         width: 200px;
     }
+
     .nav-link {
         position: relative;
         transition: all 0.2s;
+
         &:hover {
             background: rgba(255, 255, 255, .1);
 
@@ -152,37 +171,41 @@
         transition: all 0.2s;
     }
 
-    .nav-dropdown-items{
+    .nav-dropdown-items {
         max-height: 0;
-        width:100%;
+        width: 100%;
         padding: 0;
         margin: 0;
         overflow: hidden;
         transition: max-height .3s ease-in-out;
-        .nav-item{
-            width:100%;
+
+        .nav-item {
+            width: 100%;
         }
     }
 
-    .open{
+    .open {
         background: rgba(255, 255, 255, .1);
         position: relative;
 
-        .nav-dropdown-items{
+        .nav-dropdown-items {
             max-height: 1500px;
         }
-        .dropdown-toggle::after{
+
+        .dropdown-toggle::after {
             transform: rotate(0deg);
         }
     }
+
     svg {
         margin-top: -2px;
         margin-right: 5px;
         fill: #666;
     }
 
-    .active{
+    .active {
         color: #1d68a7 !important;
+
         svg {
             fill: #1d68a7 !important;
         }

@@ -15,44 +15,46 @@ export default {
                 redirect: '/dashboard',
                 children: [
                     {
-                        path: '/dashboard',
-                        name: 'dashboard',
+                        path: 'dashboard',
+                        name: 'Dashboard',
                         component: Dashboard,
                     },
                     {
-                        name: 'hello',
-                        path: '/hello',
+                        name: 'Hello World',
+                        path: 'hello',
                         component: Hello,
 
+                    },
+                    {
+                        path: 'base',
+                        name: 'Base',
+                        redirect: '/base/icons',
+                        component: {
+                            render (c) { return c('router-view') }
+                        },
+                        children: [
+                            {
+                                path: 'icons',
+                                name: 'icons',
+                                component: Icon,
+                            }
+                        ]
                     },
                 ]
             },
             {
                 path: '/login',
-                name: 'login',
+                name: 'Login',
                 component: Login,
-            },
-            {
-                path: '/base',
-                name: 'Base',
-                redirect: '/base/icons',
-                component: Layout,
-                children: [
-                    {
-                        path: '/base/icons',
-                        name: 'icons',
-                        component: Icon,
-                    }
-                ]
             },
             {
                 path: '/error',
                 name: 'Error',
                 component: Layout,
-                redirect: '/404',
+                redirect: '/error/404',
                 children: [
                     {
-                        path: '/404',
+                        path: '404',
                         component: Error_404,
                         name: '404',
                     }

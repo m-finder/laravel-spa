@@ -13677,11 +13677,11 @@ body {
 }
 
 .bg-light-blue {
-  background: url(/images/bg.svg?8cfe42427bdce7a53e1ace1745cfeed9), radial-gradient(farthest-side ellipse at 10% 0, #e1e5e8 10%, #9aacbf);
+  background: url(/images/bg.svg?490ec710dc75a515eb644552548d8acc), radial-gradient(farthest-side ellipse at 10% 0, #e1e5e8 10%, #9aacbf);
 }
 
 .bg-light-green {
-  background: url(/images/bg.svg?8cfe42427bdce7a53e1ace1745cfeed9), radial-gradient(farthest-side ellipse at 10% 0, #e1e5e8 10%, #9abf9f);
+  background: url(/images/bg.svg?490ec710dc75a515eb644552548d8acc), radial-gradient(farthest-side ellipse at 10% 0, #e1e5e8 10%, #9abf9f);
 }
 
 #app {

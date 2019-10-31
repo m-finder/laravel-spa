@@ -2198,6 +2198,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _nav__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./_nav */ "./resources/js/components/admin/layout/components/_nav.js");
 /* harmony import */ var _SidebarItem__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./SidebarItem */ "./resources/js/components/admin/layout/components/SidebarItem.vue");
+/* harmony import */ var _storage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../storage */ "./resources/js/storage.js");
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../store */ "./resources/js/store/index.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -2246,6 +2248,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+
+
 
 
 
@@ -2257,9 +2265,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   data: function data() {
     return {
       nav: _nav__WEBPACK_IMPORTED_MODULE_1__["default"],
-      active: null,
-      isActive: true,
-      href: '/dashboard'
+      status: 1
     };
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['sidebar']), {
@@ -30838,7 +30844,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../../node_module
 
 
 // module
-exports.push([module.i, ".sidebar-container[data-v-7e76a80d] {\n  position: absolute;\n  left: 0;\n  top: 0;\n  overflow: hidden;\n  -webkit-transition: all 0.2s;\n  transition: all 0.2s;\n  width: 200px;\n  background: rgba(0, 0, 0, 0.1);\n  height: 100vh;\n}\n.sidebar-wrapper[data-v-7e76a80d] {\n  height: 100%;\n  width: calc(100% + 30px);\n  overflow-x: hidden;\n  overflow-y: auto;\n}\n.nav-item span[data-v-7e76a80d] {\n  -webkit-transition: all 0.2s;\n  transition: all 0.2s;\n  position: absolute;\n  left: 40px;\n}\n.side-bar-close[data-v-7e76a80d] {\n  width: 68px;\n}\n.side-bar-close .nav[data-v-7e76a80d] {\n  width: 68px;\n}\n.side-bar-close .sidebar-wrapper[data-v-7e76a80d] {\n  width: 100%;\n}\n.side-bar-close .nav-item .nav-link[data-v-7e76a80d] {\n  text-align: center;\n  padding: 0.5rem 0;\n}\n.side-bar-close .nav-item span[data-v-7e76a80d] {\n  left: 200px;\n}\n.logo[data-v-7e76a80d] {\n  width: 30px;\n  height: 30px;\n}\n.navbar-brand[data-v-7e76a80d] {\n  margin-right: 0;\n}\n.nav[data-v-7e76a80d] {\n  width: 200px;\n}\n.nav-link[data-v-7e76a80d] {\n  position: relative;\n  -webkit-transition: all 0.2s;\n  transition: all 0.2s;\n}\n.nav-link[data-v-7e76a80d]:hover {\n  background: rgba(255, 255, 255, 0.1);\n}\n.nav-link:hover svg[data-v-7e76a80d] {\n  fill: #1d68a7 !important;\n}\n.dropdown-toggle[data-v-7e76a80d]::after {\n  display: block;\n  position: absolute;\n  top: 50%;\n  right: 20px;\n  -webkit-transform: translateY(-50%);\n          transform: translateY(-50%);\n  -webkit-transform: rotate(90deg);\n          transform: rotate(90deg);\n  -webkit-transition: all 0.2s;\n  transition: all 0.2s;\n}\n.nav-dropdown-items[data-v-7e76a80d] {\n  max-height: 0;\n  width: 100%;\n  padding: 0;\n  margin: 0;\n  overflow: hidden;\n  -webkit-transition: max-height 0.3s ease-in-out;\n  transition: max-height 0.3s ease-in-out;\n}\n.nav-dropdown-items .nav-item[data-v-7e76a80d] {\n  width: 100%;\n}\n.open[data-v-7e76a80d] {\n  background: rgba(255, 255, 255, 0.1);\n  position: relative;\n}\n.open .nav-dropdown-items[data-v-7e76a80d] {\n  max-height: 1500px;\n}\n.open .dropdown-toggle[data-v-7e76a80d]::after {\n  -webkit-transform: rotate(0deg);\n          transform: rotate(0deg);\n}\nsvg[data-v-7e76a80d] {\n  margin-top: -2px;\n  margin-right: 5px;\n  fill: #666;\n}\n.active[data-v-7e76a80d] {\n  color: #1d68a7 !important;\n}\n.active svg[data-v-7e76a80d] {\n  fill: #1d68a7 !important;\n}\n.active[data-v-7e76a80d]:before {\n  content: \"\";\n  height: 100%;\n  width: 3px;\n  position: absolute;\n  background: #fff;\n  left: 0;\n  top: 0;\n}", ""]);
+exports.push([module.i, ".sidebar-container[data-v-7e76a80d] {\n  position: absolute;\n  left: 0;\n  top: 0;\n  overflow: hidden;\n  -webkit-transition: all 0.2s;\n  transition: all 0.2s;\n  width: 200px;\n  background: rgba(0, 0, 0, 0.1);\n  height: 100vh;\n}\n.sidebar-wrapper[data-v-7e76a80d] {\n  height: 100%;\n  width: calc(100% + 30px);\n  overflow-x: hidden;\n  overflow-y: auto;\n}\n.header[data-v-7e76a80d] {\n  text-align: left;\n  padding-left: 15px;\n}\n.nav-item span[data-v-7e76a80d] {\n  -webkit-transition: all 0.2s;\n  transition: all 0.2s;\n  position: absolute;\n  left: 40px;\n}\n.side-bar-close[data-v-7e76a80d], .side-bar-close .header[data-v-7e76a80d], .side-bar-close .nav[data-v-7e76a80d] {\n  width: 68px;\n}\n.side-bar-close .header[data-v-7e76a80d] {\n  padding-left: 0;\n  text-align: center;\n}\n.side-bar-close .nav-item .nav-link[data-v-7e76a80d] {\n  text-align: center;\n  padding: 0.5rem 0;\n}\n.side-bar-close .nav-item span[data-v-7e76a80d] {\n  left: 200px;\n}\n.side-bar-close .dropdown-toggle[data-v-7e76a80d]::after {\n  display: none;\n}\n.logo[data-v-7e76a80d] {\n  width: 30px;\n  height: 30px;\n}\n.navbar-brand[data-v-7e76a80d] {\n  margin-right: 0;\n}\n.nav[data-v-7e76a80d] {\n  width: 200px;\n}\n.nav-link[data-v-7e76a80d] {\n  position: relative;\n  -webkit-transition: all 0.2s;\n  transition: all 0.2s;\n}\n.nav-link[data-v-7e76a80d]:hover {\n  background: rgba(255, 255, 255, 0.1);\n}\n.nav-link:hover svg[data-v-7e76a80d] {\n  fill: #1d68a7 !important;\n}\n.dropdown-toggle[data-v-7e76a80d]::after {\n  display: block;\n  position: absolute;\n  top: 50%;\n  right: 20px;\n  -webkit-transform: translateY(-50%);\n          transform: translateY(-50%);\n  -webkit-transform: rotate(90deg);\n          transform: rotate(90deg);\n  -webkit-transition: all 0.2s;\n  transition: all 0.2s;\n}\n.nav-dropdown-items[data-v-7e76a80d] {\n  max-height: 0;\n  width: 100%;\n  padding: 0;\n  margin: 0;\n  overflow: hidden;\n  -webkit-transition: max-height 0.3s ease-in-out;\n  transition: max-height 0.3s ease-in-out;\n}\n.nav-dropdown-items .nav-item[data-v-7e76a80d] {\n  width: 100%;\n}\n.open[data-v-7e76a80d] {\n  background: rgba(255, 255, 255, 0.1);\n  position: relative;\n}\n.open .nav-dropdown-items[data-v-7e76a80d] {\n  max-height: 1500px;\n}\n.open .dropdown-toggle[data-v-7e76a80d]::after {\n  -webkit-transform: rotate(0deg);\n          transform: rotate(0deg);\n}\nsvg[data-v-7e76a80d] {\n  margin-top: -2px;\n  margin-right: 5px;\n  fill: #666;\n}\n.active[data-v-7e76a80d] {\n  color: #1d68a7 !important;\n}\n.active svg[data-v-7e76a80d] {\n  fill: #1d68a7 !important;\n}\n.active[data-v-7e76a80d]:before {\n  content: \"\";\n  height: 100%;\n  width: 3px;\n  position: absolute;\n  background: #fff;\n  left: 0;\n  top: 0;\n}", ""]);
 
 // exports
 
@@ -36872,13 +36878,11 @@ var render = function() {
       _c(
         "p",
         [
-          _c("router-link", { attrs: { to: { name: "dashboard" } } }, [
-            _vm._v("Dashboard")
+          _c("router-link", { attrs: { to: "/base/icons" } }, [
+            _vm._v("Icons")
           ]),
           _vm._v(" |\n        "),
-          _c("router-link", { attrs: { to: { name: "hello" } } }, [
-            _vm._v("Hello World")
-          ])
+          _c("router-link", { attrs: { to: "hello" } }, [_vm._v("Hello World")])
         ],
         1
       )
@@ -37250,7 +37254,7 @@ var render = function() {
         [
           _c(
             "header",
-            { staticClass: "header navbar" },
+            { staticClass: "header" },
             [
               _c("b-navbar-brand", [
                 _c("img", {
@@ -37288,17 +37292,19 @@ var render = function() {
                               {
                                 staticClass: "nav-link dropdown-toggle",
                                 attrs: { href: "#", disabled: "" },
-                                on: { click: _vm.toggle }
+                                on: {
+                                  click: function($event) {
+                                    $event.stopPropagation()
+                                    return _vm.toggle($event, this)
+                                  }
+                                }
                               },
                               [
                                 _c("svg-vue", {
                                   attrs: { icon: item.icon || "smile" }
                                 }),
-                                _vm._v(
-                                  "\n                           " +
-                                    _vm._s(item.name) +
-                                    "\n                       "
-                                )
+                                _vm._v(" "),
+                                _c("span", [_vm._v(_vm._s(item.name))])
                               ],
                               1
                             ),
@@ -37321,11 +37327,10 @@ var render = function() {
                                             icon: children.icon || "smile"
                                           }
                                         }),
-                                        _vm._v(
-                                          "\n                                   " +
-                                            _vm._s(children.name) +
-                                            "\n                               "
-                                        )
+                                        _vm._v(" "),
+                                        _c("span", [
+                                          _vm._v(_vm._s(children.name))
+                                        ])
                                       ],
                                       1
                                     )
@@ -37341,11 +37346,32 @@ var render = function() {
                     : [
                         _c(
                           "b-nav-item",
-                          { attrs: { to: item.url } },
+                          { attrs: { to: item.url, id: "tooltip-" + index } },
                           [
                             _c("svg-vue", {
                               attrs: { icon: item.icon || "smile" }
                             }),
+                            _vm._v(" "),
+                            !_vm.isCollapse
+                              ? _c(
+                                  "b-tooltip",
+                                  {
+                                    attrs: {
+                                      target: "tooltip-" + index,
+                                      placement: "right",
+                                      boundary: "window",
+                                      triggers: "hover"
+                                    }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                            " +
+                                        _vm._s(item.name) +
+                                        "\n                        "
+                                    )
+                                  ]
+                                )
+                              : _vm._e(),
                             _vm._v(" "),
                             _c("span", [_vm._v(_vm._s(item.name))])
                           ],
@@ -55715,35 +55741,39 @@ __webpack_require__.r(__webpack_exports__);
       component: _layout_Layout__WEBPACK_IMPORTED_MODULE_0__["default"],
       redirect: '/dashboard',
       children: [{
-        path: '/dashboard',
-        name: 'dashboard',
+        path: 'dashboard',
+        name: 'Dashboard',
         component: _dashboard_Index__WEBPACK_IMPORTED_MODULE_2__["default"]
       }, {
-        name: 'hello',
-        path: '/hello',
+        name: 'Hello World',
+        path: 'hello',
         component: _hello_Index__WEBPACK_IMPORTED_MODULE_1__["default"]
+      }, {
+        path: 'base',
+        name: 'Base',
+        redirect: '/base/icons',
+        component: {
+          render: function render(c) {
+            return c('router-view');
+          }
+        },
+        children: [{
+          path: 'icons',
+          name: 'icons',
+          component: _icons_Index__WEBPACK_IMPORTED_MODULE_4__["default"]
+        }]
       }]
     }, {
       path: '/login',
-      name: 'login',
+      name: 'Login',
       component: _login_Index__WEBPACK_IMPORTED_MODULE_3__["default"]
-    }, {
-      path: '/base',
-      name: 'Base',
-      redirect: '/base/icons',
-      component: _layout_Layout__WEBPACK_IMPORTED_MODULE_0__["default"],
-      children: [{
-        path: '/base/icons',
-        name: 'icons',
-        component: _icons_Index__WEBPACK_IMPORTED_MODULE_4__["default"]
-      }]
     }, {
       path: '/error',
       name: 'Error',
       component: _layout_Layout__WEBPACK_IMPORTED_MODULE_0__["default"],
-      redirect: '/404',
+      redirect: '/error/404',
       children: [{
-        path: '/404',
+        path: '404',
         component: _error_404__WEBPACK_IMPORTED_MODULE_5__["default"],
         name: '404'
       }]
@@ -55962,7 +55992,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var state = {
   sidebar: {
-    opened: _storage__WEBPACK_IMPORTED_MODULE_0__["default"].get('sidebarStatus') ? !!+_storage__WEBPACK_IMPORTED_MODULE_0__["default"].get('sidebarStatus') : true
+    opened: !+_storage__WEBPACK_IMPORTED_MODULE_0__["default"].get('sidebarStatus')
   },
   device: 'desktop',
   size: _storage__WEBPACK_IMPORTED_MODULE_0__["default"].get('size') || 'medium'
@@ -55972,13 +56002,19 @@ var mutations = {
     state.sidebar.opened = !state.sidebar.opened;
 
     if (state.sidebar.opened) {
-      _storage__WEBPACK_IMPORTED_MODULE_0__["default"].set('sidebarStatus', 1);
+      _storage__WEBPACK_IMPORTED_MODULE_0__["default"].set({
+        'sidebarStatus': 0
+      });
     } else {
-      _storage__WEBPACK_IMPORTED_MODULE_0__["default"].set('sidebarStatus', 0);
+      _storage__WEBPACK_IMPORTED_MODULE_0__["default"].set({
+        'sidebarStatus': 1
+      });
     }
   },
   CLOSE_SIDEBAR: function CLOSE_SIDEBAR(state, withoutAnimation) {
-    _storage__WEBPACK_IMPORTED_MODULE_0__["default"].set('sidebarStatus', 0);
+    _storage__WEBPACK_IMPORTED_MODULE_0__["default"].set({
+      'sidebarStatus': 1
+    });
     state.sidebar.opened = false;
   },
   TOGGLE_DEVICE: function TOGGLE_DEVICE(state, device) {
