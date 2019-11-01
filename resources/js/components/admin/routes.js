@@ -7,7 +7,7 @@ import Redirect from './redirect/Index'
 import Error_404 from './error/404'
 
 export default {
-    routes: function () {
+    routers: function () {
         return [
             {
                 path: '/',

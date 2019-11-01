@@ -36,29 +36,30 @@
                 </b-navbar-nav>
             </b-navbar>
         </header>
-        <transition name="fade">
-            <div v-if="showSideBar"
-                 style="width:200px;height:calc(100vh - 56px);position:fixed;right:0;background: #ffffff;z-index: 1027;padding:25px;">
-                <p>主题设置</p>
-                <div>
-                    <b-button variant="outline-success" @click="setTheme('default')" block>default</b-button>
-                    <b-button variant="outline-success" @click="setTheme('bg-dark-blue')" block>dark-blue</b-button>
-                    <b-button variant="outline-success" @click="setTheme('bg-light-blue')" block>light-blue</b-button>
-                    <b-button variant="outline-success" @click="setTheme('bg-light-green')" block>light-green</b-button>
-                    <b-button variant="outline-success" @click="setTheme('bg-light-red')" block>light-red</b-button>
-                    <b-button variant="outline-success" @click="setTheme('bg-blue')" block>blue</b-button>
-                    <b-button variant="outline-success" @click="setTheme('bg-indigo')" block>indigo</b-button>
-                    <b-button variant="outline-success" @click="setTheme('bg-purple')" block>purple</b-button>
-                    <b-button variant="outline-success" @click="setTheme('bg-red')" block>red</b-button>
-                    <b-button variant="outline-success" @click="setTheme('bg-pink')" block>pink</b-button>
-                    <b-button variant="outline-success" @click="setTheme('bg-orange')" block>orange</b-button>
-                    <b-button variant="outline-success" @click="setTheme('bg-yellow')" block>yellow</b-button>
-                    <b-button variant="outline-success" @click="setTheme('bg-green')" block>green</b-button>
-                    <b-button variant="outline-success" @click="setTheme('bg-teal')" block>teal</b-button>
-                    <b-button variant="outline-success" @click="setTheme('bg-cyan')" block>cyan</b-button>
-                </div>
+
+        <div class="theme-box" :class="{'show-theme-box': showSideBar}">
+            <p>主题设置</p>
+            <div class="close-btn" @click="showSideBar = false">
+                <svg-vue icon="close"/>
             </div>
-        </transition>
+            <div>
+                <b-button variant="outline-success" @click="setTheme('default')" block>default</b-button>
+                <b-button variant="outline-success" @click="setTheme('bg-dark-blue')" block>dark-blue</b-button>
+                <b-button variant="outline-success" @click="setTheme('bg-light-blue')" block>light-blue</b-button>
+                <b-button variant="outline-success" @click="setTheme('bg-light-green')" block>light-green</b-button>
+                <b-button variant="outline-success" @click="setTheme('bg-light-red')" block>light-red</b-button>
+                <b-button variant="outline-success" @click="setTheme('bg-blue')" block>blue</b-button>
+                <b-button variant="outline-success" @click="setTheme('bg-indigo')" block>indigo</b-button>
+                <b-button variant="outline-success" @click="setTheme('bg-purple')" block>purple</b-button>
+                <b-button variant="outline-success" @click="setTheme('bg-red')" block>red</b-button>
+                <b-button variant="outline-success" @click="setTheme('bg-pink')" block>pink</b-button>
+                <b-button variant="outline-success" @click="setTheme('bg-orange')" block>orange</b-button>
+                <b-button variant="outline-success" @click="setTheme('bg-yellow')" block>yellow</b-button>
+                <b-button variant="outline-success" @click="setTheme('bg-green')" block>green</b-button>
+                <b-button variant="outline-success" @click="setTheme('bg-teal')" block>teal</b-button>
+                <b-button variant="outline-success" @click="setTheme('bg-cyan')" block>cyan</b-button>
+            </div>
+        </div>
     </section>
 </template>
 <script>
@@ -153,10 +154,34 @@
         }
     }
 
-    .fade-enter-active, .fade-leave-active {
-        transition: opacity .5s;
+    .theme-box {
+        width: 250px;
+        height: calc(100vh - 90px);
+        position: fixed;
+        right: -300px;
+        bottom: 0;
+        background: rgba(255, 255, 255, .8);
+        z-index: 1027;
+        padding: 25px;
+        transition: all 0.2s;
+        .close-btn {
+            position: absolute;
+            left: -35px;
+            top: 0;
+            width: 35px;
+            height: 35px;
+            background: rgba(255, 255, 255, .8);
+            text-align: center;
+            line-height: 35px;
+
+            &:hover {
+                svg {
+                    fill: #e3342f;
+                }
+            }
+        }
     }
-    .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-        opacity: 0;
+    .show-theme-box{
+        right: 0;
     }
 </style>

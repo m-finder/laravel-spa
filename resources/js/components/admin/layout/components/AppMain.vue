@@ -50,7 +50,7 @@
     .content{
         padding: 0.75rem 1rem;
         background: rgba(255,255,255,.1);
-        border-radius: 10px;
+        /*border-radius: 10px;*/
         min-height: 100%;
     }
 </style>

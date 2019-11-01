@@ -5,7 +5,7 @@
  */
 
 import Vue from 'vue';
-import Routes from 'vue-router';
+import Router from 'vue-router';
 import BootstrapVue from 'bootstrap-vue'
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css' // progress bar style
@@ -13,20 +13,26 @@ import storage from "./storage";
 import store from './store'
 import SvgVue from 'svg-vue';
 NProgress.configure({showSpinner: false});
-Vue.use(Routes);
+Vue.use(Router);
 Vue.use(BootstrapVue);
 Vue.use(SvgVue);
 
-import routes from './components/admin/routes'
+import routers from './components/admin/routes'
 import App from './components/admin/App'
 
+// 解决路由重写
+const routerPush = Router.prototype.push;
+Router.prototype.push = function push(location) {
+    return routerPush.call(this, location).catch(error=> error)
+};
 
-const router = new Routes({
+const router = new Router({
     linkActiveClass: 'open',
     linkExactActiveClass: 'active',
     scrollBehavior: () => ({ y: 0 }),
-    routes: routes.routes()
+    routes: routers.routers()
 });
+
 
 router.beforeEach(async (to, from, next) => {
     NProgress.start();
