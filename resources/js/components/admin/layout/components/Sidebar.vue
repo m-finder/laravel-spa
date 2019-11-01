@@ -14,8 +14,7 @@
                 <template v-for="(item, index) in nav.items">
                     <template v-if="item.children">
                         <router-link tag="li" class="nav-item " :to="item.url" :id="'tooltip-'+index">
-                            <a href="#" class="nav-link dropdown-toggle" disabled
-                               @click.stop="toggle($event,this)" disabled>
+                            <a class="nav-link dropdown-toggle" @click="toggle" disabled>
                                 <svg-vue :icon="item.icon || 'smile'"/>
                                 <span>{{ item.name }}</span>
                             </a>
@@ -44,8 +43,7 @@
                         <b-nav-item :to="item.url" :id="'tooltip-' + index">
                             <svg-vue :icon="item.icon || 'smile'"/>
                             <b-tooltip v-if="!isCollapse" :target="'tooltip-' + index" placement="right"
-                                       boundary="window"
-                                       triggers="hover">
+                                       boundary="window" triggers="hover">
                                 {{item.name}}
                             </b-tooltip>
                             <span>{{ item.name }}</span>
@@ -84,8 +82,7 @@
         methods: {
             toggle: function (e) {
                 e.preventDefault();
-                e.target.parentElement.classList.toggle('open');
-
+                e.currentTarget.parentElement.classList.toggle('open');
             }
         }
     }
@@ -117,6 +114,9 @@
         .nav {
             width: 200px;
 
+        }
+        .dropdown-toggle{
+            z-index: 1024;
         }
     }
 

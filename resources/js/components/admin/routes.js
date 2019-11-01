@@ -3,6 +3,7 @@ import Hello from './hello/Index'
 import Dashboard from './dashboard/Index'
 import Login from './login/Index'
 import Icon from './icons/Index'
+import Redirect from './redirect/Index'
 import Error_404 from './error/404'
 
 export default {
@@ -46,6 +47,17 @@ export default {
                 path: '/login',
                 name: 'Login',
                 component: Login,
+            },
+            {
+                path: '/redirect',
+                component: Layout,
+                hidden: true,
+                children: [
+                    {
+                        path: '/redirect/:path*',
+                        component: Redirect
+                    }
+                ]
             },
             {
                 path: '/error',

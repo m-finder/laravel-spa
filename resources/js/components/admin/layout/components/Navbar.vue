@@ -9,12 +9,11 @@
                 <svg-vue class="nav-status " icon="menu"/>
             </button>
 
-            <b-navbar class="mr-auto p-0 bv-d-md-down-none">
-                <b-navbar-nav>
-                    <b-nav-item class="px-3" href="#">Link</b-nav-item>
-                    <b-nav-item class="px-3" href="#" disabled>Disabled</b-nav-item>
-                </b-navbar-nav>
-            </b-navbar>
+            <button class="bv-d-lg-none navbar-toggler" type="button" display="md" @click="refresh">
+                <svg-vue class="nav-status " icon="refresh"/>
+            </button>
+
+            <bread-crumb class="mr-auto p-0 " :list="list"/>
 
             <b-navbar class="justify-content-end p-0 bv-d-md-down-none">
                 <b-navbar-nav>
@@ -31,43 +30,50 @@
                         <b-dropdown-item href="#">密码设置</b-dropdown-item>
                         <b-dropdown-item href="#">退出登陆</b-dropdown-item>
                     </b-nav-item-dropdown>
-                    <b-nav-item>
+                    <b-nav-item @click="showSideBar = !showSideBar">
                         <svg-vue icon="setting"/>
                     </b-nav-item>
                 </b-navbar-nav>
             </b-navbar>
         </header>
-        <div
-            style="width:200px;height:calc(100vh - 56px);position:fixed;right:0;background: #ffffff;z-index: 1027;padding:25px;">
-            <p>主题设置</p>
-            <div>
-                <b-button variant="outline-success" @click="setTheme('default')" block>default</b-button>
-                <b-button variant="outline-success" @click="setTheme('bg-dark-blue')" block>dark-blue</b-button>
-                <b-button variant="outline-success" @click="setTheme('bg-light-blue')" block>light-blue</b-button>
-                <b-button variant="outline-success" @click="setTheme('bg-light-green')" block>light-green</b-button>
-                <b-button variant="outline-success" @click="setTheme('bg-light-red')" block>light-red</b-button>
-                <b-button variant="outline-success" @click="setTheme('bg-blue')" block>blue</b-button>
-                <b-button variant="outline-success" @click="setTheme('bg-indigo')" block>indigo</b-button>
-                <b-button variant="outline-success" @click="setTheme('bg-purple')" block>purple</b-button>
-                <b-button variant="outline-success" @click="setTheme('bg-red')" block>red</b-button>
-                <b-button variant="outline-success" @click="setTheme('bg-pink')" block>pink</b-button>
-                <b-button variant="outline-success" @click="setTheme('bg-orange')" block>orange</b-button>
-                <b-button variant="outline-success" @click="setTheme('bg-yellow')" block>yellow</b-button>
-                <b-button variant="outline-success" @click="setTheme('bg-green')" block>green</b-button>
-                <b-button variant="outline-success" @click="setTheme('bg-teal')" block>teal</b-button>
-                <b-button variant="outline-success" @click="setTheme('bg-cyan')" block>cyan</b-button>
+        <transition name="fade">
+            <div v-if="showSideBar"
+                 style="width:200px;height:calc(100vh - 56px);position:fixed;right:0;background: #ffffff;z-index: 1027;padding:25px;">
+                <p>主题设置</p>
+                <div>
+                    <b-button variant="outline-success" @click="setTheme('default')" block>default</b-button>
+                    <b-button variant="outline-success" @click="setTheme('bg-dark-blue')" block>dark-blue</b-button>
+                    <b-button variant="outline-success" @click="setTheme('bg-light-blue')" block>light-blue</b-button>
+                    <b-button variant="outline-success" @click="setTheme('bg-light-green')" block>light-green</b-button>
+                    <b-button variant="outline-success" @click="setTheme('bg-light-red')" block>light-red</b-button>
+                    <b-button variant="outline-success" @click="setTheme('bg-blue')" block>blue</b-button>
+                    <b-button variant="outline-success" @click="setTheme('bg-indigo')" block>indigo</b-button>
+                    <b-button variant="outline-success" @click="setTheme('bg-purple')" block>purple</b-button>
+                    <b-button variant="outline-success" @click="setTheme('bg-red')" block>red</b-button>
+                    <b-button variant="outline-success" @click="setTheme('bg-pink')" block>pink</b-button>
+                    <b-button variant="outline-success" @click="setTheme('bg-orange')" block>orange</b-button>
+                    <b-button variant="outline-success" @click="setTheme('bg-yellow')" block>yellow</b-button>
+                    <b-button variant="outline-success" @click="setTheme('bg-green')" block>green</b-button>
+                    <b-button variant="outline-success" @click="setTheme('bg-teal')" block>teal</b-button>
+                    <b-button variant="outline-success" @click="setTheme('bg-cyan')" block>cyan</b-button>
+                </div>
             </div>
-        </div>
+        </transition>
     </section>
 </template>
 <script>
     import {mapGetters} from 'vuex'
     import storage from '../../../../storage'
+    import BreadCrumb from '../../breadcrumb/Index'
 
     export default {
+        components: {
+            'bread-crumb': BreadCrumb
+        },
         data() {
             return {
-                userInfo: storage.get('user-info') || storage.sessionGet('user-info')
+                userInfo: storage.get('user-info') || storage.sessionGet('user-info'),
+                showSideBar: false
             }
         },
         computed: {
@@ -76,29 +82,46 @@
             ]),
             isCollapse() {
                 return this.sidebar.opened
+            },
+            name() {
+                return this.$route.name
+            },
+            list() {
+                return this.$route.matched.filter((route) => route.name || route.meta.label)
             }
         },
         methods: {
             toggleSideBar() {
                 this.$store.dispatch('app/toggleSideBar')
             },
-            setTheme: function (className) {
-                console.log(className)
-                if (className === 'default') {
-                    storage.remove('theme')
-                } else {
-                    storage.set({'theme': className})
-                }
+            refresh() {
+                this.$store.dispatch('delCachedView', this.$route).then(() => {
+                    const {fullPath} = this.$route
+                    this.$nextTick(() => {
+                        this.$router.replace({
+                            path: '/redirect' + fullPath
+                        })
+                    })
+                })
+            },
+            setTheme(className) {
                 this.$store.dispatch('app/changeTheme', className)
-            }
+            },
+            getName(item) {
+                return item.meta && item.meta.label ? item.meta.label : item.name || null
+            },
+            isLast(index) {
+                return index === this.list.length - 1
+            },
         }
     }
 </script>
 
 <style lang="scss" scoped>
     .nav-wrap {
-        /*background: #ffffff;*/
+        box-shadow: 0 1px 4px rgba(0, 21, 41, .08);
     }
+
 
     .navbar-toggler {
         outline: none;
@@ -128,5 +151,12 @@
             margin-top: -16px;
             margin-left: 0;
         }
+    }
+
+    .fade-enter-active, .fade-leave-active {
+        transition: opacity .5s;
+    }
+    .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+        opacity: 0;
     }
 </style>

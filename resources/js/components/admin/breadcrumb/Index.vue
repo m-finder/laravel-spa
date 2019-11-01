@@ -31,3 +31,14 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+    .breadcrumb {
+        display: flex;
+        margin-bottom: -1px;
+        margin-left: 20px;
+        background: none;
+    }
+    .active{
+      color: #777;
+    }
+</style>

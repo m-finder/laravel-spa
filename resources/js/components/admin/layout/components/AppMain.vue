@@ -1,6 +1,5 @@
 <template>
     <section class="app-main" :class="{'app-main-close': !isCollapse}">
-        <bread-crumb :list="list"/>
         <transition name="fade-transform" mode="out-in">
             <keep-alive :include="cachedViews">
                 <router-view :key="key" class="content"/>
@@ -10,12 +9,9 @@
 </template>
 <script>
     import {mapGetters} from 'vuex'
-    import BreadCrumb from '../../breadcrumb/Index'
+
     export default {
         name: 'AppMain',
-        components:{
-            'bread-crumb':BreadCrumb
-        },
         computed: {
             key() {
                 return this.$route.fullPath
@@ -29,21 +25,8 @@
             isCollapse() {
                 return this.sidebar.opened
             },
-            name() {
-                return this.$route.name
-            },
-            list() {
-                return this.$route.matched.filter((route) => route.name || route.meta.label)
-            }
+
         },
-        methods: {
-            getName (item) {
-                return item.meta && item.meta.label ? item.meta.label : item.name || null
-            },
-            isLast (index) {
-                return index === this.list.length - 1
-            }
-        }
     }
 </script>
 <style scoped>
@@ -66,5 +49,8 @@
     }
     .content{
         padding: 0.75rem 1rem;
+        background: rgba(255,255,255,.1);
+        border-radius: 10px;
+        min-height: 100%;
     }
 </style>

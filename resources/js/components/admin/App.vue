@@ -16,16 +16,13 @@
         },
         watch:{
             changeTheme:function (val) {
-                console.log(val)
                 document.body.className = val
             }
         },
         beforeCreate() {
             let theme = storage.get('theme')
             if(theme){
-                document.body.classList.add(theme)
-            }else{
-                document.body.classList.add('bg-light-green')
+                document.body.className = theme
             }
         }
     }

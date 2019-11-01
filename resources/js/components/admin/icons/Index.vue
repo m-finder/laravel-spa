@@ -25,7 +25,7 @@
 <style scoped>
     .icon-item-box {
         display: inline-block;
-        width: 80px;
+        width: 110px;
         height: 30px;
         margin: 25px;
         text-align: center;
