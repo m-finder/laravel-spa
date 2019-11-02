@@ -12,6 +12,7 @@ import 'nprogress/nprogress.css' // progress bar style
 import storage from "./storage";
 import store from './store'
 import SvgVue from 'svg-vue';
+
 NProgress.configure({showSpinner: false});
 Vue.use(Router);
 Vue.use(BootstrapVue);

@@ -189,8 +189,8 @@
             margin-top: -2px;
             &:hover {
                 svg {
-                    fill: #e3342f;
-                    background: #dfdfdf;
+                    fill: #e3342f!important;
+                    background: rgba(0,0,0,.3);
                     border-radius: 50%;
                 }
             }
@@ -226,21 +226,11 @@
                     border-right: 1px solid #aaaaaa;
 
                     &.active {
-                        color: #000;
-                        border-color: #aaaaaa;
-
-                        &::before {
-                            content: '';
-                            background: #292B34;
-                            display: inline-block;
-                            width: 100%;
-                            height: 2px;
-                            position: absolute;
-                            left: 0;
-                            transition: all .3s;
+                        color: #3490dc;
+                        svg{
+                            fill:#3490dc;
                         }
                     }
-
                     &::before {
                         content: '';
                         background: #1d68a7;
@@ -256,7 +246,6 @@
                         &::before {
                             width: 100%;
                             height: 2px;
-                            background: #292B34;
                         }
                     }
                 }

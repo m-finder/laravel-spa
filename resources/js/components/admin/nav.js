@@ -26,7 +26,7 @@ export default {
          {
               name: 'Test',
               url: '/base/test',
-              icon: 'smile'
+              icon: 'smile',
           },
       ]
     },

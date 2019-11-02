@@ -5,6 +5,8 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 @import '~bootstrap-vue/src/index.scss';
+
+@import 'scrollbar';
 @import 'login';
 @import 'theme';
 
@@ -36,6 +38,9 @@ a {
     color: #666;
     &:hover{
         text-decoration: none;
+        svg{
+            fill: #1d68a7;
+        }
     }
 }
 

@@ -36,40 +36,19 @@
                 </b-navbar-nav>
             </b-navbar>
         </header>
-
-        <div class="theme-box" :class="{'show-theme-box': showSideBar}">
-            <p>主题设置</p>
-            <div class="close-btn" @click="showSideBar = false">
-                <svg-vue icon="close"/>
-            </div>
-            <div>
-                <b-button variant="outline-success" @click="setTheme('default')" block>default</b-button>
-                <b-button variant="outline-success" @click="setTheme('bg-dark-blue')" block>dark-blue</b-button>
-                <b-button variant="outline-success" @click="setTheme('bg-light-blue')" block>light-blue</b-button>
-                <b-button variant="outline-success" @click="setTheme('bg-light-green')" block>light-green</b-button>
-                <b-button variant="outline-success" @click="setTheme('bg-light-red')" block>light-red</b-button>
-                <b-button variant="outline-success" @click="setTheme('bg-blue')" block>blue</b-button>
-                <b-button variant="outline-success" @click="setTheme('bg-indigo')" block>indigo</b-button>
-                <b-button variant="outline-success" @click="setTheme('bg-purple')" block>purple</b-button>
-                <b-button variant="outline-success" @click="setTheme('bg-red')" block>red</b-button>
-                <b-button variant="outline-success" @click="setTheme('bg-pink')" block>pink</b-button>
-                <b-button variant="outline-success" @click="setTheme('bg-orange')" block>orange</b-button>
-                <b-button variant="outline-success" @click="setTheme('bg-yellow')" block>yellow</b-button>
-                <b-button variant="outline-success" @click="setTheme('bg-green')" block>green</b-button>
-                <b-button variant="outline-success" @click="setTheme('bg-teal')" block>teal</b-button>
-                <b-button variant="outline-success" @click="setTheme('bg-cyan')" block>cyan</b-button>
-            </div>
-        </div>
+        <theme :show="showSideBar"/>
     </section>
 </template>
 <script>
     import {mapGetters} from 'vuex'
     import storage from '../../../../storage'
     import BreadCrumb from '../../breadcrumb/Index'
+    import Theme from './theme'
 
     export default {
         components: {
-            'bread-crumb': BreadCrumb
+            'bread-crumb': BreadCrumb,
+            'theme': Theme
         },
         data() {
             return {
@@ -105,9 +84,6 @@
                     })
                 })
             },
-            setTheme(className) {
-                this.$store.dispatch('app/changeTheme', className)
-            },
             getName(item) {
                 return item.meta && item.meta.label ? item.meta.label : item.name || null
             },
@@ -122,8 +98,6 @@
     .nav-wrap {
         box-shadow: 0 1px 4px rgba(0, 21, 41, .08);
     }
-
-
     .navbar-toggler {
         outline: none;
 
@@ -154,34 +128,5 @@
         }
     }
 
-    .theme-box {
-        width: 250px;
-        height: calc(100vh - 90px);
-        position: fixed;
-        right: -300px;
-        bottom: 0;
-        background: rgba(255, 255, 255, .8);
-        z-index: 1027;
-        padding: 25px;
-        transition: all 0.2s;
-        .close-btn {
-            position: absolute;
-            left: -35px;
-            top: 0;
-            width: 35px;
-            height: 35px;
-            background: rgba(255, 255, 255, .8);
-            text-align: center;
-            line-height: 35px;
 
-            &:hover {
-                svg {
-                    fill: #e3342f;
-                }
-            }
-        }
-    }
-    .show-theme-box{
-        right: 0;
-    }
 </style>

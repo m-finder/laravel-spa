@@ -48,9 +48,10 @@
         width: calc(100vw - 68px);
     }
     .content{
-        padding: 0.75rem 1rem;
+        padding: 0.75rem 1rem 5rem 1rem;
         background: rgba(255,255,255,.1);
         /*border-radius: 10px;*/
         min-height: 100%;
+
     }
 </style>

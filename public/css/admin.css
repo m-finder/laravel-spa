@@ -13456,6 +13456,36 @@ input[type=color].form-control:disabled {
   background-color: black;
 }
 
+::-webkit-scrollbar {
+  width: 5px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-button:vertical {
+  display: none;
+}
+
+::-webkit-scrollbar-corner,
+::-webkit-scrollbar-track {
+  background: #e2e2e2;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 0;
+  background: -webkit-gradient(linear, left top, left bottom, from(#fb929e), color-stop(#b4b4ff), to(#aedefc));
+  background: linear-gradient(to bottom, #fb929e, #b4b4ff, #aedefc);
+}
+
+::-webkit-scrollbar-thumb:vertical:hover {
+  background: -webkit-gradient(linear, left top, left bottom, from(#fb929e), color-stop(#b4b4ff), to(#aedefc));
+  background: linear-gradient(to bottom, #fb929e, #b4b4ff, #aedefc);
+}
+
+::-webkit-scrollbar-thumb:vertical:active {
+  background: -webkit-gradient(linear, left top, left bottom, from(#fb929e), color-stop(#b4b4ff), to(#aedefc));
+  background: linear-gradient(to bottom, #fb929e, #b4b4ff, #aedefc);
+}
+
 .login-page {
   background-color: #f1f2f7;
   display: -webkit-box;
@@ -13655,7 +13685,7 @@ input[type=color].form-control:disabled {
 }
 
 .default {
-  background: url(/images/bg.svg?8cfe42427bdce7a53e1ace1745cfeed9), radial-gradient(farthest-side ellipse at 10% 0, #e1e5e8 10%, rgba(0, 0, 0, 0.2)), no-repeat, fixed;
+  background: url(/images/bg.svg?8cfe42427bdce7a53e1ace1745cfeed9), radial-gradient(farthest-side ellipse at 10% 0, #ffffff 10%, rgba(0, 0, 0, 0.1)), no-repeat, fixed;
   background-size: cover;
 }
 
@@ -13758,6 +13788,10 @@ a {
 
 a:hover {
   text-decoration: none;
+}
+
+a:hover svg {
+  fill: #1d68a7;
 }
 
 .invalid-feedback {

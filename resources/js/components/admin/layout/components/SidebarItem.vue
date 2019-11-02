@@ -1,8 +1,8 @@
 <template>
-    <router-link tag="li" class="nav-item " :to="href" disabled>
-        <a href="#" @click="toggle" class="nav-link dropdown-toggle">
+    <router-link tag="li" class="nav-item " :to="href" :id="id">
+        <a class="nav-link dropdown-toggle" @click="toggle" disabled>
             <svg-vue :icon="icon"/>
-            {{ name }}
+            <span>{{ name }}</span>
         </a>
         <slot/>
     </router-link>
@@ -11,12 +11,6 @@
 <script>
     export default {
         name: 'sidebar-nav-item',
-        data(){
-            return {
-                isActive: true,
-                isExactActive: true
-            }
-        },
         props: {
             href: {
                 type: String,
@@ -30,15 +24,76 @@
                 type: String,
                 default: ''
             },
+            id: {
+                type: String,
+                default: '',
+            }
         },
         methods: {
             toggle: function (e) {
                 e.preventDefault();
-                e.target.parentElement.classList.toggle('open');
-            },
-            navigate: function (e) {
-                console.log(e)
+                e.currentTarget.parentElement.classList.toggle('open');
             }
         }
     }
 </script>
+<style lang="scss" scoped>
+    .nav-link {
+        &:hover{
+            svg{
+                fill: #1d68a7;
+            }
+        }
+    }
+
+    .dropdown-toggle{
+        position: relative;
+        width: 200px;
+        transition: padding-left .2s;
+        &::after {
+            display: block;
+            position: absolute;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            transform: rotate(90deg);
+            transition: all 0.2s;
+        }
+        span {
+            transition: all .2s;
+            position: absolute;
+            left: 40px;
+            display: inline-flex;
+            max-width: 100%;
+            min-width: 180px;
+        }
+
+    }
+
+    .side-bar-close {
+
+        .nav-item {
+            .nav-link {
+                padding-left:25px;
+            }
+
+            span {
+                left: 200px;
+            }
+        }
+
+        .dropdown-toggle::after {
+            display: none;
+        }
+    }
+
+    .open {
+        .dropdown-toggle {
+            background: rgba(255, 255, 255, .1)
+        }
+
+        .dropdown-toggle::after {
+            transform: rotate(0deg);
+        }
+    }
+</style>
