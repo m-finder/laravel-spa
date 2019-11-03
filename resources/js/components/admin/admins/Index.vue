@@ -8,9 +8,7 @@
                     </div>
                     <div class="card-body">
                         <div class="card-tools mb-3">
-                            <div class="btn-group mr-3">
-                                <b-button class="btn-sm" variant="info">添加用户</b-button>
-                            </div>
+
                             <div class="btn-group">
                                 <form model="form">
                                     <div class="row">
@@ -40,6 +38,10 @@
                                     </div>
                                 </form>
                             </div>
+
+                            <div class="btn-group mr-3">
+                                <b-button class="btn-sm" variant="primary">添加用户</b-button>
+                            </div>
                         </div>
 
                         <b-table striped hover :items="items" :fields="fields" :sort-by.sync="sortBy"
@@ -57,7 +59,7 @@
                             </template>
 
                             <template v-slot:cell(actions)="row">
-                                <b-button variant="link" class="text-danger mr-1" @click="openDeleteModal(row.item)">
+                                <b-button v-if="row.item.id != 1" variant="link" class="text-danger mr-1" @click="openDeleteModal(row.item)">
                                     删除
                                 </b-button>
                                 <b-button variant="link" :href="'admins/edit' + row.item.id">编辑</b-button>

@@ -89,7 +89,8 @@
 
     .open {
         .dropdown-toggle {
-            background: rgba(255, 255, 255, .1)
+            /*background: rgba(255,255,255, .1);*/
+            /*border-bottom: 1px solid rgba(255,255,255,.5)*/
         }
 
         .dropdown-toggle::after {

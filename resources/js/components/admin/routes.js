@@ -1,6 +1,8 @@
 import Layout from './layout/Layout'
 import Admin from './admins/Index'
-import Hello from './hello/Index'
+import Role from './roles/Index'
+import Permission from './permissions/Index'
+import RolePermission from './roles-permissions/Index'
 import Dashboard from './dashboard/Index'
 import Login from './login/Index'
 import Icon from './icons/Index'
@@ -22,6 +24,26 @@ export default {
                         component: Dashboard,
                     },
                     {
+                        name: '角色管理',
+                        path: 'role',
+                        redirect: '/role/list',
+                        component: {
+                            render (c) { return c('router-view') }
+                        },
+                        children: [
+                            {
+                                name: '角色列表',
+                                path: 'list',
+                                component: Role,
+                            },
+                            {
+                                name: '权限分配',
+                                path: 'role-permission',
+                                component: RolePermission,
+                            }
+                        ]
+                    },
+                    {
                         name: '用户管理',
                         path: 'admin',
                         redirect: '/admin/list',
@@ -37,11 +59,22 @@ export default {
                         ]
                     },
                     {
-                        name: 'Hello World',
-                        path: 'hello',
-                        component: Hello,
-
+                        name: '权限管理',
+                        path: 'permission',
+                        redirect: '/permission/list',
+                        component: {
+                            render (c) { return c('router-view') }
+                        },
+                        children: [
+                            {
+                                name: '权限列表',
+                                path: 'list',
+                                component: Permission,
+                            }
+                        ]
                     },
+
+
                     {
                         path: 'base',
                         name: 'Base',

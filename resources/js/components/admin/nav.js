@@ -6,6 +6,22 @@ export default {
             icon: 'dashboard',
         },
         {
+            name: '角色管理',
+            url: '/role',
+            icon: 'role',
+            children: [
+                {
+                    name: '角色列表',
+                    url: '/role/list',
+                    icon: 'list'
+                }, {
+                    name: '权限分配',
+                    url: '/role/role-permission',
+                    icon: 'security'
+                },
+            ]
+        },
+        {
             name: '用户管理',
             url: '/admin',
             icon: 'user',
@@ -18,9 +34,16 @@ export default {
             ]
         },
         {
-            name: 'Hello Word',
-            url: '/hello',
-            icon: 'smile'
+            name: '权限管理',
+            url: '/permission',
+            icon: 'credits',
+            children: [
+                {
+                    name: '权限列表',
+                    url: '/permission/list',
+                    icon: 'list'
+                },
+            ]
         },
         {
             name: 'Base',

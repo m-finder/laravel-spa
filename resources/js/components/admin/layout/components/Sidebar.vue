@@ -14,7 +14,7 @@
                 <template v-for="(item, index) in nav.items">
                     <template v-if="item.children">
                         <sitebar-item :name="item.name" :icon="item.icon" :href="item.url"
-                                      :id="'level-1-tooltip-'+index">
+                                      :id="item.url">
                             <b-nav v-if="isCollapse" vertical class="nav-dropdown-items">
                                 <template v-for="(children, i) in item.children">
                                     <b-nav-item :to="children.url">
@@ -23,7 +23,7 @@
                                     </b-nav-item>
                                 </template>
                             </b-nav>
-                            <b-tooltip v-if="!isCollapse" :target="'level-1-tooltip-' + index" placement="right"
+                            <b-tooltip v-if="!isCollapse" :target="item.url" placement="right"
                                        boundary="window" triggers="hover">
                                 <b-nav vertical class="tooltip-nav">
                                     <template v-for="(children, i) in item.children">
@@ -37,9 +37,9 @@
 
                     </template>
                     <template v-else>
-                        <b-nav-item :to="item.url" :id="'tooltip-' + index">
+                        <b-nav-item :to="item.url" :id="item.url">
                             <svg-vue :icon="item.icon || 'smile'"/>
-                            <b-tooltip v-if="!isCollapse" :target="'tooltip-' + index" placement="right"
+                            <b-tooltip v-if="!isCollapse" :target="item.url" placement="right"
                                        boundary="window" triggers="hover">
                                 {{item.name}}
                             </b-tooltip>
@@ -163,11 +163,17 @@
         margin: 0;
         overflow: hidden;
         transition: max-height .3s ease-in-out;
+        .nav-link{
+            padding-left: 32px;
+            span{
+                left: 55px;
+            }
+        }
     }
 
     .active {
         color: #1d68a7 !important;
-        background: rgba(255, 255, 255, .1);
+        background: rgba(255,255,255,.1);
         svg {
             fill: #1d68a7 !important;
         }
