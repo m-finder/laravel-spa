@@ -2,6 +2,8 @@
 .default {
     background: url(../images/bg.svg), radial-gradient(farthest-side ellipse at 10% 0, #ffffff 10%, $default), no-repeat, fixed;
     background-size: cover;
+
+
 }
 
 .bg-dark-blue {
@@ -72,4 +74,37 @@
 .bg-cyan {
     background: url(../images/bg.svg), radial-gradient(farthest-side ellipse at 10% 0, #e1e5e8 10%, $cyan), no-repeat, fixed;
     background-size: cover;
+}
+
+
+
+/**
+    默认样式覆盖
+ */
+.card{
+    background: none;
+    .card-title{
+        color: #666;
+    }
+}
+.input-group-text{
+    background-color: rgba(0,0,0,.1);
+}
+.form-control{
+    background-color: rgba(255,255,255, .1);
+}
+.border {
+    border: 1px solid rgba(0,0,0,.1)!important;
+}
+th {
+    color: #495057;
+    background-color: rgba(0,0,0,.1)!important;
+    border-color: rgba(0,0,0,.1)!important;
+}
+.page-item.disabled .page-link{
+    background-color: rgba(255,255,255,.1)!important;
+    border-color: rgba(0,0,0,.1)!important;
+}
+.btn-info {
+    color: #ffffff;
 }

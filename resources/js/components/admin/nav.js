@@ -1,34 +1,49 @@
 export default {
-  items: [
-    {
-      name: 'Dashboard',
-      url: '/dashboard',
-      icon: 'dashboard',
-      badge: {
-        variant: 'primary',
-        text: 'NEW'
-      }
-    },
-    {
-      name: 'Hello Word',
-      url: '/hello',
-      icon: 'smile'
-    },
-    {
-      name: 'Base',
-      url: '/base',
-      children: [
+    items: [
         {
-          name: 'Icons',
-          url: '/base/icons',
-          icon: 'smile'
+            name: '首页',
+            url: '/dashboard',
+            icon: 'dashboard',
         },
-         {
-              name: 'Test',
-              url: '/base/test',
-              icon: 'smile',
-          },
-      ]
-    },
-  ]
+        {
+            name: '用户管理',
+            url: '/admin',
+            icon: 'user',
+            children: [
+                {
+                    name: '用户列表',
+                    url: '/admin/list',
+                    icon: 'list'
+                },
+            ]
+        },
+        {
+            name: 'Hello Word',
+            url: '/hello',
+            icon: 'smile'
+        },
+        {
+            name: 'Base',
+            url: '/base',
+            children: [
+                {
+                    name: 'Icons',
+                    url: '/base/icons',
+                    icon: 'smile'
+                },
+                {
+                    name: 'Test',
+                    url: '/base/test',
+                    icon: 'smile',
+                    children: [
+                        {
+                            name: 'Test2',
+                            url: '/base/test/test2',
+                            icon: 'smile',
+                        }
+                    ]
+                },
+            ]
+        },
+    ]
 }

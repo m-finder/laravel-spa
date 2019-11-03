@@ -82,21 +82,18 @@
                 </b-col>
             </b-row>
         </b-container>
-        <div class="alert-panel">
-            <b-alert v-for="(alert, index) in alerts" v-bind:key="index" :variant="alert.type"
-                     :show="alert.show" @dismissed="alert.down=0"
-                     @dismiss-count-down="countDownChanged($event,index)" dismissible>
-                {{ alert.msg }}
-                <b-progress variant="primary" :max="alert.show" :value="alert.down" height="4px"/>
-            </b-alert>
-        </div>
+        <alert alerts="alerts"/>
     </b-container>
 </template>
 
 <script>
     import api from '../../../api/login'
     import storage from '../../../storage'
+    import Alert from '../alert/Index'
     export default {
+        components:{
+            Alert
+        },
         data() {
             return {
                 text: '登录',
@@ -122,7 +119,9 @@
                 forgetPasswordState: null,
                 forgetForm: {
                     email: null
-                }
+                },
+                redirect: null,
+                otherQuery: {}
             }
         },
         computed: {
@@ -148,6 +147,16 @@
             'form.password': function (value) {
                 value.length === 0 ? this.passwordState = this.error.password = null : this.checkPassword(value)
             },
+            $route: {
+                handler: function(route) {
+                    const query = route.query
+                    if (query) {
+                        this.redirect = query.redirect
+                        this.otherQuery = this.getOtherQuery(query)
+                    }
+                },
+                immediate: true
+            }
         },
         methods: {
             wrapSwitch(state) {
@@ -195,11 +204,11 @@
                                 'show': 10,
                                 'down': 0
                             });
-                            let data = {'user-info':response.data.data};
+                            let data = {'user-info': response.data.data};
                             this.form.status === true
-                                ? storage.set(data)
-                                : (storage.remove(),storage.sessionSet(data))
-                            this.$router.push({ path: this.redirect || '/' })
+                                ? (storage.set(data), storage.set({'token': response.data.data.api_token}))
+                                : (storage.remove(), storage.sessionSet(data), storage.sessionSet({'token': response.data.data.api_token}))
+                            this.$router.push({path: this.redirect || '/'})
                         } else {
                             this.restForm();
                             this.alerts.push({
@@ -226,10 +235,7 @@
                 this.loading = false;
                 this.disabled = false;
                 this.text = '登录';
-            },
-            countDownChanged(dismissCountDown, index) {
-                this.alerts[index].down = dismissCountDown
-            },
+            }
         }
     }
 </script>

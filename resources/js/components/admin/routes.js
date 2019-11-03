@@ -1,4 +1,5 @@
 import Layout from './layout/Layout'
+import Admin from './admins/Index'
 import Hello from './hello/Index'
 import Dashboard from './dashboard/Index'
 import Login from './login/Index'
@@ -17,8 +18,23 @@ export default {
                 children: [
                     {
                         path: 'dashboard',
-                        name: 'Dashboard',
+                        name: '首页',
                         component: Dashboard,
+                    },
+                    {
+                        name: '用户管理',
+                        path: 'admin',
+                        redirect: '/admin/list',
+                        component: {
+                            render (c) { return c('router-view') }
+                        },
+                        children: [
+                            {
+                                name: '用户列表',
+                                path: 'list',
+                                component: Admin,
+                            }
+                        ]
                     },
                     {
                         name: 'Hello World',

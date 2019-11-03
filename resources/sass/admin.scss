@@ -4,7 +4,7 @@
 @import 'variables';
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
-@import '~bootstrap-vue/src/index.scss';
+@import '~bootstrap-vue/dist/bootstrap-vue.css';
 
 @import 'scrollbar';
 @import 'login';
@@ -54,8 +54,9 @@ a {
 }
 
 .alert-panel {
-    position: absolute;
+    position: fixed;
     right: 2px;
+    top: 95px;
 }
 
 svg {
@@ -63,3 +64,6 @@ svg {
     height: 16px;
     fill: #666;
 }
+
+
+

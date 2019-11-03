@@ -16,7 +16,7 @@ class AdminsTableSeeder extends Seeder
         $db->email = 'yf-wu@qq.com';
         $db->avatar =  'images/avatar.png';
         $db->password = Hash::make('111111');
-        $db->token = (string) Str::uuid();
+        $db->api_token = (string) Str::uuid();
         $db->save();
     }
 }

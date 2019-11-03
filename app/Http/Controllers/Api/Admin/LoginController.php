@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Api\Admin;
 
+use App\Http\Controllers\Api\ApiController;
 use App\Models\Admin;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 
-class LoginController extends Controller
+class LoginController extends ApiController
 {
     public function login(){
         $email = request('email');
