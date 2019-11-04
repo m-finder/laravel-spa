@@ -196,7 +196,6 @@
                 let passwordCheck = this.checkPassword(password);
                 if (emailCheck && passwordCheck) {
                     api.login(this.form).then((response) => {
-                        console.log(response);
                         if (response.data.code == 0) {
                             this.alerts.push({
                                 'type': response.data.msg_type,
@@ -219,7 +218,15 @@
                             });
 
                         }
-                    })
+                    }).catch((error)=>{
+                        this.alerts.push({
+                            'type': 'danger',
+                            'msg': '出错了',
+                            'show': 10,
+                            'down': 0
+                        });
+                        console.log(error);
+                    });
                 }
             },
             onForgetSubmit: function (evt) {

@@ -93,7 +93,7 @@
 </template>
 
 <script>
-    import {getList, deleteData} from "../../../api/user";
+    import {getData, deleteData} from "../../../api/user";
     import Alert from '../alert/Index'
     export default {
         name: "Index",
@@ -132,11 +132,19 @@
         methods: {
             getList() {
                 this.isBusy = true;
-                getList(this.form).then((response) => {
+                getData(this.form).then((response) => {
                     this.isBusy = false;
                     this.currentPage = response.data.data.current_page;
                     this.items = response.data.data.data;
                     this.total = response.data.data.total;
+                }).catch((error)=>{
+                    this.alerts.push({
+                        'type': 'danger',
+                        'msg': '系统出错，请联系管理员查看',
+                        'show': 10,
+                        'down': 0
+                    });
+                    console.log(error);
                 });
             },
             getAvatar(avatar) {
@@ -161,14 +169,15 @@
                         this.total = this.total - 1
                     }
 
-                }).catch((error) => {
+                }).catch((error)=>{
                     this.alerts.push({
                         'type': 'danger',
-                        'msg': error.toString(),
+                        'msg': '系统出错，请联系管理员查看',
                         'show': 10,
                         'down': 0
                     });
-                })
+                    console.log(error);
+                });
             },
             cancel() {
                 this.$bvModal.hide('modal-admin-delete')
