@@ -13,6 +13,7 @@ class AdminsTableSeeder extends Seeder
     {
         $db = new \App\Models\Admin();
         $db->name = 'wu';
+        $db->role_id = 1;
         $db->email = 'yf-wu@qq.com';
         $db->avatar =  'images/avatar.png';
         $db->password = Hash::make('111111');

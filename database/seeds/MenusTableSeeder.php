@@ -11,7 +11,7 @@ class MenusTableSeeder extends Seeder
      */
     public function run()
     {
-        $db = new \App\Models\Permission();
+        $db = new \App\Models\Menu();
         $db->id = 1;
         $db->parent_id = 0;
         $db->name = '首页';
@@ -19,7 +19,7 @@ class MenusTableSeeder extends Seeder
         $db->icon = 'dashboard';
         $db->save();
 
-        $db = new \App\Models\Permission();
+        $db = new \App\Models\Menu();
         $db->id = 2;
         $db->parent_id = 0;
         $db->name = '角色管理';
@@ -27,7 +27,7 @@ class MenusTableSeeder extends Seeder
         $db->icon = 'role';
         $db->save();
 
-        $db = new \App\Models\Permission();
+        $db = new \App\Models\Menu();
         $db->id = 3;
         $db->parent_id = 2;
         $db->name = '角色列表';
@@ -35,7 +35,7 @@ class MenusTableSeeder extends Seeder
         $db->icon = 'list';
         $db->save();
 
-        $db = new \App\Models\Permission();
+        $db = new \App\Models\Menu();
         $db->id = 4;
         $db->parent_id = 2;
         $db->name = '权限分配';
