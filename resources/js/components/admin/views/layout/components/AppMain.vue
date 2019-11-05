@@ -1,6 +1,6 @@
 <template>
     <section class="app-main" :class="{'app-main-close': !isCollapse}">
-        <transition name="fade">
+        <transition name="fade" mode="out-in">
             <keep-alive :include="cachedViews">
                 <router-view :key="key" />
             </keep-alive>
@@ -14,6 +14,8 @@
         name: 'AppMain',
         computed: {
             key() {
+                console.log(this.$route.fullPath)
+                console.log('key')
                 return this.$route.fullPath
             },
             cachedViews() {
@@ -55,9 +57,12 @@
     /*}*/
 
     .fade-enter-active, .fade-leave-active {
-        transition: opacity .3s;
+        transition-duration: 0.3s;
+        transition-property: opacity;
+        transition-timing-function: ease;
     }
-    .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-        opacity: 0;
+
+    .fade-enter, .fade-leave-active {
+        opacity: 0
     }
 </style>
