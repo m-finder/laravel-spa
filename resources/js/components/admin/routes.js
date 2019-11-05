@@ -1,13 +1,13 @@
-import Layout from './layout/Layout'
-import Admin from './admins/Index'
-import Role from './roles/Index'
-import Permission from './permissions/Index'
-import RolePermission from './roles-permissions/Index'
-import Dashboard from './dashboard/Index'
-import Login from './login/Index'
-import Icon from './icons/Index'
-import Redirect from './redirect/Index'
-import Error_404 from './error/404'
+import Layout from './views/layout/Layout'
+import Admin from './views/admins/Index'
+import Role from './views/roles/Index'
+import Permission from './views/permissions/Index'
+import RolePermission from './views/roles-permissions/Index'
+import Dashboard from './views/dashboard/Index'
+import Login from './views/login/Index'
+import Icon from './views/icons/Index'
+import Redirect from './components/redirect/Index'
+import Error_404 from './views/error/404'
 
 export default {
     routers: function () {
