@@ -54,7 +54,7 @@
 </template>
 <script>
     import {mapGetters} from 'vuex'
-    import nav from '../../../nav'
+    import nav from '../../../router/nav'
     import SitebarItem from './SidebarItem'
 
     export default {

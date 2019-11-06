@@ -1,13 +1,13 @@
-import Layout from './views/layout/Layout'
-import Admin from './views/admins/Index'
-import Role from './views/roles/Index'
-import Permission from './views/permissions/Index'
-import RolePermission from './views/roles-permissions/Index'
-import Dashboard from './views/dashboard/Index'
-import Login from './views/login/Index'
-import Icon from './views/icons/Index'
-import Redirect from './components/redirect/Index'
-import Error_404 from './views/error/404'
+import Layout from '../views/layout/Layout'
+// import Admin from '../views/admins/Index'
+// import Role from '../views/roles/Index'
+// import Permission from '../views/permissions/Index'
+// import RolePermission from '../views/roles-permissions/Index'
+// import Dashboard from '../views/dashboard/Index'
+// import Login from '../views/login/Index'
+// import Icon from '../views/icons/Index'
+import Redirect from '../components/redirect/Index'
+// import Error_404 from '../views/error/404'
 
 export default {
     routers: function () {
@@ -21,7 +21,7 @@ export default {
                     {
                         path: 'dashboard',
                         name: '首页',
-                        component: Dashboard,
+                        component: require('../views/dashboard/Index').default,
                     },
                     {
                         name: '角色管理',
@@ -34,12 +34,12 @@ export default {
                             {
                                 name: '角色列表',
                                 path: 'list',
-                                component: Role,
+                                component: require('../views/roles/Index').default, //Role
                             },
                             {
                                 name: '权限分配',
                                 path: 'role-permission',
-                                component: RolePermission,
+                                component: require('../views/roles-permissions/Index').default,
                             }
                         ]
                     },
@@ -54,7 +54,7 @@ export default {
                             {
                                 name: '用户列表',
                                 path: 'list',
-                                component: Admin,
+                                component: require('../views/admins/Index').default,
                             }
                         ]
                     },
@@ -69,7 +69,7 @@ export default {
                             {
                                 name: '权限列表',
                                 path: 'list',
-                                component: Permission,
+                                component: require('../views/permissions/Index').default,
                             }
                         ]
                     },
@@ -86,7 +86,7 @@ export default {
                             {
                                 path: 'icons',
                                 name: 'icons',
-                                component: Icon,
+                                component: require('../views/icons/Index').default,
                             }
                         ]
                     },
@@ -95,7 +95,7 @@ export default {
             {
                 path: '/login',
                 name: 'Login',
-                component: Login,
+                component: require('../views/login/Index').default,
             },
             {
                 path: '/redirect',
@@ -116,7 +116,7 @@ export default {
                 children: [
                     {
                         path: '404',
-                        component: Error_404,
+                        component: require('../views/error/404').default,
                         name: '404',
                     }
                 ]

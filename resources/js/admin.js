@@ -18,8 +18,10 @@ Vue.use(Router);
 Vue.use(BootstrapVue);
 Vue.use(SvgVue);
 
-import routers from './components/admin/routes'
+import routers from './components/admin/router/routers'
 import App from './components/admin/App'
+
+
 
 // 解决路由重写
 const routerPush = Router.prototype.push;
@@ -41,7 +43,6 @@ router.beforeEach(async (to, from, next) => {
         to.path === '/login' ? next('/') : next();
         NProgress.done()
     } else {
-        console.log('login')
         to.path === '/login' ? next() : next(`/login?redirect=${to.path}`);
         NProgress.done();
     }

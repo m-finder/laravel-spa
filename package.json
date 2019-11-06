@@ -24,6 +24,7 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "babel-plugin-syntax-dynamic-import": "^6.18.0",
         "bootstrap-vue": "^2.0.4",
         "echarts": "^4.4.0",
         "laravel-mix-svg-vue": "^0.2.3",

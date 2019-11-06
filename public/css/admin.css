@@ -6325,7 +6325,7 @@ input[type=button].btn-block {
   background-color: #3490dc;
   border: 0;
   border-radius: 1rem;
-  -webkit-transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  -moz-transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   -moz-appearance: none;
        appearance: none;
@@ -6333,7 +6333,7 @@ input[type=button].btn-block {
 
 @media (prefers-reduced-motion: reduce) {
   .custom-range::-moz-range-thumb {
-    -webkit-transition: none;
+    -moz-transition: none;
     transition: none;
   }
 }
@@ -6361,14 +6361,14 @@ input[type=button].btn-block {
   background-color: #3490dc;
   border: 0;
   border-radius: 1rem;
-  -webkit-transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  -ms-transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   appearance: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .custom-range::-ms-thumb {
-    -webkit-transition: none;
+    -ms-transition: none;
     transition: none;
   }
 }
@@ -13306,77 +13306,77 @@ a.text-dark:focus {
 }
 
 .default {
-  background: url(/images/bg.svg?8cfe42427bdce7a53e1ace1745cfeed9), radial-gradient(farthest-side ellipse at 10% 0, #ffffff 10%, rgba(0, 0, 0, 0.1)), no-repeat, fixed;
+  background: url(/images/bg.svg?490ec710dc75a515eb644552548d8acc), radial-gradient(farthest-side ellipse at 10% 0, #ffffff 10%, rgba(0, 0, 0, 0.1)), no-repeat, fixed;
   background-size: cover;
 }
 
 .bg-dark-blue {
-  background: url(/images/bg.svg?8cfe42427bdce7a53e1ace1745cfeed9), radial-gradient(farthest-side ellipse at 10% 0, #9aacbf 20%, #36455a), no-repeat, fixed;
+  background: url(/images/bg.svg?490ec710dc75a515eb644552548d8acc), radial-gradient(farthest-side ellipse at 10% 0, #9aacbf 20%, #36455a), no-repeat, fixed;
   background-size: cover;
 }
 
 .bg-light-blue {
-  background: url(/images/bg.svg?8cfe42427bdce7a53e1ace1745cfeed9), radial-gradient(farthest-side ellipse at 10% 0, #e1e5e8 10%, #9aacbf), no-repeat, fixed;
+  background: url(/images/bg.svg?490ec710dc75a515eb644552548d8acc), radial-gradient(farthest-side ellipse at 10% 0, #e1e5e8 10%, #9aacbf), no-repeat, fixed;
   background-size: cover;
 }
 
 .bg-light-green {
-  background: url(/images/bg.svg?8cfe42427bdce7a53e1ace1745cfeed9), radial-gradient(farthest-side ellipse at 10% 0, #e1e5e8 10%, #9abf9f), no-repeat, fixed;
+  background: url(/images/bg.svg?490ec710dc75a515eb644552548d8acc), radial-gradient(farthest-side ellipse at 10% 0, #e1e5e8 10%, #9abf9f), no-repeat, fixed;
   background-size: cover;
 }
 
 .bg-light-red {
-  background: url(/images/bg.svg?8cfe42427bdce7a53e1ace1745cfeed9), radial-gradient(farthest-side ellipse at 10% 0, #e1e5e8 10%, #f2c4d3), no-repeat, fixed;
+  background: url(/images/bg.svg?490ec710dc75a515eb644552548d8acc), radial-gradient(farthest-side ellipse at 10% 0, #e1e5e8 10%, #f2c4d3), no-repeat, fixed;
   background-size: cover;
 }
 
 .bg-blue {
-  background: url(/images/bg.svg?8cfe42427bdce7a53e1ace1745cfeed9), radial-gradient(farthest-side ellipse at 10% 0, #e1e5e8 10%, #3490dc), no-repeat, fixed;
+  background: url(/images/bg.svg?490ec710dc75a515eb644552548d8acc), radial-gradient(farthest-side ellipse at 10% 0, #e1e5e8 10%, #3490dc), no-repeat, fixed;
   background-size: cover;
 }
 
 .bg-indigo {
-  background: url(/images/bg.svg?8cfe42427bdce7a53e1ace1745cfeed9), radial-gradient(farthest-side ellipse at 10% 0, #e1e5e8 10%, #6574cd), no-repeat, fixed;
+  background: url(/images/bg.svg?490ec710dc75a515eb644552548d8acc), radial-gradient(farthest-side ellipse at 10% 0, #e1e5e8 10%, #6574cd), no-repeat, fixed;
   background-size: cover;
 }
 
 .bg-red {
-  background: url(/images/bg.svg?8cfe42427bdce7a53e1ace1745cfeed9), radial-gradient(farthest-side ellipse at 10% 0, #e1e5e8 10%, #e3342f), no-repeat, fixed;
+  background: url(/images/bg.svg?490ec710dc75a515eb644552548d8acc), radial-gradient(farthest-side ellipse at 10% 0, #e1e5e8 10%, #e3342f), no-repeat, fixed;
   background-size: cover;
 }
 
 .bg-orange {
-  background: url(/images/bg.svg?8cfe42427bdce7a53e1ace1745cfeed9), radial-gradient(farthest-side ellipse at 10% 0, #e1e5e8 10%, #f6993f), no-repeat, fixed;
+  background: url(/images/bg.svg?490ec710dc75a515eb644552548d8acc), radial-gradient(farthest-side ellipse at 10% 0, #e1e5e8 10%, #f6993f), no-repeat, fixed;
   background-size: cover;
 }
 
 .bg-yellow {
-  background: url(/images/bg.svg?8cfe42427bdce7a53e1ace1745cfeed9), radial-gradient(farthest-side ellipse at 10% 0, #e1e5e8 10%, #ffed4a), no-repeat, fixed;
+  background: url(/images/bg.svg?490ec710dc75a515eb644552548d8acc), radial-gradient(farthest-side ellipse at 10% 0, #e1e5e8 10%, #ffed4a), no-repeat, fixed;
   background-size: cover;
 }
 
 .bg-pink {
-  background: url(/images/bg.svg?8cfe42427bdce7a53e1ace1745cfeed9), radial-gradient(farthest-side ellipse at 10% 0, #e1e5e8 10%, #f66d9b), no-repeat, fixed;
+  background: url(/images/bg.svg?490ec710dc75a515eb644552548d8acc), radial-gradient(farthest-side ellipse at 10% 0, #e1e5e8 10%, #f66d9b), no-repeat, fixed;
   background-size: cover;
 }
 
 .bg-purple {
-  background: url(/images/bg.svg?8cfe42427bdce7a53e1ace1745cfeed9), radial-gradient(farthest-side ellipse at 10% 0, #e1e5e8 10%, #9561e2), no-repeat, fixed;
+  background: url(/images/bg.svg?490ec710dc75a515eb644552548d8acc), radial-gradient(farthest-side ellipse at 10% 0, #e1e5e8 10%, #9561e2), no-repeat, fixed;
   background-size: cover;
 }
 
 .bg-green {
-  background: url(/images/bg.svg?8cfe42427bdce7a53e1ace1745cfeed9), radial-gradient(farthest-side ellipse at 10% 0, #e1e5e8 10%, #38c172), no-repeat, fixed;
+  background: url(/images/bg.svg?490ec710dc75a515eb644552548d8acc), radial-gradient(farthest-side ellipse at 10% 0, #e1e5e8 10%, #38c172), no-repeat, fixed;
   background-size: cover;
 }
 
 .bg-teal {
-  background: url(/images/bg.svg?8cfe42427bdce7a53e1ace1745cfeed9), radial-gradient(farthest-side ellipse at 10% 0, #e1e5e8 10%, #4dc0b5), no-repeat, fixed;
+  background: url(/images/bg.svg?490ec710dc75a515eb644552548d8acc), radial-gradient(farthest-side ellipse at 10% 0, #e1e5e8 10%, #4dc0b5), no-repeat, fixed;
   background-size: cover;
 }
 
 .bg-cyan {
-  background: url(/images/bg.svg?8cfe42427bdce7a53e1ace1745cfeed9), radial-gradient(farthest-side ellipse at 10% 0, #e1e5e8 10%, #6cb2eb), no-repeat, fixed;
+  background: url(/images/bg.svg?490ec710dc75a515eb644552548d8acc), radial-gradient(farthest-side ellipse at 10% 0, #e1e5e8 10%, #6cb2eb), no-repeat, fixed;
   background-size: cover;
 }
 
@@ -13425,7 +13425,7 @@ th {
 }
 
 html {
-  height: 100vh;
+  height: 100%;
   box-sizing: border-box;
 }
 
