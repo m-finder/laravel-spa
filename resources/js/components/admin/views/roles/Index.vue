@@ -58,7 +58,7 @@
                                 <b-button v-if="row.item.id != 1" variant="link" class="text-danger mr-1" @click="openDeleteModal(row.item)">
                                     删除
                                 </b-button>
-                                <b-button variant="link" :href="'admins/edit' + row.item.id">编辑</b-button>
+                                <b-button variant="link" :to="'/role/edit/' + row.item.id">编辑</b-button>
                             </template>
                         </b-table>
 

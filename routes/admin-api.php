@@ -7,4 +7,6 @@ Route::middleware('auth:admin-api')->group(function() {
     Route::delete('/admins/delete', 'Api\Admin\AdminController@delete');
 
     Route::get('/roles/list', 'Api\Admin\RoleController@lists');
+    Route::get('/roles/detail', 'Api\Admin\RoleController@detail');
+    Route::put('/roles/{id}/update', 'Api\Admin\RoleController@update');
 });
