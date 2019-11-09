@@ -9,7 +9,6 @@ service.interceptors.request.use(
     config => {
         // do something before request is sent
         const token = storage.get('token');
-        console.log(token)
         if (token) {
             config.headers['Accept'] = 'application/json';
             config.headers['Authorization'] = 'Bearer ' + token;
@@ -17,6 +16,7 @@ service.interceptors.request.use(
         return config
     },
     error => {
+        // todo 添加接口统一报错
         // do something with request error
         console.log(error) // for debug
         return Promise.reject(error)

@@ -8,15 +8,15 @@ const tagsView = {
       if (state.visitedViews.some(v => v.path === view.path)) return
       state.visitedViews.push(
         Object.assign({}, view, {
-          title: view.name || 'no-name'
+            title: view.meta.title || 'no-name'
         })
       )
     },
     ADD_CACHED_VIEW: (state, view) => {
-      if (state.cachedViews.includes(view.name)) return
-      if (!view.meta.noCache) {
-        state.cachedViews.push(view.name)
-      }
+        if (state.cachedViews.includes(view.name)) return
+        if (!view.meta.noCache) {
+            state.cachedViews.push(view.name)
+        }
     },
 
     DEL_VISITED_VIEW: (state, view) => {
@@ -118,8 +118,6 @@ const tagsView = {
       })
     },
     delOthersVisitedViews({ commit, state }, view) {
-      console.log(commit)
-      console.log(view)
       return new Promise(resolve => {
         commit('DEL_OTHERS_VISITED_VIEWS', view)
         resolve([...state.visitedViews])

@@ -31,3 +31,11 @@ export function updateData(data) {
         data: data
     })
 }
+
+export function createData(data) {
+    return request({
+        url: '/admin-api/roles/create',
+        method: 'post',
+        data: data
+    })
+}

@@ -14,14 +14,30 @@
                 type: Array,
                 required: true,
                 default: () => []
+            },
+            homePage:{
+                type: String,
+                default: 'Home'
+            },
+            homeUrl:{
+                type: String,
+                default: '/dashboard'
             }
         },
         computed: {
             routeRecords: function () {
-                return this.list.filter((route) => route.name || route.meta.label)
+                let matched = this.list.filter((route) => route.name || route.meta.label)
+                if (!this.isDashboard(matched[0])) {
+                    matched = [{ path: this.homeUrl, name: this.homePage}].concat(matched)
+                }
+                return matched
             }
         },
         methods: {
+            isDashboard(route) {
+                const name = route && route.name
+                return name ? name.trim().toLocaleLowerCase() === (this.homePage).toLocaleLowerCase() :  false
+            },
             getName(item) {
                 return item.meta && item.meta.label ? item.meta.label : item.name || null
             },

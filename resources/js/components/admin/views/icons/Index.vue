@@ -13,7 +13,7 @@
     import icons from './requireIcons'
 
     export default {
-        name: "Index",
+        name: "Icons",
         data() {
             return {
                 iconsMap: icons

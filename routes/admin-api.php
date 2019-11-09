@@ -9,4 +9,5 @@ Route::middleware('auth:admin-api')->group(function() {
     Route::get('/roles/list', 'Api\Admin\RoleController@lists');
     Route::get('/roles/detail', 'Api\Admin\RoleController@detail');
     Route::put('/roles/{id}/update', 'Api\Admin\RoleController@update');
+    Route::post('/roles/create', 'Api\Admin\RoleController@create');
 });

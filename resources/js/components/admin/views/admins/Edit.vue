@@ -6,7 +6,7 @@
 
 <script>
     export default {
-        name: "edit",
+        name: "AdminEdit",
         data(){
             return {
                 id: this.$route.params.id

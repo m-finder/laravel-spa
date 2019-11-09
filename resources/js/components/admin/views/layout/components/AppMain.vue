@@ -2,7 +2,7 @@
     <section class="app-main" :class="{'app-main-close': !isCollapse}">
         <transition name="fade" mode="out-in">
             <keep-alive :include="cachedViews">
-                <router-view :key="key" />
+                <router-view />
             </keep-alive>
         </transition>
     </section>
@@ -14,9 +14,7 @@
         name: 'AppMain',
         computed: {
             key() {
-                console.log(this.$route.fullPath)
-                console.log('key')
-                return this.$route.fullPath
+                return this.$route.path
             },
             cachedViews() {
                 return this.$store.state.tagsView.cachedViews

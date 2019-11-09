@@ -91,6 +91,7 @@
     import storage from '../../../../storage'
     import Alert from '../../components/alert/Index'
     export default {
+        name: 'Login',
         components:{
             Alert
         },

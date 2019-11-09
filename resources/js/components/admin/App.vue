@@ -6,6 +6,7 @@
     import {mapGetters} from 'vuex'
 
     export default {
+        name: 'App',
         computed: {
             ...mapGetters([
                 'theme',
@@ -20,7 +21,7 @@
             }
         },
         beforeCreate() {
-            let theme = storage.get('theme')
+            let theme = storage.get('theme') || 'default'
             if(theme){
                 document.body.className = theme
             }

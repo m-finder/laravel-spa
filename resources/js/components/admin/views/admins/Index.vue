@@ -96,7 +96,7 @@
     import {getData, deleteData} from "../../../../api/user";
     import Alert from '../../components/alert/Index'
     export default {
-        name: "Index",
+        name: "AdminList",
         components:{
             Alert
         },

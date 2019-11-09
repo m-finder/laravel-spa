@@ -40,7 +40,7 @@
                             </div>
 
                             <div class="btn-group mr-3">
-                                <b-button class="btn-sm" variant="primary">添加角色</b-button>
+                                <b-button class="btn-sm" variant="primary" to="/role/create">添加角色</b-button>
                             </div>
                         </div>
 
@@ -64,7 +64,7 @@
 
                         <b-row>
                             <b-col md="6" class="my-1">
-                                <b-pagination v-model="currentPage" :total-rows="total" :per-page="perPage" class="my-0"/>
+                                <b-pagination v-model="form.current_page" :total-rows="total" :per-page="form.limit" class="my-0"/>
                                 <b-card-text class="mt-3 text-secondary">共 {{ total }} 条数据</b-card-text>
                             </b-col>
                         </b-row>
@@ -92,7 +92,7 @@
     import {getData, deleteData} from "../../../../api/role";
     import Alert from '../../components/alert/Index'
     export default {
-        name: "Index",
+        name: "RoleList",
         components:{
             Alert
         },
@@ -100,8 +100,7 @@
             return {
                 alerts: [],
                 isBusy: true,
-                perPage: 3,
-                currentPage: 1,
+
                 total: 0,
                 items: [],
                 name: '',
@@ -109,6 +108,8 @@
                 form: {
                     name: null,
                     alias: null,
+                    limit: 2,
+                    current_page: 1,
                 },
                 sortBy: 'id',
                 sortDesc: false,
@@ -122,6 +123,9 @@
             }
         },
         created() {
+            this.getList()
+        },
+        activated(){
             this.getList()
         },
         methods: {

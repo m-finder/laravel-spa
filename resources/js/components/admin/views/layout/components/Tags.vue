@@ -29,6 +29,7 @@
 </template>
 <script>
     export default {
+        name: 'Tags',
         data() {
             return {
                 left: 0,

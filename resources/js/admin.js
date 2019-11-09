@@ -20,7 +20,7 @@ Vue.use(SvgVue);
 
 import routers from './components/admin/router/routers'
 import App from './components/admin/App'
-
+import getPageTitle from './components/admin/utils/get-page-title'
 
 
 // 解决路由重写
@@ -38,6 +38,8 @@ const router = new Router({
 
 
 router.beforeEach(async (to, from, next) => {
+    document.title = getPageTitle(to.meta.title);
+
     NProgress.start();
     if (storage.get('user-info')) {
         to.path === '/login' ? next('/') : next();

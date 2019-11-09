@@ -13,7 +13,7 @@
                 <svg-vue class="nav-status " icon="refresh"/>
             </button>
 
-            <bread-crumb class="mr-auto p-0 " :list="list"/>
+            <bread-crumb class="mr-auto p-0 " :list="list" :homePage="'Home'" :homeUrl="'/dashboard'"/>
 
             <b-navbar class="justify-content-end p-0 bv-d-md-down-none">
                 <b-navbar-nav>
@@ -46,6 +46,7 @@
     import Theme from './theme'
 
     export default {
+        name: 'Navbar',
         components: {
             'bread-crumb': BreadCrumb,
             'theme': Theme

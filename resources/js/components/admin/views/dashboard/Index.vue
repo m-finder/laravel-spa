@@ -65,6 +65,7 @@
     import 'echarts'
 
     export default {
+        name: 'Dashboard',
         components: {
             'v-chart': ECharts
         },
