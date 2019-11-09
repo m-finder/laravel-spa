@@ -101,9 +101,12 @@ th {
     background-color: rgba(0,0,0,.1)!important;
     border-color: rgba(0,0,0,.1)!important;
 }
-.page-item.disabled .page-link{
+.page-item.disabled .page-link, .page-item .page-link{
     background-color: rgba(255,255,255,.1)!important;
     border-color: rgba(0,0,0,.1)!important;
+}
+.page-item.active{
+    background: #3490dc!important;
 }
 .btn-info {
     color: #ffffff;

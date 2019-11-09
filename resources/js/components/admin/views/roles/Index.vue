@@ -45,8 +45,8 @@
                         </div>
 
                         <b-table striped hover :items="items" :fields="fields" :sort-by.sync="sortBy"
-                                 :sort-desc.sync="sortDesc" :busy.sync="isBusy" :current-page="currentPage"
-                                 :per-page="perPage" responsive="sm" outlined ref="table" show-empty
+                                 :sort-desc.sync="sortDesc" :busy.sync="isBusy"
+                                 responsive="sm" outlined ref="table" show-empty
                                  sticky-header head-variant="light">
 
                             <div slot="table-busy" class="text-center text-danger my-2">
@@ -55,7 +55,8 @@
                             </div>
 
                             <template v-slot:cell(actions)="row">
-                                <b-button v-if="row.item.id != 1" variant="link" class="text-danger mr-1" @click="openDeleteModal(row.item)">
+                                <b-button v-if="row.item.id != 1" variant="link" class="text-danger mr-1"
+                                          @click="openDeleteModal(row.item)">
                                     删除
                                 </b-button>
                                 <b-button variant="link" :to="'/role/edit/' + row.item.id">编辑</b-button>
@@ -64,7 +65,8 @@
 
                         <b-row>
                             <b-col md="6" class="my-1">
-                                <b-pagination v-model="form.current_page" :total-rows="total" :per-page="form.limit" class="my-0"/>
+                                <b-pagination v-model="form.page" :total-rows="total" :per-page="form.limit"
+                                              class="my-0"/>
                                 <b-card-text class="mt-3 text-secondary">共 {{ total }} 条数据</b-card-text>
                             </b-col>
                         </b-row>
@@ -91,16 +93,17 @@
 <script>
     import {getData, deleteData} from "../../../../api/role";
     import Alert from '../../components/alert/Index'
+
     export default {
         name: "RoleList",
-        components:{
+        components: {
             Alert
         },
+
         data() {
             return {
                 alerts: [],
                 isBusy: true,
-
                 total: 0,
                 items: [],
                 name: '',
@@ -108,8 +111,8 @@
                 form: {
                     name: null,
                     alias: null,
-                    limit: 2,
-                    current_page: 1,
+                    limit: 20,
+                    page: 1,
                 },
                 sortBy: 'id',
                 sortDesc: false,
@@ -125,18 +128,23 @@
         created() {
             this.getList()
         },
-        activated(){
+        activated() {
             this.getList()
+        },
+        watch: {
+            'form.page'() {
+                this.getList()
+            },
         },
         methods: {
             getList() {
                 this.isBusy = true;
                 getData(this.form).then((response) => {
                     this.isBusy = false;
-                    this.currentPage = response.data.data.current_page;
+                    this.form.page = response.data.data.current_page;
                     this.items = response.data.data.data;
                     this.total = response.data.data.total;
-                }).catch((error)=>{
+                }).catch((error) => {
                     this.alerts.push({
                         'type': 'danger',
                         'msg': '系统出错，请联系管理员查看',
@@ -196,12 +204,13 @@
     }
 
     .btn, .btn-outline-info {
-        svg{
+        svg {
             fill: #ffffff;
         }
     }
-    .btn-outline-info{
-        &:hover{
+
+    .btn-outline-info {
+        &:hover {
             color: #ffffff;
         }
     }
