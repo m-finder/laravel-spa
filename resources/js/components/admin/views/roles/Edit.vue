@@ -9,7 +9,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">角色名称</span>
                                 </div>
-                                <input required type="text" name="name" v-model="form.name"
+                                <input type="text" name="name" v-model="form.name"
                                        class="form-control" placeholder="角色名称">
                             </div>
                         </div>
@@ -18,7 +18,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">角色别名</span>
                                 </div>
-                                <input required type="text" name="alias"  v-model="form.alias"
+                                <input type="text" name="alias"  v-model="form.alias"
                                        class="form-control" placeholder="角色别名">
                             </div>
                         </div>
@@ -54,7 +54,7 @@
         },
         data() {
             return {
-                disabled: false,
+                disabled: true,
                 alerts: [],
                 tempRoute: {},
                 form: {
@@ -113,6 +113,7 @@
                 getDetail(this.form.id).then(response => {
                     if(response.data.code == 0){
                         this.form = response.data.data;
+                        this.disabled = false
                     }else{
                         this.alerts.push({
                             'type': response.data.msg_type,
@@ -153,6 +154,8 @@
                 this.setPageTitle()
 
                 this.getDetail()
+            }else{
+                this.disabled = false
             }
         },
     }

@@ -40,7 +40,7 @@
                             </div>
 
                             <div class="btn-group mr-3">
-                                <b-button class="btn-sm" variant="primary">添加用户</b-button>
+                                <b-button to="/admin/create" class="btn-sm" variant="primary">添加用户</b-button>
                             </div>
                         </div>
 

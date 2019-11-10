@@ -1,6 +1,7 @@
 import Layout from '../views/layout/Layout'
 import Admin from '../views/admins/Index'
 import AdminEdit from '../views/admins/Edit'
+import AdminCreate from '../views/admins/Create'
 
 import Role from '../views/roles/Index'
 import RoleEdit from '../views/roles/Edit'
@@ -82,6 +83,12 @@ export default {
                         meta: {title: '用户编辑', noCache: true},
                         path: 'edit/:id',
                         component: AdminEdit
+                    },
+                    {
+                        name: 'AdminCreate',
+                        meta: {title: '添加用户', noCache: true},
+                        path: 'create',
+                        component: AdminCreate
                     }
                 ]
             },

@@ -16,6 +16,12 @@ class RoleController extends ApiController
         return $this->json_response($roles, '操作成功', self::ERROR_NONE, self::MSG_TYPE_SUCCESS);
     }
 
+    public function all()
+    {
+        $roles = Role::get();
+        return $this->json_response($roles, '操作成功', self::ERROR_NONE, self::MSG_TYPE_SUCCESS);
+    }
+
     public function detail($id)
     {
 
@@ -38,7 +44,7 @@ class RoleController extends ApiController
                     'name', 'alias'
                 ]));
             } else {
-                return $this->json_response(null, '该角色名已存在', self::ERROR_PARAMS, self::MSG_TYPE_ERROR);
+                return $this->json_response(null, '该角色已存在，请更换角色名或别名', self::ERROR_PARAMS, self::MSG_TYPE_ERROR);
             }
 
         } catch (\Exception $exception) {

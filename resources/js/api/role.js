@@ -8,6 +8,13 @@ export function getData(query) {
     })
 }
 
+export function getAll() {
+    return request({
+        url: '/admin-api/roles/all',
+        method: 'get'
+    })
+}
+
 export function getDetail(id) {
     return request({
         url: '/admin-api/roles/' + id + '/detail',

@@ -4,12 +4,17 @@ Route::post('login', 'Api\Admin\LoginController@login');
 
 Route::middleware('auth:admin-api')->group(function() {
     Route::get('/admins/list', 'Api\Admin\AdminController@lists');
+    Route::post('/admins/create', 'Api\Admin\AdminController@create');
     Route::get('/admins/{id}/detail', 'Api\Admin\AdminController@detail');
+    Route::put('/admins/{id}/update', 'Api\Admin\AdminController@update');
     Route::delete('/admins/{id}/delete', 'Api\Admin\AdminController@delete');
 
+
+
     Route::get('/roles/list', 'Api\Admin\RoleController@lists');
-    Route::get('/roles/{id}/detail', 'Api\Admin\RoleController@detail');
-    Route::put('/roles/{id}/update', 'Api\Admin\RoleController@update');
+    Route::get('/roles/all', 'Api\Admin\RoleController@all');
     Route::post('/roles/create', 'Api\Admin\RoleController@create');
+    Route::put('/roles/{id}/update', 'Api\Admin\RoleController@update');
+    Route::get('/roles/{id}/detail', 'Api\Admin\RoleController@detail');
     Route::delete('/roles/{id}/delete', 'Api\Admin\RoleController@delete');
 });

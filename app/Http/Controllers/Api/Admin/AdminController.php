@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Api\Admin;
 use App\Models\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Api\ApiController;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 class AdminController extends ApiController
 {
@@ -25,17 +28,17 @@ class AdminController extends ApiController
 
     public function update($id)
     {
-        $role = Admin::where('id', $id)->first();
+        $admin = Admin::where('id', $id)->first();
         try {
-            if (is_null($role)) {
-                return $this->json_response(null, '角色不存在', self::ERROR_USER_NOT_EXIST, self::MSG_TYPE_ERROR);
+            if (is_null($admin)) {
+                return $this->json_response(null, '用户不存在', self::ERROR_USER_NOT_EXIST, self::MSG_TYPE_ERROR);
             }
             if (Admin::checkUnique()) {
-                $role->update(request_intersect([
-                    'name', 'alias'
+                $admin->update(request_intersect([
+                    'role_id', 'name', 'email', 'password'
                 ]));
             } else {
-                return $this->json_response(null, '该角色名已存在', self::ERROR_PARAMS, self::MSG_TYPE_ERROR);
+                return $this->json_response(null, '该用户已存在，请更换用户名或登录邮箱', self::ERROR_PARAMS, self::MSG_TYPE_ERROR);
             }
 
         } catch (\Exception $exception) {
@@ -47,14 +50,18 @@ class AdminController extends ApiController
 
     public function create()
     {
-        $role = new Admin();
+        $admin = new Admin();
         try {
             if (Admin::checkUnique()) {
-                $role->create(request_intersect([
-                    'name', 'alias'
-                ]));
+                $data = request_intersect([
+                    'role_id', 'name', 'email', 'password'
+                ]);
+                $data['password'] =  Hash::make($data['password']);
+                $data['api_token'] =   (string) Str::uuid();
+                $data['avatar'] =   'images/avatar.png';
+                $admin->create($data);
             } else {
-                return $this->json_response(null, '该角色已存在，请更换角色名或别名', self::ERROR_PARAMS, self::MSG_TYPE_ERROR);
+                return $this->json_response(null, '该用户已存在，请更换用户名或邮箱', self::ERROR_PARAMS, self::MSG_TYPE_ERROR);
             }
 
         } catch (\Exception $exception) {

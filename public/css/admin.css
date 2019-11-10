@@ -13400,6 +13400,10 @@ a.text-dark:focus {
   background-color: rgba(255, 255, 255, 0.1);
 }
 
+.custom-select {
+  background: rgba(255, 255, 255, 0.1);
+}
+
 .border {
   border: 1px solid rgba(0, 0, 0, 0.1) !important;
 }
@@ -13432,6 +13436,7 @@ th {
 html {
   height: 100%;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 body {
