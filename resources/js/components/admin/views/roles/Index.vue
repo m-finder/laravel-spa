@@ -75,9 +75,9 @@
             </div>
         </div>
 
-        <b-modal centered id="modal-admin-delete" title="操作提醒" @hidden="resetModal">
+        <b-modal centered id="modal-role-delete" title="操作提醒" @hidden="resetModal">
             <p class="my-4">
-                {{ name ? '是否确认删除用户 ' + name + '？' : '是否删除该用户？'}}
+                {{ name ? '是否确认删除角色 ' + name + '？' : '是否删除该角色？'}}
             </p>
             <div slot="modal-footer" class="w-100">
                 <b-button variant="primary" size="sm" @click="cancel">取消</b-button>
@@ -151,23 +151,15 @@
                     console.log(error);
                 });
             },
-            getAvatar(avatar) {
-                return '/' + avatar;
-            },
             openDeleteModal(data) {
                 this.name = data.name;
                 this.id = data.id;
-                this.$root.$emit('bv::show::modal', 'modal-admin-delete')
+                this.$root.$emit('bv::show::modal', 'modal-role-delete')
             },
             sure() {
-                this.$bvModal.hide('modal-admin-delete')
+                this.$bvModal.hide('modal-role-delete')
                 deleteData(this.id).then((response) => {
-                    this.alerts.push({
-                        'type': response.data.msg_type,
-                        'msg': response.data.msg,
-                        'show': 10,
-                        'down': 0
-                    });
+                    this.alerts.push({'type': response.data.msg_type,'msg': response.data.msg,'show': 10,'down': 0});
                     if (response.data.code == 0) {
                         this.items = this.items.filter(item => item.id != this.id)
                         this.total = this.total - 1

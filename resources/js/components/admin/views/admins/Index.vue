@@ -151,9 +151,6 @@
                     console.log(error);
                 });
             },
-            getAvatar(avatar) {
-                return '/' + avatar;
-            },
             openDeleteModal(data) {
                 this.name = data.name;
                 this.id = data.id;
@@ -162,24 +159,14 @@
             sure() {
                 this.$bvModal.hide('modal-admin-delete')
                 deleteData(this.id).then((response) => {
-                    this.alerts.push({
-                        'type': response.data.msg_type,
-                        'msg': response.data.msg,
-                        'show': 10,
-                        'down': 0
-                    });
+                    this.alerts.push({'type': response.data.msg_type,'msg': response.data.msg, 'show': 10,'down': 0});
                     if (response.data.code == 0) {
                         this.items = this.items.filter(item => item.id != this.id)
                         this.total = this.total - 1
                     }
 
                 }).catch((error)=>{
-                    this.alerts.push({
-                        'type': 'danger',
-                        'msg': '系统出错，请联系管理员查看',
-                        'show': 10,
-                        'down': 0
-                    });
+                    this.alerts.push({'type': 'danger','msg': '系统出错，请联系管理员查看','show': 10,'down': 0});
                     console.log(error);
                 });
             },
