@@ -128,9 +128,6 @@
         created() {
             this.getList()
         },
-        activated() {
-            this.getList()
-        },
         watch: {
             'form.page'() {
                 this.getList()

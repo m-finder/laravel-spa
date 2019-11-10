@@ -1,5 +1,7 @@
 import Layout from '../views/layout/Layout'
 import Admin from '../views/admins/Index'
+import AdminEdit from '../views/admins/Edit'
+
 import Role from '../views/roles/Index'
 import RoleEdit from '../views/roles/Edit'
 import RoleCreate from '../views/roles/Create'
@@ -38,13 +40,13 @@ export default {
                 children: [
                     {
                         name: 'RoleList',
-                        meta: { title: '角色列表'},
+                        meta: { title: '角色列表', noCache: true},
                         path: 'list',
                         component: Role,
                     },
                     {
                         name: 'RoleEdit',
-                        meta: { title: '角色编辑'},
+                        meta: { title: '角色编辑', noCache: true},
                         path: 'edit/:id',
                         component: RoleEdit,
                     },
@@ -71,9 +73,15 @@ export default {
                 children: [
                     {
                         name: 'AdminList',
-                        meta: { title: '用户列表'},
+                        meta: { title: '用户列表' , noCache: true},
                         path: 'list',
                         component: Admin,
+                    },
+                    {
+                        name: 'AdminEdit',
+                        meta: {title: '用户编辑', noCache: true},
+                        path: 'edit/:id',
+                        component: AdminEdit
                     }
                 ]
             },

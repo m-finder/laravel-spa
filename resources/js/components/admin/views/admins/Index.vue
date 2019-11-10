@@ -45,8 +45,7 @@
                         </div>
 
                         <b-table striped hover :items="items" :fields="fields" :sort-by.sync="sortBy"
-                                 :sort-desc.sync="sortDesc" :busy.sync="isBusy" :current-page="currentPage"
-                                 :per-page="perPage" responsive="sm" outlined ref="table" show-empty
+                                 :sort-desc.sync="sortDesc" :busy.sync="isBusy" responsive="sm" outlined ref="table" show-empty
                                  sticky-header head-variant="light">
 
                             <div slot="table-busy" class="text-center text-danger my-2">
@@ -62,13 +61,13 @@
                                 <b-button v-if="row.item.id != 1" variant="link" class="text-danger mr-1" @click="openDeleteModal(row.item)">
                                     删除
                                 </b-button>
-                                <b-button variant="link" :href="'admins/edit' + row.item.id">编辑</b-button>
+                                <b-button variant="link" :to="'/admin/edit/' + row.item.id">编辑</b-button>
                             </template>
                         </b-table>
 
                         <b-row>
                             <b-col md="6" class="my-1">
-                                <b-pagination v-model="currentPage" :total-rows="total" :per-page="perPage" class="my-0"/>
+                                <b-pagination v-model="form.page" :total-rows="total" :per-page="form.limit" class="my-0"/>
                                 <b-card-text class="mt-3 text-secondary">共 {{ total }} 条数据</b-card-text>
                             </b-col>
                         </b-row>
@@ -93,7 +92,7 @@
 </template>
 
 <script>
-    import {getData, deleteData} from "../../../../api/user";
+    import {getData, deleteData} from "../../../../api/admin";
     import Alert from '../../components/alert/Index'
     export default {
         name: "AdminList",
@@ -104,8 +103,6 @@
             return {
                 alerts: [],
                 isBusy: true,
-                perPage: 3,
-                currentPage: 1,
                 total: 0,
                 items: [],
                 name: '',
@@ -113,6 +110,8 @@
                 form: {
                     name: null,
                     email: null,
+                    limit: 20,
+                    page: 1,
                 },
                 sortBy: 'id',
                 sortDesc: false,
@@ -128,6 +127,11 @@
         },
         created() {
             this.getList()
+        },
+        watch: {
+            'form.page'() {
+                this.getList()
+            },
         },
         methods: {
             getList() {

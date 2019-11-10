@@ -19,7 +19,7 @@
                                     <span class="input-group-text">角色别名</span>
                                 </div>
                                 <input required type="text" name="alias"  v-model="form.alias"
-                                       class="form-control" placeholder="登录邮箱">
+                                       class="form-control" placeholder="角色别名">
                             </div>
                         </div>
                         <div class="col-lg-12">
@@ -141,8 +141,7 @@
                 document.title = `${title} - ${this.form.id}`
             },
         },
-        activated() {
-            console.log(this.isEdit)
+        created(){
             if(this.isEdit){
                 this.form.id = this.$route.params.id
                 this.tempRoute = Object.assign({}, this.$route)
@@ -155,7 +154,7 @@
 
                 this.getDetail()
             }
-        }
+        },
     }
 </script>
 
