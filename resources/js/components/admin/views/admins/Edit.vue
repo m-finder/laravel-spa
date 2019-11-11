@@ -37,7 +37,7 @@
                                 </div>
                                 <b-form-select v-model="form.role_id">
                                     <template v-slot:first>
-                                        <option :value="null" disabled>-- 请选中角色绑定 --</option>
+                                        <option :value="null" disabled>-- 请选择角色进行绑定 --</option>
                                     </template>
                                     <template v-for="(role, i) in roles">
                                         <option :value="role.id">{{role.alias}}</option>

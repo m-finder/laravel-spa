@@ -7,8 +7,13 @@ import Role from '../views/roles/Index'
 import RoleEdit from '../views/roles/Edit'
 import RoleCreate from '../views/roles/Create'
 
+
+
 import Permission from '../views/permissions/Index'
 import RolePermission from '../views/roles-permissions/Index'
+
+import Menu from '../views/menus/Index'
+
 import Dashboard from '../views/dashboard/Index'
 import Login from '../views/login/Index'
 import Icon from '../views/icons/Index'
@@ -104,6 +109,21 @@ export default {
                         meta: { title: '权限列表'},
                         path: 'list',
                         component: Permission,
+                    }
+                ]
+            },
+            {
+                name: 'Menu',
+                meta: { title: '菜单管理'},
+                path: '/menu',
+                redirect: '/menu/list',
+                component: Layout,
+                children: [
+                    {
+                        name: 'MenuList',
+                        meta: { title: '菜单列表'},
+                        path: 'list',
+                        component: Menu,
                     }
                 ]
             },

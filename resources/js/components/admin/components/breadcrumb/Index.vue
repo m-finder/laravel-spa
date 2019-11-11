@@ -39,7 +39,7 @@
                 return name ? name.trim().toLocaleLowerCase() === (this.homePage).toLocaleLowerCase() :  false
             },
             getName(item) {
-                return item.meta && item.meta.label ? item.meta.label : item.name || null
+                return item.meta && item.meta.title ? item.meta.title : item.name || null
             },
             isLast(index) {
                 return index === this.list.length - 1

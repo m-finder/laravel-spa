@@ -46,6 +46,18 @@ export default {
             ]
         },
         {
+            name: '菜单管理',
+            url: '/menu',
+            icon: 'nav-list',
+            children: [
+                {
+                    name: '菜单列表',
+                    url: '/menu/list',
+                    icon: 'list'
+                },
+            ]
+        },
+        {
             name: 'Base',
             url: '/base',
             children: [

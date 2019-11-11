@@ -151,6 +151,9 @@
                     console.log(error);
                 });
             },
+            getAvatar(avatar) {
+                return '/' + avatar;
+            },
             openDeleteModal(data) {
                 this.name = data.name;
                 this.id = data.id;

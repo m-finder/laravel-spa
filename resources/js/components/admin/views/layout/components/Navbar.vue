@@ -1,6 +1,6 @@
 <template>
     <section class="nav-wrap">
-        <header class="header navbar">
+        <div class="header navbar">
             <button class="d-lg-none navbar-toggler" type="button" display="md" mobile @click="toggleSideBar">
                 <svg-vue class="nav-status " icon="menu"/>
             </button>
@@ -35,7 +35,7 @@
                     </b-nav-item>
                 </b-navbar-nav>
             </b-navbar>
-        </header>
+        </div>
         <theme :show="showSideBar"/>
     </section>
 </template>

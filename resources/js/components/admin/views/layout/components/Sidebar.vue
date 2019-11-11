@@ -1,14 +1,14 @@
 <template>
     <section class="text-center sidebar-container" :class="{ 'side-bar-close' : !isCollapse }">
         <div class="sidebar-wrapper">
-            <header class="header">
+            <div class="header">
                 <b-navbar-brand>
                     <img :src="'/favicon.ico'" class="logo d-inline-block align-bottom" alt="">
                     <span v-if="isCollapse">
                     M-laravel-spa
                 </span>
                 </b-navbar-brand>
-            </header>
+            </div>
 
             <b-nav vertical class="text-left" type="dark">
                 <template v-for="(item, index) in nav.items">
