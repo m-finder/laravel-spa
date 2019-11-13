@@ -91,7 +91,7 @@
 </template>
 
 <script>
-    import {getData, deleteData} from "../../../../api/role";
+    import {getData, deleteData} from "../../api/role";
     import Alert from '../../components/alert/Index'
 
     export default {

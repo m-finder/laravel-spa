@@ -9,7 +9,12 @@ Route::middleware('auth:admin-api')->group(function() {
     Route::put('/admins/{id}/update', 'Api\Admin\AdminController@update');
     Route::delete('/admins/{id}/delete', 'Api\Admin\AdminController@delete');
 
-
+    Route::get('/menus/list', 'Api\Admin\MenuController@lists');
+    Route::get('/menus/all', 'Api\Admin\MenuController@all');
+    Route::post('/menus/create', 'Api\Admin\MenuController@create');
+    Route::get('/menus/{id}/detail', 'Api\Admin\MenuController@detail');
+    Route::put('/menus/{id}/update', 'Api\Admin\MenuController@update');
+    Route::delete('/menus/{id}/delete', 'Api\Admin\MenuController@delete');
 
     Route::get('/roles/list', 'Api\Admin\RoleController@lists');
     Route::get('/roles/all', 'Api\Admin\RoleController@all');

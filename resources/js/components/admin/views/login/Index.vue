@@ -87,7 +87,7 @@
 </template>
 
 <script>
-    import api from '../../../../api/login'
+    import api from '../../api/login'
     import storage from '../../../../storage'
     import Alert from '../../components/alert/Index'
     export default {

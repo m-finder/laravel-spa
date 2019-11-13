@@ -61,8 +61,8 @@
 </template>
 
 <script>
-    import { getDetail, updateData, createData } from '../../../../api/admin'
-    import { getAll } from '../../../../api/role'
+    import { getDetail, updateData, createData } from '../../api/admin'
+    import { getAll } from '../../api/role'
     import Alert from '../../components/alert/Index'
 
     export default {

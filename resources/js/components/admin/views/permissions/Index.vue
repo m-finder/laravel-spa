@@ -91,7 +91,7 @@
 </template>
 
 <script>
-    import {getData, deleteData} from "../../../../api/admin";
+    import {getData, deleteData} from "../../api/admin";
     import Alert from '../../components/alert/Index'
     export default {
         name: "PermissionList",
