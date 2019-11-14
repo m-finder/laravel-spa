@@ -36,26 +36,47 @@
                             </div>
                         </div>
 
-                        <b-table striped hover :items="items" :fields="fields" :sort-by.sync="sortBy"
-                                 :sort-desc.sync="sortDesc" :busy.sync="isBusy" responsive="sm" outlined ref="table" show-empty
+                        <b-table-simple  striped hover :busy.sync="isBusy" responsive="sm" outlined ref="table" show-empty
                                  sticky-header head-variant="light">
+
+                            <b-thead>
+                                <b-tr>
+                                    <b-th colspan="2">Region</b-th>
+                                    <b-th colspan="3">Clothes</b-th>
+                                    <b-th colspan="2">Accessories</b-th>
+                                    <b-th>Country</b-th>
+                                    <b-th>City</b-th>
+                                </b-tr>
+                            </b-thead>
 
                             <div slot="table-busy" class="text-center text-danger my-2">
                                 <b-spinner class="align-middle"></b-spinner>
                                 <strong>Loading...</strong>
                             </div>
 
-                            <template v-slot:cell(icon)="data">
-                                <svg-vue :icon="data.icon || 'smile'"/>
-                            </template>
+                            <b-tbody>
+                                <b-tr>
+                                    <b-th rowspan="3">Belgium</b-th>
+                                    <b-th class="text-right">Antwerp</b-th>
+                                    <b-td>56</b-td>
+                                    <b-td>22</b-td>
+                                    <b-td>43</b-td>
+                                    <b-td variant="success">72</b-td>
+                                    <b-td>23</b-td>
+                                </b-tr>
+                            </b-tbody>
 
-                            <template v-slot:cell(actions)="row">
-                                <b-button v-if="row.item.id != 1" variant="link" class="text-danger mr-1" @click="openDeleteModal(row.item)">
-                                    删除
-                                </b-button>
-                                <b-button variant="link" :to="'/menu/edit/' + row.item.id">编辑</b-button>
-                            </template>
-                        </b-table>
+<!--                            <template v-slot:cell(icon)="data">-->
+<!--                                <svg-vue :icon="data.icon || 'smile'"/>-->
+<!--                            </template>-->
+
+<!--                            <template v-slot:cell(actions)="row">-->
+<!--                                <b-button v-if="row.item.id != 1" variant="link" class="text-danger mr-1" @click="openDeleteModal(row.item)">-->
+<!--                                    删除-->
+<!--                                </b-button>-->
+<!--                                <b-button variant="link" :to="'/menu/edit/' + row.item.id">编辑</b-button>-->
+<!--                            </template>-->
+                        </b-table-simple >
 
                         <b-row>
                             <b-col md="6" class="my-1">
