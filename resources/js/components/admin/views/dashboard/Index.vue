@@ -1,58 +1,18 @@
 <template>
     <div>
         <b-container fluid>
-            <b-row class="d-none">
-                <b-col sm="6" lg="3">
-                    <b-card title="用户量">
-                        <b-card-body class="p-0">
-                            <b-card-text>
-                                <h4 class="mb-0">96</h4>
-                            </b-card-text>
-                            <span>用户总数</span>
-                            <b-link class="float-right">195
-                                <svg-vue icon="more"/>
-                            </b-link>
-                        </b-card-body>
-                    </b-card>
-                </b-col>
-                <b-col sm="6" lg="3">
-                    <b-card no-body class="bg-info">
-                        <b-card-body class="pb-0">
-                            <h4 class="mb-0">9.823</h4>
-                            <p>Members online</p>
-                        </b-card-body>
-                    </b-card>
-                </b-col>
-                <b-col sm="6" lg="3">
-                    <b-card no-body class="bg-warning">
-                        <b-card-body class="pb-0">
-                            <h4 class="mb-0">9.823</h4>
-                            <p>Members online</p>
-                        </b-card-body>
-                    </b-card>
-                </b-col>
-                <b-col sm="6" lg="3">
-                    <b-card no-body class="bg-danger">
-                        <b-card-body class="pb-0">
-                            <h4 class="mb-0">9.823</h4>
-                            <p>Members online</p>
-                        </b-card-body>
-                    </b-card>
-                </b-col>
-            </b-row>
             <b-row>
-                <b-col>
+                <b-col md="4" sm="12">
                     <v-chart :options="option"/>
                 </b-col>
-                <b-col>
+                <b-col md="4" sm="12">
                     <v-chart :options="polar"/>
                 </b-col>
-                <b-col>
+                <b-col md="4" sm="12">
                     <v-chart :options="line"/>
                 </b-col>
             </b-row>
         </b-container>
-
     </div>
 </template>
 <script>
@@ -140,8 +100,8 @@
                         trigger: 'axis'
                     },
                     legend: {
-                        top:"8%",
-                        data:['邮件营销','联盟广告','视频广告','直接访问','搜索引擎']
+                        top: "8%",
+                        data: ['邮件营销', '联盟广告', '视频广告', '直接访问', '搜索引擎']
                     },
                     toolbox: {
                         feature: {
@@ -151,41 +111,41 @@
                     xAxis: {
                         type: 'category',
                         boundaryGap: false,
-                        data: ['周一','周二','周三','周四','周五','周六','周日']
+                        data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
                     },
                     yAxis: {
                         type: 'value'
                     },
                     series: [
                         {
-                            name:'邮件营销',
-                            type:'line',
+                            name: '邮件营销',
+                            type: 'line',
                             stack: '总量',
-                            data:[120, 132, 101, 134, 90, 230, 210]
+                            data: [120, 132, 101, 134, 90, 230, 210]
                         },
                         {
-                            name:'联盟广告',
-                            type:'line',
+                            name: '联盟广告',
+                            type: 'line',
                             stack: '总量',
-                            data:[220, 182, 191, 234, 290, 330, 310]
+                            data: [220, 182, 191, 234, 290, 330, 310]
                         },
                         {
-                            name:'视频广告',
-                            type:'line',
+                            name: '视频广告',
+                            type: 'line',
                             stack: '总量',
-                            data:[150, 232, 201, 154, 190, 330, 410]
+                            data: [150, 232, 201, 154, 190, 330, 410]
                         },
                         {
-                            name:'直接访问',
-                            type:'line',
+                            name: '直接访问',
+                            type: 'line',
                             stack: '总量',
-                            data:[320, 332, 301, 334, 390, 330, 320]
+                            data: [320, 332, 301, 334, 390, 330, 320]
                         },
                         {
-                            name:'搜索引擎',
-                            type:'line',
+                            name: '搜索引擎',
+                            type: 'line',
                             stack: '总量',
-                            data:[820, 932, 901, 934, 1290, 1330, 1320]
+                            data: [820, 932, 901, 934, 1290, 1330, 1320]
                         }
                     ]
                 }

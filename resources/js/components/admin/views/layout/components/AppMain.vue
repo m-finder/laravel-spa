@@ -2,7 +2,7 @@
     <section class="app-main" :class="{'app-main-close': !isCollapse}">
         <transition name="fade" mode="out-in">
             <keep-alive :include="cachedViews">
-                <router-view />
+                <router-view/>
             </keep-alive>
         </transition>
     </section>
@@ -31,14 +31,13 @@
 </script>
 <style lang="scss" scoped>
     .app-main {
-        /*84 = navbar + tags-view = 50 +34 */
-        min-height: calc(100vh - 84px);
+        height: calc(100vh - 89px);
         width: calc(100vw - 200px);
+        padding: 1.5rem 1rem 5rem 1rem;
+        transition: width 0.2s;
         overflow-x: hidden;
         overflow-y: auto;
         display: block;
-        padding: 1.5rem 1rem 5rem 1rem;
-        transition: width 0.2s;
     }
 
     .app-main-close {
