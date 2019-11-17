@@ -86,7 +86,7 @@
         transition: all .2s;
         width: 200px;
         background: rgba(0, 0, 0, .1);
-        height: 100vh;
+        height: 100%;
 
         .sidebar-wrapper {
             height: 100%;
@@ -162,6 +162,7 @@
         padding: 0;
         margin: 0;
         overflow: hidden;
+        background: rgba(255,255,255,.1);
         transition: max-height .3s ease-in-out;
         .nav-link{
             padding-left: 32px;
@@ -171,12 +172,14 @@
         }
     }
 
-    .active {
-        color: #1d68a7 !important;
-        background: rgba(255,255,255,.1);
+    .nav-link.active.open{
         svg {
             fill: #1d68a7 !important;
         }
+    }
+    .active {
+        color: #1d68a7 !important;
+        background: rgba(255,255,255,.1);
 
         &:before {
             content: '';

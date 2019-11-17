@@ -36,6 +36,7 @@ export default {
         } else {
             const data = JSON.parse(storage[table]);
             delete data[key]
+            storage[table] = JSON.stringify(data);
         }
     },
     sessionSet: function (settings) {

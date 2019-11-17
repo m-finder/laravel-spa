@@ -82,12 +82,12 @@
                 </b-col>
             </b-row>
         </b-container>
-        <alert alerts="alerts"/>
+        <alert :alerts="alerts"/>
     </b-container>
 </template>
 
 <script>
-    import api from '../../api/login'
+    import {login} from '../../api/login'
     import storage from '../../../../storage'
     import Alert from '../../components/alert/Index'
     export default {
@@ -160,6 +160,14 @@
             }
         },
         methods: {
+            getOtherQuery(query) {
+                return Object.keys(query).reduce((acc, cur) => {
+                    if (cur !== 'redirect') {
+                        acc[cur] = query[cur]
+                    }
+                    return acc
+                }, {})
+            },
             wrapSwitch(state) {
                 this.switchLeft = !this.switchLeft;
                 this.switchRight = !this.switchRight;
@@ -196,7 +204,7 @@
                 let emailCheck = this.checkEmail(email);
                 let passwordCheck = this.checkPassword(password);
                 if (emailCheck && passwordCheck) {
-                    api.login(this.form).then((response) => {
+                    login(this.form).then((response) => {
                         if (response.data.code == 0) {
                             this.alerts.push({
                                 'type': response.data.msg_type,

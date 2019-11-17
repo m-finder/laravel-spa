@@ -32,20 +32,7 @@
     }
 </script>
 <style lang="scss" scoped>
-    .app-wrapper {
-        width: 100%;
-        height: 100%;
-        position: relative;
-    }
-
-    .main-container {
-        position: absolute;
-        right: 0;
-        height: 100%;
-        transition: width 0.2s;
-        width: calc(100vw - 200px);
-    }
     .main-container-open{
-        width: calc(100vw - 68px);
+        width: calc(100vw - 68px)!important;
     }
 </style>

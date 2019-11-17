@@ -28,7 +28,7 @@
                         </template>
                         <b-dropdown-item href="#">资料设置</b-dropdown-item>
                         <b-dropdown-item href="#">密码设置</b-dropdown-item>
-                        <b-dropdown-item href="#">退出登陆</b-dropdown-item>
+                        <b-dropdown-item @click="logout">退出登陆</b-dropdown-item>
                     </b-nav-item-dropdown>
                     <b-nav-item @click="showSideBar = !showSideBar">
                         <svg-vue icon="setting"/>
@@ -72,6 +72,11 @@
             }
         },
         methods: {
+            logout(){
+                storage.remove('user-info') && storage.sessionRemove('user-info');
+                storage.remove('token') && storage.sessionRemove('token');
+                this.$router.push({path: '/login'})
+            },
             toggleSideBar() {
                 this.$store.dispatch('app/toggleSideBar')
             },
