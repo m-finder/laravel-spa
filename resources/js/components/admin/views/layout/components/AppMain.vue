@@ -29,7 +29,18 @@
         },
     }
 </script>
-<style scoped>
+<style lang="scss" scoped>
+    .app-main {
+        /*84 = navbar + tags-view = 50 +34 */
+        min-height: calc(100vh - 84px);
+        width: calc(100vw - 200px);
+        overflow-x: hidden;
+        overflow-y: auto;
+        display: block;
+        padding: 1.5rem 1rem 5rem 1rem;
+        transition: width 0.2s;
+    }
+
     .app-main-close {
         width: calc(100vw - 68px)!important;
     }

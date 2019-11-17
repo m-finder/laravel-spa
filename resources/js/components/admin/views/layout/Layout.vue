@@ -32,6 +32,14 @@
     }
 </script>
 <style lang="scss" scoped>
+    .main-container {
+        position: absolute;
+        right: 0;
+        height: 100vh;
+        transition: width 0.2s;
+        width: calc(100vw - 200px);
+    }
+
     .main-container-open{
         width: calc(100vw - 68px)!important;
     }
