@@ -31,7 +31,7 @@
 </script>
 <style lang="scss" scoped>
     .app-main {
-        height: calc(100vh - 89px);
+        height: calc(100vh - 91px);
         width: calc(100vw - 200px);
         padding: 1.5rem 1rem 5rem 1rem;
         transition: width 0.2s;
