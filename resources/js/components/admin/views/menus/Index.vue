@@ -9,7 +9,7 @@
                     <div class="card-body">
                         <div class="card-tools mb-3">
                             <div class="btn-group mr-3">
-                                <b-button class="btn-sm" variant="primary">添加菜单</b-button>
+                                <b-button class="btn-sm" variant="primary" @click="addMenu">添加菜单</b-button>
                             </div>
                         </div>
 
@@ -20,13 +20,44 @@
             </div>
         </div>
 
-        <b-modal centered id="modal-menu-delete" title="操作提醒" @hidden="resetModal">
+        <b-modal centered id="modal-menu-delete" title="操作提醒" @hidden="resetModal('form', 'defaultForm')">
             <p class="my-4">
-                {{ name ? '是否确认删除菜单 ' + name + '？' : '是否删除该菜单？'}}
+                {{ form.name ? '是否确认删除菜单 ' + form.name + '？' : '是否删除该菜单？'}}
             </p>
             <div slot="modal-footer" class="w-100">
-                <b-button variant="primary" size="sm" @click="cancel">取消</b-button>
-                <b-button variant="danger" size="sm" @click="sure">确认</b-button>
+                <b-button variant="primary" size="sm" @click="cancel('modal-menu-delete')">取消</b-button>
+                <b-button variant="danger" size="sm" @click="deleteData">确认</b-button>
+            </div>
+        </b-modal>
+
+        <b-modal centered id="modal-menu-add" title="操作提醒" @hidden="resetModal('form', 'defaultForm')">
+            <div class="col-lg-12">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">菜单名称</span>
+                    </div>
+                    <b-form-input v-model="form.name" placeholder="请输入菜单名称" required />
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">上级菜单</span>
+                    </div>
+                    <b-form-select v-model="form.parent_id">
+                        <template v-slot:first>
+                            <option :value="null" disabled>-- 请选择上级菜单 --</option>
+                        </template>
+                        <template v-for="(p, i) in parentNodes">
+                            <option :value="p.id">{{ p.name }}</option>
+                        </template>
+                    </b-form-select>
+                </div>
+            </div>
+
+            <div slot="modal-footer" class="w-100">
+                <b-button variant="primary" size="sm" @click="cancel('modal-menu-add')">取消</b-button>
+                <b-button variant="danger" size="sm" @click="submitAdd">确认</b-button>
             </div>
         </b-modal>
 
@@ -39,6 +70,12 @@
     import {getAll, deleteData} from "../../api/menu";
     import Alert from '../../components/alert/Index'
     import { bTreeView } from 'bootstrap-vue-treeview'
+
+    const defaultForm = {
+        id: null,
+        name: null,
+        parent_id: null,
+    };
     export default {
         name: "MenuList",
         components:{
@@ -49,10 +86,10 @@
             return {
                 alerts: [],
                 items: [],
-                name: '',
-                id: '',
+                parentNodes: [],
                 selectedNode: null,
-                menus: [{code: 'ADD_MENU', label: '添加菜单'},{code: 'DELETE_MENU', label: '删除菜单'}, {code: 'RENAME_MENU', label: '重命名'}]
+                menus: [{code: 'ADD_MENU', label: '添加子菜单'},{code: 'DELETE_MENU', label: '删除菜单'}, {code: 'RENAME_MENU', label: '重命名'}],
+                form:  Object.assign({}, defaultForm),
             }
         },
         created() {
@@ -64,31 +101,32 @@
             },
         },
         methods: {
+            submitAdd(){
+                console.log(this.form)
+            },
+            addMenu(){
+                this.parentNodes = [{id: 0, name: '顶级菜单'}];
+                this.form = Object.assign({}, defaultForm);
+                this.form.parent_id = 0;
+                this.$root.$emit('bv::show::modal', 'modal-menu-add');
+            },
             nodeSelect(node, isSelected) {
-                console.log('Node ' + node.data.name + ' has been ' + (isSelected ? 'selected' : 'deselected'))
                 if (isSelected) {
-                    this.name = node.data.name;
-                    this.id = node.data.id;
-                } else if (node.data === this.selectedNode) {
-                    this.resetModal();
+                    this.form = Object.assign({}, node.data);
+                    console.log(this.form)
                 }
             },
             menuItemSelected(item, node) {
-                console.log(item)
-                // if (item.code === 'ADD_CHILD_NODE') {
-                //     node.appendChild({
-                //         id: count++,
-                //         name: 'My new node'
-                //     })
-                // }
-
                 switch (item.code) {
                     case 'ADD_MENU':
-                        console.log('添加菜单');
-                        node.appendChild({id: count++,name: 'My new node'});
+                        let id = this.form.id;
+                        this.parentNodes = [{id: id, name: this.form.name}];
+                        this.form = Object.assign({}, defaultForm);
+                        this.form.parent_id = id;
+                        this.$root.$emit('bv::show::modal', 'modal-menu-add');
+                        // node.appendChild({id: count++,name: 'My new node'});
                         break;
                     case 'DELETE_MENU':
-                        console.log('删除菜单');
                         this.$root.$emit('bv::show::modal', 'modal-menu-delete');
                         break;
                     case 'RENAME_MENU':
@@ -113,12 +151,12 @@
                 this.id = data.id;
                 this.$root.$emit('bv::show::modal', 'modal-menu-delete')
             },
-            sure() {
-                this.$bvModal.hide('modal-menu-delete')
-                deleteData(this.id).then((response) => {
+            deleteData() {
+                this.$bvModal.hide('modal-menu-delete');
+                deleteData(this.form.id).then((response) => {
                     this.alerts.push({'type': response.data.msg_type,'msg': response.data.msg, 'show': 10,'down': 0});
                     if (response.data.code == 0) {
-                        this.items = this.items.filter(item => item.id != this.id)
+                        this.items = this.items.filter(item => item.id != this.form.id)
                         this.total = this.total - 1
                     }
                 }).catch((error)=>{
@@ -126,12 +164,11 @@
                     console.log(error);
                 });
             },
-            cancel() {
-                this.$bvModal.hide('modal-menu-delete')
+            cancel(modal) {
+                this.$bvModal.hide(modal)
             },
-            resetModal() {
-                this.name = '';
-                this.form.id = null
+            resetModal(form, defaultForm) {
+                this[form] = defaultForm
             }
         }
     }
