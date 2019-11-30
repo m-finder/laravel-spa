@@ -14,7 +14,7 @@ class AdminController extends ApiController
     public function lists()
     {
         $users = Admin::name(request('name'))->email(request('email'))->paginate(10);
-        return $this->json_response($users, '操作成功', self::ERROR_NONE, self::MSG_TYPE_SUCCESS);
+        return $this->json_response($users);
     }
 
     public function detail($id)
@@ -23,7 +23,7 @@ class AdminController extends ApiController
             return $this->json_response(null, '参数错误', self::ERROR_PARAMS, self::MSG_TYPE_ERROR);
         }
         $detail = Admin::find($id);
-        return $this->json_response($detail, '操作成功', self::ERROR_NONE, self::MSG_TYPE_SUCCESS);
+        return $this->json_response($detail);
     }
 
     public function update($id)

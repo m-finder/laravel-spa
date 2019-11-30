@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Menu extends Model
 {
-    public function scopeName($query){
-        return request('name') ? $query->where('name', request('name')) : $query;
-    }
+    protected $fillable = [
+        'id', 'parent_id', 'name', 'url',  'icon',
+    ];
+
 }

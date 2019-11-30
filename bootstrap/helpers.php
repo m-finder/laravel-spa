@@ -8,7 +8,7 @@ if (!function_exists('request_intersect')) {
      * @return array|ø
      */
     function request_intersect($keys) {
-        return array_filter(request()->only(is_array($keys) ? $keys : func_get_args()));
+        return request()->only(is_array($keys) ? $keys : func_get_args());
     }
 }
 
@@ -28,10 +28,11 @@ if (!function_exists('make_tree')) {
         foreach ($list as $k => $v) {
             $newList[$v['id']] = $v;
         }
-        
+
         foreach ($newList as $value) {
             if ($parentId == $value['parent_id']) {
                 $tree[] = &$newList[$value['id']];
+                $newList[$value['id']]['children'] = [];
             } elseif (isset($newList[$value['parent_id']])) {
                 $newList[$value['parent_id']]['children'][] = &$newList[$value['id']];
             }

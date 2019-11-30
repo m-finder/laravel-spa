@@ -13,13 +13,13 @@ class RoleController extends ApiController
     {
         $page = request('limit', 20);
         $roles = Role::name(request('name'))->alias(request('alias'))->paginate($page);
-        return $this->json_response($roles, '操作成功', self::ERROR_NONE, self::MSG_TYPE_SUCCESS);
+        return $this->json_response($roles);
     }
 
     public function all()
     {
         $roles = Role::get();
-        return $this->json_response($roles, '操作成功', self::ERROR_NONE, self::MSG_TYPE_SUCCESS);
+        return $this->json_response($roles);
     }
 
     public function detail($id)
@@ -29,7 +29,7 @@ class RoleController extends ApiController
             return $this->json_response(null, '参数错误', self::ERROR_PARAMS, self::MSG_TYPE_ERROR);
         }
         $detail = Role::find($id);
-        return $this->json_response($detail, '操作成功', self::ERROR_NONE, self::MSG_TYPE_SUCCESS);
+        return $this->json_response($detail);
     }
 
     public function update($id)

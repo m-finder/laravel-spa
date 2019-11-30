@@ -13,12 +13,17 @@ class MenuController extends ApiController
     public function lists()
     {
         $menus = Menu::name(request('name'))->paginate(10);
-        return $this->json_response($menus, '操作成功', self::ERROR_NONE, self::MSG_TYPE_SUCCESS);
+        return $this->json_response($menus);
     }
 
     public function all(){
-        $menus = Menu::name(request('name'))->get();
-        return $this->json_response(make_tree($menus->toArray()), '操作成功', self::ERROR_NONE, self::MSG_TYPE_SUCCESS);
+        $menus = Menu::get();
+        return $this->json_response(make_tree($menus->toArray()));
+    }
+
+    public function parents(){
+        $menus = Menu::where('parent_id', 0)->get();
+        return $this->json_response($menus);
     }
 
     public function detail($id)
@@ -27,24 +32,19 @@ class MenuController extends ApiController
             return $this->json_response(null, '参数错误', self::ERROR_PARAMS, self::MSG_TYPE_ERROR);
         }
         $detail = Menu::find($id);
-        return $this->json_response($detail, '操作成功', self::ERROR_NONE, self::MSG_TYPE_SUCCESS);
+        return $this->json_response($detail);
     }
 
     public function update($id)
     {
-        $admin = Menu::where('id', $id)->first();
+        $menu = Menu::where('id', $id)->first();
         try {
-            if (is_null($admin)) {
-                return $this->json_response(null, '用户不存在', self::ERROR_USER_NOT_EXIST, self::MSG_TYPE_ERROR);
+            if (is_null($menu)) {
+                return $this->json_response(null, '该菜单不存在', self::ERROR_USER_NOT_EXIST, self::MSG_TYPE_ERROR);
             }
-            if (Menu::checkUnique()) {
-                $admin->update(request_intersect([
-                    'role_id', 'name', 'email', 'password'
-                ]));
-            } else {
-                return $this->json_response(null, '该用户已存在，请更换用户名或登录邮箱', self::ERROR_PARAMS, self::MSG_TYPE_ERROR);
-            }
-
+            $menu->update(request_intersect([
+                'parent_id', 'name', 'url', 'icon',
+            ]));
         } catch (\Exception $exception) {
             Log::error($exception);
             return $this->json_response(null, '系统错误', self::ERROR_SYSTEM_INTERRUPTED, self::MSG_TYPE_ERROR);
@@ -54,31 +54,28 @@ class MenuController extends ApiController
 
     public function create()
     {
-        $admin = new Menu();
+        $model = new Menu();
         try {
-            if (Menu::checkUnique()) {
-                $data = request_intersect([
-                    'role_id', 'name', 'email', 'password'
-                ]);
-                $data['password'] = Hash::make($data['password']);
-                $data['api_token'] = (string)Str::uuid();
-                $data['avatar'] = 'images/avatar.png';
-                $admin->create($data);
-            } else {
-                return $this->json_response(null, '该用户已存在，请更换用户名或邮箱', self::ERROR_PARAMS, self::MSG_TYPE_ERROR);
-            }
-
+            $data = request_intersect([
+                'parent_id', 'name', 'url', 'icon',
+            ]);
+            $data['icon'] = is_null($data['icon']) ? 'smile' : $data['icon'];
+            $menu = $model->firstOrCreate($data);
         } catch (\Exception $exception) {
             Log::error($exception);
             return $this->json_response(null, '系统错误', self::ERROR_SYSTEM_INTERRUPTED, self::MSG_TYPE_ERROR);
         }
-        return $this->json_response();
+        return $this->json_response($menu);
     }
 
     public function delete($id)
     {
         $menu = Menu::find($id);
-        if ($id == 1) return $this->json_response(null, '该菜单不存在', self::ERROR_PARAMS, self::MSG_TYPE_ERROR);
+        if ($id == 1) return $this->json_response(null, '该菜单不可删除', self::ERROR_PARAMS, self::MSG_TYPE_ERROR);
+
+        $has_children = Menu::where('parent_id', $id)->first();
+        if (!is_null($has_children)) return $this->json_response(null, '请先删除该菜单下的子菜单', self::ERROR_PARAMS, self::MSG_TYPE_ERROR);
+
         if (is_null($menu)) {
             return $this->json_response(null, '菜单不存在', self::ERROR_USER_NOT_EXIST, self::MSG_TYPE_ERROR);
         } else {

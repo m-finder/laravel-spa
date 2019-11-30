@@ -15,6 +15,13 @@ export function getAll() {
     })
 }
 
+export function getParents() {
+    return request({
+        url: '/admin-api/menus/parents',
+        method: 'get'
+    })
+}
+
 export function getDetail(id) {
     return request({
         url: '/admin-api/menus/' + id + '/detail',
