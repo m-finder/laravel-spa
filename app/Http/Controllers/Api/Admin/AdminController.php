@@ -13,7 +13,7 @@ class AdminController extends ApiController
 {
     public function lists()
     {
-        $users = Admin::name(request('name'))->email(request('email'))->paginate(10);
+        $users = Admin::name(request('name'))->email(request('email'))->with('role')->paginate(10);
         return $this->json_response($users);
     }
 
@@ -56,9 +56,9 @@ class AdminController extends ApiController
                 $data = request_intersect([
                     'role_id', 'name', 'email', 'password'
                 ]);
-                $data['password'] =  Hash::make($data['password']);
-                $data['api_token'] =   (string) Str::uuid();
-                $data['avatar'] =   'images/avatar.png';
+                $data['password'] = Hash::make($data['password']);
+                $data['api_token'] = (string)Str::uuid();
+                $data['avatar'] = 'images/avatar.jpg';
                 $admin->create($data);
             } else {
                 return $this->json_response(null, '该用户已存在，请更换用户名或邮箱', self::ERROR_PARAMS, self::MSG_TYPE_ERROR);

@@ -15,7 +15,7 @@
                         ref="tag"
                         class="tags-view-item">
                         {{ tag.title }}
-                        <span class="tag-close" @click.prevent.stop="closeTag(tag)">
+                        <span v-if="!isAffix(tag)" class="tag-close" @click.prevent.stop="closeTag(tag)">
                             <svg-vue icon="close"/>
                         </span>
                     </router-link>
@@ -28,12 +28,16 @@
     </div>
 </template>
 <script>
+    import routers from '../../../router/routers'
+    import path from 'path'
+
     export default {
         name: 'Tags',
         data() {
             return {
                 left: 0,
-                tagsWrapperLeft: 0
+                tagsWrapperLeft: 0,
+                routers: routers.routers()
             }
         },
         computed: {
@@ -48,9 +52,43 @@
             }
         },
         mounted() {
-            this.addViewTags()
+            this.initTags();
+            this.addViewTags();
         },
         methods: {
+            isAffix(tag) {
+                return tag.meta && tag.meta.affix
+            },
+            filterAffixTags(routes, basePath = '/') {
+                let tags = []
+                routes.forEach(route => {
+                    if (route.meta && route.meta.affix) {
+                        const tagPath = path.resolve(basePath, route.path);
+                        tags.push({
+                            fullPath: tagPath,
+                            path: tagPath,
+                            name: route.name,
+                            meta: { ...route.meta }
+                        })
+                    }
+                    if (route.children) {
+                        const tempTags = this.filterAffixTags(route.children, route.path);
+                        if (tempTags.length >= 1) {
+                            tags = [...tags, ...tempTags]
+                        }
+                    }
+                });
+                return tags
+            },
+            initTags() {
+                const affixTags = this.affixTags = this.filterAffixTags(this.routers);
+                for (const tag of affixTags) {
+                    // Must have tag name
+                    if (tag.name) {
+                        this.$store.dispatch('addVisitedView', tag)
+                    }
+                }
+            },
             handleScroll() {
 
             },

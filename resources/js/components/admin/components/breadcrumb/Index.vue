@@ -26,7 +26,7 @@
         },
         computed: {
             routeRecords: function () {
-                let matched = this.list.filter((route) => route.name || route.meta.label)
+                let matched = this.list.filter((route) => route.name || route.meta.label);
                 if (!this.isDashboard(matched[0])) {
                     matched = [{ path: this.homeUrl, name: this.homePage}].concat(matched)
                 }

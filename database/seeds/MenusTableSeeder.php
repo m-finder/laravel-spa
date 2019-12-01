@@ -31,36 +31,28 @@ class MenusTableSeeder extends Seeder
         $db->id = 3;
         $db->parent_id = 2;
         $db->name = '角色列表';
-        $db->url = '/role/list';
-        $db->icon = 'list';
+        $db->url = '/auth/roles';
+        $db->icon = 'role';
         $db->save();
 
         $db = new \App\Models\Menu();
         $db->id = 4;
         $db->parent_id = 2;
         $db->name = '用户列表';
-        $db->url = '/admin/list';
+        $db->url = '/auth/admins';
         $db->icon = 'user';
         $db->save();
 
         $db = new \App\Models\Menu();
         $db->id = 5;
         $db->parent_id = 2;
-        $db->name = '权限列表';
-        $db->url = '/permission/list';
+        $db->name = '权限管理';
+        $db->url = '/auth/menus';
         $db->icon = 'security';
         $db->save();
 
         $db = new \App\Models\Menu();
         $db->id = 6;
-        $db->parent_id = 2;
-        $db->name = '菜单列表';
-        $db->url = '/menu/list';
-        $db->icon = 'nav-list';
-        $db->save();
-
-        $db = new \App\Models\Menu();
-        $db->id = 7;
         $db->parent_id = 0;
         $db->name = '其他';
         $db->url = '/base';
@@ -68,13 +60,11 @@ class MenusTableSeeder extends Seeder
         $db->save();
 
         $db = new \App\Models\Menu();
-        $db->id = 8;
+        $db->id = 7;
         $db->parent_id = 7;
         $db->name = '图标';
         $db->url = '/base/icons';
         $db->icon = 'smile';
         $db->save();
-
-
     }
 }

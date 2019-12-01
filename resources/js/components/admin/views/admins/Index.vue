@@ -9,7 +9,7 @@
                     <div class="card-body">
                         <div class="card-tools mb-3">
 
-                            <div class="btn-group">
+                            <div class="btn-group mr-3">
                                 <form model="form">
                                     <div class="row">
                                         <div class="col-6">
@@ -40,13 +40,17 @@
                             </div>
 
                             <div class="btn-group mr-3">
-                                <b-button to="/admin/create" class="btn-sm" variant="primary">添加用户</b-button>
+                                <b-button class="btn-sm" variant="primary" @click="openAddModal">添加用户</b-button>
+                            </div>
+
+                            <div class="btn-group mr-3">
+                                <b-button class="btn-sm" variant="primary" @click="refresh">刷新列表</b-button>
                             </div>
                         </div>
 
-                        <b-table striped hover :items="items" :fields="fields" :sort-by.sync="sortBy"
-                                 :sort-desc.sync="sortDesc" :busy.sync="isBusy" responsive="sm" outlined ref="table" show-empty
-                                 sticky-header head-variant="light">
+                        <b-table hover :items="items" :fields="fields" :sort-by.sync="sortBy"
+                                 :sort-desc.sync="sortDesc" :busy.sync="isBusy"
+                                 responsive="sm" outlined ref="table" show-empty sticky-header>
 
                             <div slot="table-busy" class="text-center text-danger my-2">
                                 <b-spinner class="align-middle"></b-spinner>
@@ -57,11 +61,15 @@
                                 <img :src="getAvatar(data.value) " class="img-circle row-user-avatar" alt="用户头像">
                             </template>
 
+                            <template v-slot:cell(role)="row">
+                                {{ row.item.role.alias}}
+                            </template>
+
                             <template v-slot:cell(actions)="row">
                                 <b-button v-if="row.item.id != 1" variant="link" class="text-danger mr-1" @click="openDeleteModal(row.item)">
                                     删除
                                 </b-button>
-                                <b-button variant="link" :to="'/admin/edit/' + row.item.id">编辑</b-button>
+                                <b-button variant="link" @click="openEditModal(row.item)">编辑</b-button>
                             </template>
                         </b-table>
 
@@ -76,13 +84,109 @@
             </div>
         </div>
 
-        <b-modal centered id="modal-admin-delete" title="操作提醒" @hidden="resetModal">
+        <b-modal centered id="modal-admin-delete" title="删除用户" @hidden="resetModal">
             <p class="my-4">
-                {{ name ? '是否确认删除用户 ' + name + '？' : '是否删除该用户？'}}
+                {{ deleteForm.name ? '是否确认删除用户 ' + deleteForm.name + '？' : '是否删除该用户？'}}
             </p>
             <div slot="modal-footer" class="w-100">
-                <b-button variant="primary" size="sm" @click="cancel">取消</b-button>
-                <b-button variant="danger" size="sm" @click="sure">确认</b-button>
+                <b-button variant="primary" size="sm" @click="cancel('modal-admin-delete')">取消</b-button>
+                <b-button variant="danger" size="sm" @click="deleteData">提交</b-button>
+            </div>
+        </b-modal>
+
+        <b-modal centered id="modal-admin-add" title="添加用户" @hidden="resetModal">
+            <div class="col-lg-12">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">用户名称</span>
+                    </div>
+                    <input type="text" name="name" v-model="addForm.name"
+                           class="form-control" placeholder="角色名称">
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">登录邮箱</span>
+                    </div>
+                    <input type="email" name="email"  v-model="addForm.email"
+                           class="form-control" placeholder="登录邮箱">
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">登录密码</span>
+                    </div>
+                    <input type="password" name="password"  v-model="addForm.password" class="form-control" placeholder="登录密码">
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">角色绑定</span>
+                    </div>
+                    <b-form-select v-model="addForm.role_id">
+                        <template v-slot:first>
+                            <option :value="null" disabled>-- 请选择角色进行绑定 --</option>
+                        </template>
+                        <template v-for="(role, i) in roles">
+                            <option :value="role.id">{{role.alias}}</option>
+                        </template>
+                    </b-form-select>
+                </div>
+            </div>
+            <div slot="modal-footer" class="w-100">
+                <b-button variant="primary" size="sm" @click="cancel('modal-admin-add')">取消</b-button>
+                <b-button variant="danger" size="sm" @click="submitAdd">确认</b-button>
+            </div>
+        </b-modal>
+
+        <b-modal centered id="modal-admin-edit" title="编辑用户" @hidden="resetModal">
+            <div class="col-lg-12">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">用户名称</span>
+                    </div>
+                    <input type="text" name="name" v-model="editForm.name"
+                           class="form-control" placeholder="角色名称">
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">登录邮箱</span>
+                    </div>
+                    <input type="email" name="email"  v-model="editForm.email"
+                           class="form-control" placeholder="登录邮箱">
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">登录密码</span>
+                    </div>
+                    <input type="password" name="password"  v-model="editForm.password" class="form-control" placeholder="登录密码">
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">角色绑定</span>
+                    </div>
+                    <b-form-select v-model="editForm.role_id">
+                        <template v-slot:first>
+                            <option :value="null" disabled>-- 请选择角色进行绑定 --</option>
+                        </template>
+                        <template v-for="(role, i) in roles">
+                            <option :selected="role.id == editForm.role_id" :value="role.id">{{role.alias}}</option>
+                        </template>
+                    </b-form-select>
+                </div>
+            </div>
+            <div slot="modal-footer" class="w-100">
+                <b-button variant="primary" size="sm" @click="cancel('modal-admin-edit')">取消</b-button>
+                <b-button variant="danger" size="sm" @click="submitEdit">提交</b-button>
             </div>
         </b-modal>
 
@@ -92,8 +196,27 @@
 </template>
 
 <script>
-    import {getData, deleteData} from "../../api/admin";
+    import {getData, deleteData, createData, updateData, getDetail} from "../../api/admin";
     import Alert from '../../components/alert/Index'
+    import {getAll} from "../../api/role";
+
+    const deleteForm = {
+        id: null,
+        name: null
+    };
+    const addForm = {
+        name: null,
+        email: null,
+        password: null,
+        role_id: null,
+    };
+    const form = {
+        name: null,
+        email: null,
+        limit: 20,
+        page: 1,
+    };
+
     export default {
         name: "AdminList",
         components:{
@@ -105,19 +228,17 @@
                 isBusy: true,
                 total: 0,
                 items: [],
-                name: '',
-                id: '',
-                form: {
-                    name: null,
-                    email: null,
-                    limit: 20,
-                    page: 1,
-                },
+                roles: [],
+                deleteForm: Object.assign({}, deleteForm),
+                addForm: Object.assign({}, addForm),
+                editForm: Object.assign({id:null}, addForm),
+                form: Object.assign({}, form),
                 sortBy: 'id',
                 sortDesc: false,
                 fields: [
                     {label: 'ID', key: 'id', sortable: true},
                     {label: '昵称', key: 'name', sortable: false},
+                    {label: '角色', key: 'role', sortable: false},
                     {label: '邮箱', key: 'email', sortable: false},
                     {label: '头像', key: 'avatar', sortable: false},
                     {label: '创建时间', key: 'created_at', sortable: true},
@@ -134,6 +255,10 @@
             },
         },
         methods: {
+            refresh(){
+                this.form = Object.assign({}, form);
+                this.getList()
+            },
             getList() {
                 this.isBusy = true;
                 getData(this.form).then((response) => {
@@ -142,12 +267,7 @@
                     this.items = response.data.data.data;
                     this.total = response.data.data.total;
                 }).catch((error)=>{
-                    this.alerts.push({
-                        'type': 'danger',
-                        'msg': '系统出错，请联系管理员查看',
-                        'show': 10,
-                        'down': 0
-                    });
+                    this.alerts.push({'type': 'danger','msg': '系统出错，请联系管理员查看','show': 10,'down': 0});
                     console.log(error);
                 });
             },
@@ -155,30 +275,156 @@
                 return '/' + avatar;
             },
             openDeleteModal(data) {
-                this.name = data.name;
-                this.id = data.id;
+                this.deleteForm = data
                 this.$root.$emit('bv::show::modal', 'modal-admin-delete')
             },
-            sure() {
+            deleteData() {
                 this.$bvModal.hide('modal-admin-delete')
-                deleteData(this.id).then((response) => {
+                deleteData(this.deleteForm.id).then((response) => {
                     this.alerts.push({'type': response.data.msg_type,'msg': response.data.msg, 'show': 10,'down': 0});
                     if (response.data.code == 0) {
-                        this.items = this.items.filter(item => item.id != this.id)
-                        this.total = this.total - 1
+                        this.items = this.items.filter(item => item.id != this.deleteForm.id);
+                        this.total = this.total - 1;
+                        this.deleteForm = Object.assign({}, deleteForm);
                     }
-
                 }).catch((error)=>{
                     this.alerts.push({'type': 'danger','msg': '系统出错，请联系管理员查看','show': 10,'down': 0});
                     console.log(error);
                 });
             },
-            cancel() {
-                this.$bvModal.hide('modal-admin-delete')
+            openAddModal(){
+                this.getRole();
+                this.$root.$emit('bv::show::modal', 'modal-admin-add');
+            },
+            checkAddForm(){
+                if(!this.addForm.name){
+                    this.alerts.push({'type': 'danger','show': 10,'down': 0,'msg': '请输入用户名'});
+                    return false;
+                }
+                if(!this.addForm.role_id){
+                    this.alerts.push({'type': 'danger','show': 10,'down': 0,'msg': '请选择绑定角色'});
+                    return false;
+                }
+                if(!this.addForm.email){
+                    this.alerts.push({'type': 'danger','show': 10,'down': 0,'msg': '请输入登录邮箱'});
+                    return false;
+                }
+                let reg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                let email = reg.test(this.addForm.email);
+                if(!email){
+                    this.alerts.push({'type': 'danger','show': 10,'down': 0,'msg': '请输入正确的登录邮箱'});
+                    return false;
+                }
+                if(!this.editForm.password){
+                    this.alerts.push({'type': 'danger','show': 10,'down': 0,'msg': '请输入登录密码'});
+                    return false;
+                }
+                if(this.editForm.password.length > 32 || this.editForm.password.length<6){
+                    this.alerts.push({'type': 'danger','show': 10,'down': 0,'msg': '密码应为长度 6 - 32 位的字符串'});
+                    return false;
+                }
+                return true;
+            },
+            submitAdd(){
+               if(this.checkAddForm()){
+                   createData(this.addForm).then(response => {
+                       this.alerts.push({'type': response.data.msg_type,'show': 10,'down': 0,'msg': response.data.msg});
+                       if(response.data.code == 0){
+                           this.$bvModal.hide('modal-admin-add');
+                           this.getList()
+                       }
+                   }).catch(error => {
+                       let error_message = error.response.data.message || error.message;
+                       this.alerts.push({'type': 'danger','msg': '系统出错，请联系管理员查看','show': 10,'down': 0});
+                       console.log(error_message)
+                   })
+               }
+            },
+            getRole(){
+                getAll().then(response => {
+                    if(response.data.code == 0){
+                        this.roles = response.data.data;
+                    }else{
+                        this.alerts.push({'type': response.data.msg_type,'msg': response.data.msg,'show': 10,'down': 0});
+                    }
+                }).catch(error => {
+                    this.alerts.push({'type': 'danger','msg': '系统出错，请联系管理员查看','show': 10,'down': 0 });
+                    console.log(error);
+                })
+            },
+            getDetail(){
+                getDetail(this.editForm.id).then(response => {
+                    if(response.data.code == 0){
+                        this.editForm = response.data.data;
+                        this.editForm.password = null
+                        this.$root.$emit('bv::show::modal', 'modal-admin-edit');
+                    }else{
+                        this.alerts.push({'type': response.data.msg_type,'msg': response.data.msg,'show': 10,'down': 0});
+                    }
+                }).catch(error => {
+                    this.alerts.push({'type': 'danger','msg': '系统出错，请联系管理员查看','show': 10,'down': 0 });
+                    console.log(error);
+                })
+            },
+            openEditModal(data){
+                this.editForm = data;
+                this.getRole();
+                this.getDetail();
+            },
+            checkEditForm(){
+                if(!this.editForm.id){
+                    this.alerts.push({'type': 'danger','show': 10,'down': 0,'msg': '用户获取失败'});
+                    return false;
+                }
+                if(!this.editForm.name){
+                    this.alerts.push({'type': 'danger','show': 10,'down': 0,'msg': '请输入用户名'});
+                    return false;
+                }
+                if(!this.editForm.role_id){
+                    this.alerts.push({'type': 'danger','show': 10,'down': 0,'msg': '请选择绑定角色'});
+                    return false;
+                }
+                if(!this.editForm.email){
+                    this.alerts.push({'type': 'danger','show': 10,'down': 0,'msg': '请输入登录邮箱'});
+                    return false;
+                }
+                let reg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                let email = reg.test(this.editForm.email);
+                if(!email){
+                    this.alerts.push({'type': 'danger','show': 10,'down': 0,'msg': '请输入正确的登录邮箱'});
+                    return false;
+                }
+                if(!this.editForm.password){
+                    this.alerts.push({'type': 'danger','show': 10,'down': 0,'msg': '请输入登录密码'});
+                    return false;
+                }
+                if(this.editForm.password.length > 32 || this.editForm.password.length<6){
+                    this.alerts.push({'type': 'danger','show': 10,'down': 0,'msg': '密码应为长度 6 - 32 位的字符串'});
+                    return false;
+                }
+                return true;
+            },
+            submitEdit(){
+                if(this.checkEditForm()){
+                    updateData(this.editForm).then(response => {
+                        this.alerts.push({'type': response.data.msg_type,'show': 10,'down': 0,'msg': response.data.msg});
+                        if(response.data.code == 0){
+                            this.$bvModal.hide('modal-admin-edit');
+                            this.getList()
+                        }
+                    }).catch(error => {
+                        let error_message = error.response.data.message || error.message;
+                        this.alerts.push({'type': 'danger','msg': '系统出错，请联系管理员查看','show': 10,'down': 0});
+                        console.log(error_message)
+                    })
+                }
+            },
+            cancel(modal) {
+                this.$bvModal.hide(modal)
             },
             resetModal() {
-                this.name = '';
-                this.form.id = null
+                this.addForm = Object.assign({}, addForm);
+                this.editForm = Object.assign({id: null}, addForm);
             }
         }
     }

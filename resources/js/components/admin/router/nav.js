@@ -12,23 +12,18 @@ export default {
             children: [
                 {
                     name: '角色列表',
-                    url: '/role/list',
+                    url: '/auth/roles',
                     icon: 'role'
                 },
                 {
                     name: '用户列表',
-                    url: '/admin/list',
+                    url: '/auth/admins',
                     icon: 'user'
                 },
                 {
-                    name: '权限列表',
-                    url: '/permission/list',
+                    name: '权限管理',
+                    url: '/auth/menus',
                     icon: 'security'
-                },
-                {
-                    name: '菜单列表',
-                    url: '/menu/list',
-                    icon: 'nav-list'
                 },
             ]
         },
