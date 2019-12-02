@@ -18,7 +18,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-8"  >
+            <div class="col-8">
                 <div class="card card-primary card-outline">
                     <div class="card-header">
                         <h3 class="card-title mb-0">资源列表</h3>
@@ -30,8 +30,18 @@
                             </div>
                         </div>
 
-                        <b-tree-view v-if="items && items.length" :data="items" :contextMenuItems="menus"
-                                     @nodeSelect="nodeSelect" @contextMenuItemSelect="menuItemSelected"/>
+                        <b-table hover responsive="sm" outlined ref="table" show-empty sticky-header>
+
+                           <tr>
+                               <td>2222</td>
+                           </tr>
+                        </b-table>
+
+                        <b-row>
+                            <b-col md="6" class="my-1">
+                               分页111222
+                            </b-col>
+                        </b-row>
                     </div>
                 </div>
             </div>
@@ -174,7 +184,6 @@
                 alerts: [],
                 items: [],
                 parentNodes: [],
-                selectedNode: null,
                 menus: [{code: 'ADD_MENU', label: '添加子菜单'},{code: 'DELETE_MENU', label: '删除菜单'}, {code: 'RENAME_MENU', label: '编辑菜单'}],
                 form:  Object.assign({}, defaultForm),
                 node: null,

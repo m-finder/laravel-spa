@@ -1,4 +1,5 @@
 const mix = require('laravel-mix');
+const config = require('./webpack.config');
 require('laravel-mix-svg-vue');
 /*
  |--------------------------------------------------------------------------
@@ -13,7 +14,20 @@ require('laravel-mix-svg-vue');
 mix.js('resources/js/app.js', 'public/js')
     .sass('resources/sass/app.scss', 'public/css');
 
+// mix.webpackConfig(config);
+
 mix.js('resources/js/admin.js', 'public/js')
+    .extract([
+        'vue',
+        'axios',
+        'vuex',
+        'vue-router',
+        'echarts',
+        'vue-echarts'
+    ])
+    .options({
+        processCssUrls: false,
+    })
     .sass('resources/sass/admin.scss', 'public/css')
     .svgVue({
         svgPath: 'resources/icons',
@@ -22,8 +36,17 @@ mix.js('resources/js/admin.js', 'public/js')
             {removeTitle: true},
             {removeViewBox: true},
             {removeDimensions: true},
-            {removeAttrs: { attrs: '(fill|stroke)' }}
+            {removeAttrs: {attrs: '(fill|stroke)'}}
         ]
     });
-
-mix.version();
+// , {
+//     implementation: require('node-sass'),
+// }
+if (mix.inProduction()) {
+    mix.version();
+} else {
+    mix.sourceMaps()
+        .webpackConfig({
+            devtool: 'cheap-eval-source-map', // Fastest for development
+        });
+}

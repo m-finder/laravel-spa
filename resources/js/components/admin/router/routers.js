@@ -1,18 +1,5 @@
 import Layout from '../views/layout/Layout'
 
-import Admin from '../views/admins/Index'
-import Role from '../views/roles/Index'
-import Permission from '../views/permissions/Index'
-import RolePermission from '../views/roles-permissions/Index'
-
-import Menu from '../views/menus/Index'
-
-import Dashboard from '../views/dashboard/Index'
-import Login from '../views/login/Index'
-import Icon from '../views/icons/Index'
-import Redirect from '../components/redirect/Index'
-import Error_404 from '../views/error/404'
-
 export default {
     routers: function () {
         return [
@@ -24,9 +11,9 @@ export default {
                 children: [
                     {
                         path: 'dashboard',
-                        component: Dashboard,
                         meta: {title: '首页', affix: true},
                         name: 'Dashboard',
+                        component: () => import('../views/dashboard/Index')
                     },
                 ]
             },
@@ -41,19 +28,19 @@ export default {
                         name: 'RoleList',
                         meta: {title: '角色列表', noCache: false},
                         path: 'roles',
-                        component: Role,
+                        component: () => import('../views/roles/Index'),
                     },
                     {
                         name: 'AdminList',
                         meta: {title: '用户列表', noCache: false},
                         path: 'admins',
-                        component: Admin,
+                        component: () => import('../views/admins/Index'),
                     },
                     {
                         name: 'MenuList',
                         meta: {title: '权限管理'},
                         path: 'menus',
-                        component: Menu,
+                        component: () => import('../views/menus/Index')
                     },
                 ]
             },
@@ -68,7 +55,7 @@ export default {
                         path: 'icons',
                         name: 'Icons',
                         meta: {title: 'Icons'},
-                        component: Icon,
+                        component: () => import('../components/redirect/Index'),
                     }
                 ]
             },
@@ -76,7 +63,7 @@ export default {
             {
                 path: '/login',
                 name: 'Login',
-                component: Login,
+                component: () => import('../views/login/Index'),
             },
             {
                 path: '/redirect',
@@ -85,7 +72,7 @@ export default {
                 children: [
                     {
                         path: '/redirect/:path*',
-                        component: Redirect
+                        component: () => import('../components/redirect/Index')
                     }
                 ]
             },
@@ -97,7 +84,7 @@ export default {
                 children: [
                     {
                         path: '404',
-                        component: Error_404,
+                        component: () => import('../views/error/404'),
                         name: '404',
                         title: '404',
                     }
