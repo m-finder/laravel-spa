@@ -18,7 +18,7 @@
                             <strong>Loading...</strong>
                         </div>
 
-                        <b-tree-view v-if="items && items.length" :data="items" :contextMenuItems="menus" @nodeSelect="nodeSelect" @contextMenuItemSelect="menuItemSelected"/>
+                        <b-tree-view v-if="items && items.length" :nodeLabelProp="'title'" :data="items" :contextMenuItems="menus" @nodeSelect="nodeSelect" @contextMenuItemSelect="menuItemSelected"/>
                     </div>
                 </div>
             </div>
@@ -91,9 +91,9 @@
             <div class="col-lg-12">
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                        <span class="input-group-text">显示名称</span>
+                        <span class="input-group-text">菜单名称</span>
                     </div>
-                    <b-form-input v-model="form.title" placeholder="请输入显示名称" required/>
+                    <b-form-input v-model="form.title" placeholder="请输入菜单名称" required/>
                 </div>
             </div>
             <div class="col-lg-12">
@@ -101,7 +101,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text">视图路径</span>
                     </div>
-                    <b-form-input v-model="form.path" placeholder="请输入视图文件路径" required/>
+                    <b-form-input v-model="form.component" placeholder="请输入视图文件路径" required/>
                 </div>
             </div>
             <div class="col-lg-12">
@@ -148,30 +148,6 @@
             <div class="col-lg-12">
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                        <span class="input-group-text">菜单名称</span>
-                    </div>
-                    <b-form-input v-model="form.name" placeholder="请输入菜单名称" required/>
-                </div>
-            </div>
-            <div class="col-lg-12">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">跳转地址</span>
-                    </div>
-                    <b-form-input v-model="form.url" placeholder="请输入跳转地址" required/>
-                </div>
-            </div>
-            <div class="col-lg-12">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">图标文件</span>
-                    </div>
-                    <b-form-input v-model="form.icon" placeholder="请输入图标文件"/>
-                </div>
-            </div>
-            <div class="col-lg-12">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
                         <span class="input-group-text">上级菜单</span>
                     </div>
                     <b-form-select v-model="form.parent_id">
@@ -186,12 +162,69 @@
                 </div>
             </div>
 
+            <div class="col-lg-12">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">视图名称</span>
+                    </div>
+                    <b-form-input v-model="form.name" placeholder="请输入视图名称(vue 组件 name)" required/>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">菜单名称</span>
+                    </div>
+                    <b-form-input v-model="form.title" placeholder="请输入菜单名称" required/>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">视图路径</span>
+                    </div>
+                    <b-form-input v-model="form.component" placeholder="请输入视图文件路径" required/>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">跳转地址</span>
+                    </div>
+                    <b-form-input v-model="form.path" placeholder="请输入跳转地址" required/>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">重定向&nbsp;&nbsp;&nbsp;</span>
+                    </div>
+                    <b-form-input v-model="form.redirect" placeholder="请输入重定向地址"/>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">图标文件</span>
+                    </div>
+                    <b-form-input v-model="form.icon" placeholder="请输入图标文件"/>
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">排序编号</span>
+                    </div>
+                    <b-form-input v-model="form.order" placeholder="请输入排序编号，从小到大正序排列"/>
+                </div>
+            </div>
+
             <div slot="modal-footer" class="w-100">
                 <b-button variant="primary" size="sm" @click="cancel('modal-menu-edit')">取消</b-button>
                 <b-button variant="danger" size="sm" @click="submitUpdate">确认</b-button>
             </div>
         </b-modal>
-
 
         <alert :alerts="alerts"/>
 
@@ -206,9 +239,13 @@
     const defaultForm = {
         id: null,
         name: null,
-        url: null,
+        title: null,
+        path: null,
+        component: null,
+        redirect: null,
         icon: null,
         parent_id: null,
+        order: null
     };
     export default {
         name: "MenuList",

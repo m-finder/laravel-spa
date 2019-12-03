@@ -17,8 +17,12 @@ class CreateMenusTable extends Migration
             $table->bigIncrements('id');
             $table->integer('parent_id');
             $table->string('name');
-            $table->string('url');
+            $table->string('title');
+            $table->string('redirect')->nullable()->default(null);
+            $table->string('component');
+            $table->string('path');
             $table->string('icon');
+            $table->integer('order')->nullable();
             $table->timestamps();
         });
     }
