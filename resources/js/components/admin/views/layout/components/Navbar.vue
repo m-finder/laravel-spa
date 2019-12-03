@@ -30,7 +30,7 @@
                         <b-dropdown-item href="#">密码设置</b-dropdown-item>
                         <b-dropdown-item @click="logout">退出登陆</b-dropdown-item>
                     </b-nav-item-dropdown>
-                    <b-nav-item @click="showSideBar = !showSideBar">
+                    <b-nav-item @click="showSideBar = !showSideBar" v-clickoutside="close">
                         <svg-vue icon="setting"/>
                     </b-nav-item>
                 </b-navbar-nav>
@@ -45,6 +45,28 @@
     import BreadCrumb from '../../../components/breadcrumb/Index'
     import Theme from './theme'
 
+    const clickoutside = {
+        bind(el, binding, vnode) {
+            function documentHandler(e) {
+                let theme = document.getElementsByClassName('theme-box')[0];
+                if (el.contains(e.target) || theme.contains(e.target)) {
+                    return false;
+                }
+                if (binding.expression) {
+                    binding.value(e);
+                }
+            }
+
+            el.__vueClickOutside__ = documentHandler;
+            document.addEventListener('click', documentHandler);
+        },
+        unbind(el, binding) {
+            document.removeEventListener('click', el.__vueClickOutside__);
+            delete el.__vueClickOutside__;
+        },
+    };
+
+
     export default {
         name: 'Navbar',
         components: {
@@ -57,6 +79,7 @@
                 showSideBar: false
             }
         },
+        directives: {clickoutside},
         computed: {
             ...mapGetters([
                 'sidebar',
@@ -72,7 +95,10 @@
             }
         },
         methods: {
-            logout(){
+            close() {
+                this.showSideBar = false
+            },
+            logout() {
                 storage.remove('user-info') && storage.sessionRemove('user-info');
                 storage.remove('token') && storage.sessionRemove('token');
                 this.$router.push({path: '/login'})
@@ -82,7 +108,7 @@
             },
             refresh() {
                 this.$store.dispatch('delCachedView', this.$route).then(() => {
-                    const { fullPath } = this.$route
+                    const {fullPath} = this.$route
                     this.$nextTick(() => {
                         this.$router.replace({path: '/redirect' + fullPath})
                     })
@@ -102,6 +128,7 @@
     .nav-wrap {
         box-shadow: 0 1px 4px rgba(0, 21, 41, .08);
     }
+
     .navbar-toggler {
         outline: none;
 

@@ -12,21 +12,21 @@
                 当前主题:
                 <div :class="[currentTheme, 'theme-btn']"></div>
             </div>
-            <div class="theme-btn default" @click="setTheme('default')" ></div>
-            <div class="theme-btn bg-dark-blue" @click="setTheme('bg-dark-blue')" ></div>
-            <div class="theme-btn bg-light-blue" @click="setTheme('bg-light-blue')" ></div>
-            <div class="theme-btn bg-light-green" @click="setTheme('bg-light-green')" ></div>
-            <div class="theme-btn bg-light-red" @click="setTheme('bg-light-red')" ></div>
-            <div class="theme-btn bg-blue" @click="setTheme('bg-blue')" ></div>
-            <div class="theme-btn bg-indigo" @click="setTheme('bg-indigo')" ></div>
-            <div class="theme-btn bg-purple" @click="setTheme('bg-purple')" ></div>
-            <div class="theme-btn bg-red" @click="setTheme('bg-red')" ></div>
-            <div class="theme-btn bg-pink" @click="setTheme('bg-pink')" ></div>
-            <div class="theme-btn bg-orange" @click="setTheme('bg-orange')" ></div>
-            <div class="theme-btn bg-yellow" @click="setTheme('bg-yellow')" ></div>
-            <div class="theme-btn bg-green" @click="setTheme('bg-green')" ></div>
-            <div class="theme-btn bg-teal" @click="setTheme('bg-teal')" ></div>
-            <div class="theme-btn bg-cyan" @click="setTheme('bg-cyan')" ></div>
+            <div class="theme-btn default" @click="setTheme('default')"></div>
+            <div class="theme-btn bg-dark-blue" @click="setTheme('bg-dark-blue')"></div>
+            <div class="theme-btn bg-light-blue" @click="setTheme('bg-light-blue')"></div>
+            <div class="theme-btn bg-light-green" @click="setTheme('bg-light-green')"></div>
+            <div class="theme-btn bg-light-red" @click="setTheme('bg-light-red')"></div>
+            <div class="theme-btn bg-blue" @click="setTheme('bg-blue')"></div>
+            <div class="theme-btn bg-indigo" @click="setTheme('bg-indigo')"></div>
+            <div class="theme-btn bg-purple" @click="setTheme('bg-purple')"></div>
+            <div class="theme-btn bg-red" @click="setTheme('bg-red')"></div>
+            <div class="theme-btn bg-pink" @click="setTheme('bg-pink')"></div>
+            <div class="theme-btn bg-orange" @click="setTheme('bg-orange')"></div>
+            <div class="theme-btn bg-yellow" @click="setTheme('bg-yellow')"></div>
+            <div class="theme-btn bg-green" @click="setTheme('bg-green')"></div>
+            <div class="theme-btn bg-teal" @click="setTheme('bg-teal')"></div>
+            <div class="theme-btn bg-cyan" @click="setTheme('bg-cyan')"></div>
         </div>
     </div>
 </template>
@@ -36,11 +36,12 @@
 
     export default {
         name: "theme",
-        data(){
+        data() {
             return {
                 currentTheme: storage.get('theme')
             }
         },
+
         props: {
             show: {
                 type: Boolean,
@@ -48,11 +49,11 @@
             }
         },
         methods: {
-            close: function () {
+            close: function (e) {
                 this.$parent.showSideBar = false
             },
             setTheme(className) {
-                this.currentTheme = className
+                this.currentTheme = className;
                 this.$store.dispatch('app/changeTheme', className)
             },
         }
@@ -94,16 +95,18 @@
         right: 0;
     }
 
-    .theme-btn{
+    .theme-btn {
         width: 25px;
-        height:25px;
-        margin-right:10px;
+        height: 25px;
+        margin-right: 10px;
         cursor: pointer;
         display: inline-block;
     }
-    .current-theme-box{
+
+    .current-theme-box {
         margin: 15px auto;
-        .theme-btn{
+
+        .theme-btn {
             cursor: default;
             vertical-align: bottom;
         }

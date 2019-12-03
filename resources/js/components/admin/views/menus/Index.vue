@@ -13,8 +13,12 @@
                             </div>
                         </div>
 
-                        <b-tree-view v-if="items && items.length" :data="items" :contextMenuItems="menus"
-                                     @nodeSelect="nodeSelect" @contextMenuItemSelect="menuItemSelected"/>
+                        <div v-if="loading" class="text-center text-danger my-2">
+                            <b-spinner class="align-middle"></b-spinner>
+                            <strong>Loading...</strong>
+                        </div>
+
+                        <b-tree-view v-if="items && items.length" :data="items" :contextMenuItems="menus" @nodeSelect="nodeSelect" @contextMenuItemSelect="menuItemSelected"/>
                     </div>
                 </div>
             </div>
@@ -63,30 +67,6 @@
             <div class="col-lg-12">
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                        <span class="input-group-text">菜单名称</span>
-                    </div>
-                    <b-form-input v-model="form.name" placeholder="请输入菜单名称" required/>
-                </div>
-            </div>
-            <div class="col-lg-12">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">跳转地址</span>
-                    </div>
-                    <b-form-input v-model="form.url" placeholder="请输入跳转地址" required/>
-                </div>
-            </div>
-            <div class="col-lg-12">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">图标文件</span>
-                    </div>
-                    <b-form-input v-model="form.icon" placeholder="请输入图标文件"/>
-                </div>
-            </div>
-            <div class="col-lg-12">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
                         <span class="input-group-text">上级菜单</span>
                     </div>
                     <b-form-select v-model="form.parent_id">
@@ -100,6 +80,63 @@
                 </div>
             </div>
 
+            <div class="col-lg-12">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">视图名称</span>
+                    </div>
+                    <b-form-input v-model="form.name" placeholder="请输入视图名称(vue 组件 name)" required/>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">显示名称</span>
+                    </div>
+                    <b-form-input v-model="form.title" placeholder="请输入显示名称" required/>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">视图路径</span>
+                    </div>
+                    <b-form-input v-model="form.path" placeholder="请输入视图文件路径" required/>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">跳转地址</span>
+                    </div>
+                    <b-form-input v-model="form.path" placeholder="请输入跳转地址" required/>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">重定向&nbsp;&nbsp;&nbsp;</span>
+                    </div>
+                    <b-form-input v-model="form.path" placeholder="请输入重定向地址"/>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">图标文件</span>
+                    </div>
+                    <b-form-input v-model="form.icon" placeholder="请输入图标文件"/>
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">排序编号</span>
+                    </div>
+                    <b-form-input v-model="form.icon" placeholder="请输入排序编号，从小到大正序排列"/>
+                </div>
+            </div>
             <div slot="modal-footer" class="w-100">
                 <b-button variant="primary" size="sm" @click="cancel('modal-menu-add')">取消</b-button>
                 <b-button variant="danger" size="sm" @click="submitAdd">确认</b-button>
@@ -187,6 +224,7 @@
                 menus: [{code: 'ADD_MENU', label: '添加子菜单'},{code: 'DELETE_MENU', label: '删除菜单'}, {code: 'RENAME_MENU', label: '编辑菜单'}],
                 form:  Object.assign({}, defaultForm),
                 node: null,
+                loading: true
             }
         },
         created() {
@@ -230,6 +268,7 @@
             },
             getList() {
                 getAll(this.form).then(response => {
+                    this.loading = false;
                     this.items = response.data.data;
                 }).catch(error =>{
                     this.alerts.push({'type': 'danger','msg': '系统出错，请联系管理员查看','show': 10,'down': 0});

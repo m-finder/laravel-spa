@@ -28,7 +28,7 @@
     </div>
 </template>
 <script>
-    import routers from '../../../router/routers'
+    import store from '../../../store'
     import path from 'path'
 
     export default {
@@ -37,7 +37,7 @@
             return {
                 left: 0,
                 tagsWrapperLeft: 0,
-                routers: routers.routers()
+                routers: store.getters.routers
             }
         },
         computed: {
@@ -60,7 +60,7 @@
                 return tag.meta && tag.meta.affix
             },
             filterAffixTags(routes, basePath = '/') {
-                let tags = []
+                let tags = [];
                 routes.forEach(route => {
                     if (route.meta && route.meta.affix) {
                         const tagPath = path.resolve(basePath, route.path);
