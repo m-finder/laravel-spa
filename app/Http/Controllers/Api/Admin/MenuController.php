@@ -8,26 +8,23 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Log;
 
-class MenuController extends ApiController
-{
-    public function lists()
-    {
+class MenuController extends ApiController {
+    public function lists() {
         $menus = Menu::name(request('name'))->paginate(10);
         return $this->json_response($menus);
     }
 
-    public function all(){
+    public function all() {
         $menus = Menu::get();
         return $this->json_response(make_tree($menus->toArray()));
     }
 
-    public function parents(){
+    public function parents() {
         $menus = Menu::where('parent_id', 0)->get();
         return $this->json_response($menus);
     }
 
-    public function detail($id)
-    {
+    public function detail($id) {
         if (is_null($id)) {
             return $this->json_response(null, '参数错误', self::ERROR_PARAMS, self::MSG_TYPE_ERROR);
         }
@@ -35,15 +32,14 @@ class MenuController extends ApiController
         return $this->json_response($detail);
     }
 
-    public function update($id)
-    {
+    public function update($id) {
         $menu = Menu::where('id', $id)->first();
         try {
             if (is_null($menu)) {
                 return $this->json_response(null, '该菜单不存在', self::ERROR_USER_NOT_EXIST, self::MSG_TYPE_ERROR);
             }
             $menu->update(request_intersect([
-                'parent_id', 'name', 'url', 'icon',
+                'parent_id', 'name', 'title', 'path', 'icon', 'component', 'redirect', 'order'
             ]));
         } catch (\Exception $exception) {
             Log::error($exception);
@@ -52,12 +48,11 @@ class MenuController extends ApiController
         return $this->json_response();
     }
 
-    public function create()
-    {
+    public function create() {
         $model = new Menu();
         try {
             $data = request_intersect([
-                'parent_id', 'name', 'url', 'icon',
+                'parent_id', 'name', 'title', 'path', 'icon', 'component', 'redirect', 'order'
             ]);
             $data['icon'] = is_null($data['icon']) ? 'smile' : $data['icon'];
             $menu = $model->firstOrCreate($data);
@@ -68,8 +63,7 @@ class MenuController extends ApiController
         return $this->json_response($menu);
     }
 
-    public function delete($id)
-    {
+    public function delete($id) {
         $menu = Menu::find($id);
         if ($id == 1) return $this->json_response(null, '该菜单不可删除', self::ERROR_PARAMS, self::MSG_TYPE_ERROR);
 

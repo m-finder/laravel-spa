@@ -74,7 +74,7 @@
                             <option :value="null" disabled>-- 请选择上级菜单 --</option>
                         </template>
                         <template v-for="(p, i) in parentNodes">
-                            <option :value="p.id">{{ p.name }}</option>
+                            <option :value="p.id">{{ p.title }}</option>
                         </template>
                     </b-form-select>
                 </div>
@@ -117,7 +117,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text">重定向&nbsp;&nbsp;&nbsp;</span>
                     </div>
-                    <b-form-input v-model="form.path" placeholder="请输入重定向地址"/>
+                    <b-form-input v-model="form.redirect" placeholder="请输入重定向地址"/>
                 </div>
             </div>
             <div class="col-lg-12">
@@ -134,7 +134,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text">排序编号</span>
                     </div>
-                    <b-form-input v-model="form.icon" placeholder="请输入排序编号，从小到大正序排列"/>
+                    <b-form-input v-model="form.order" placeholder="请输入排序编号，从小到大正序排列"/>
                 </div>
             </div>
             <div slot="modal-footer" class="w-100">
@@ -156,7 +156,7 @@
                             <option :value="0" >顶级菜单</option>
                         </template>
                         <template v-if="form.id != 1 " v-for="(p, i) in parentNodes">
-                            <option :disabled="form.parent_id==0?true:false" v-if="form.id != p.id" :selected="p.id==form.parent_id ? true : false" :value="p.id">{{ p.name }}</option>
+                            <option  v-if="form.id != p.id" :selected="p.id==form.parent_id ? true : false" :value="p.id">{{ p.title }}</option>
                         </template>
                     </b-form-select>
                 </div>
@@ -326,10 +326,18 @@
                     return false
                 }
                 if(this.form.name.length == 0){
+                    this.alerts.push({'type': 'danger','msg': '请输入视图名称','show': 10,'down': 0});
+                    return false
+                }
+                if(this.form.title.length == 0){
                     this.alerts.push({'type': 'danger','msg': '请输入菜单名称','show': 10,'down': 0});
                     return false
                 }
-                if(this.form.url.length == 0){
+                if(this.form.component.length == 0){
+                    this.alerts.push({'type': 'danger','msg': '请输入视图路径','show': 10,'down': 0});
+                    return false
+                }
+                if(this.form.path.length == 0){
                     this.alerts.push({'type': 'danger','msg': '请输入跳转地址','show': 10,'down': 0});
                     return false
                 }
@@ -341,11 +349,11 @@
                         this.alerts.push({'type': response.data.msg_type,'msg': response.data.msg,'show': 10,'down': 0});
                         if(response.data.code==0){
                             this.$bvModal.hide('modal-menu-add');
-                            let id = response.data.data.id, name = response.data.data.name;
+                            let id = response.data.data.id, title = response.data.data.title;
                             if(this.form.parent_id == 0){
-                                this.items.push({id: id, name: name})
+                                this.items.push({id: id, title: title})
                             }else{
-                                this.node.appendChild({id: id, name: name});
+                                this.node.appendChild({id: id, title: title});
                             }
                         }
                     }).catch((error) => {
