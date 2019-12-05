@@ -1,5 +1,6 @@
-# laravel-admin-spa
-laravel5.8 + vue 单页式后台
+# laravel vue 单页式管理后台
+
+开发中,容易纠结，进度很慢
 
 #### install
 ```

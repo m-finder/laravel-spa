@@ -1,9 +1,6 @@
 
 .default {
-    background: url(../images/bg.svg), radial-gradient(farthest-side ellipse at 10% 0, #ffffff 10%, $default), no-repeat, fixed;
-    background-size: cover;
-
-
+    background: none;
 }
 
 .bg-dark-blue {
@@ -102,7 +99,7 @@
 th {
     color: #495057;
     background-color: rgba(0,0,0,.1)!important;
-    border-color: rgba(0,0,0,.1)!important;
+    //border-color: rgba(0,0,0,.1)!important;
 }
 .page-item.disabled .page-link, .page-item .page-link{
     background-color: rgba(255,255,255,.1)!important;

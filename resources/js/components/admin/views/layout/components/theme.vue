@@ -41,7 +41,6 @@
                 currentTheme: storage.get('theme')
             }
         },
-
         props: {
             show: {
                 type: Boolean,

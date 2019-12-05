@@ -17,6 +17,8 @@ Route::middleware('auth:admin-api')->group(function() {
     Route::put('/menus/{id}/update', 'Api\Admin\MenuController@update');
     Route::delete('/menus/{id}/delete', 'Api\Admin\MenuController@delete');
 
+    Route::get('/elements/list', 'Api\Admin\ElementController@lists');
+
     Route::get('/roles/list', 'Api\Admin\RoleController@lists');
     Route::get('/roles/all', 'Api\Admin\RoleController@all');
     Route::post('/roles/create', 'Api\Admin\RoleController@create');
