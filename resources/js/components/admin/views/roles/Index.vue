@@ -59,11 +59,12 @@
                             </div>
 
                             <template v-slot:cell(actions)="row">
-                                <b-button v-if="row.item.id != 1" variant="link" class="text-danger mr-1"
-                                          @click="openDeleteModal(row.item)">
+
+                                <b-button v-if="row.item.id != 1" variant="link" @click="openEditModal(row.item)">编辑</b-button>
+                                <b-button variant="link" class="text-danger" @click="assign(row.item)">权限分配</b-button>
+                                <b-button v-if="row.item.id != 1" variant="link" class="text-danger" @click="openDeleteModal(row.item)">
                                     删除
                                 </b-button>
-                                <b-button variant="link" @click="openEditModal(row.item)">编辑</b-button>
                             </template>
                         </b-table>
 
@@ -88,57 +89,8 @@
                 <b-button variant="danger" size="sm" @click="deleteData">确认</b-button>
             </div>
         </b-modal>
-
-        <b-modal centered id="modal-role-add" title="添加角色" @hidden="resetModal">
-            <div class="col-lg-12">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">角色名称</span>
-                    </div>
-                    <input type="text" name="name" v-model="addForm.name"
-                           class="form-control" placeholder="角色名称">
-                </div>
-            </div>
-            <div class="col-lg-12">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">角色别名</span>
-                    </div>
-                    <input type="text" name="alias"  v-model="addForm.alias"
-                           class="form-control" placeholder="角色别名">
-                </div>
-            </div>
-            <div slot="modal-footer" class="w-100">
-                <b-button variant="primary" size="sm" @click="cancel('modal-role-add')">取消</b-button>
-                <b-button variant="danger" size="sm" @click="submitAdd">提交</b-button>
-            </div>
-        </b-modal>
-
-        <b-modal centered id="modal-role-edit" title="编辑角色" @hidden="resetModal">
-            <div class="col-lg-12">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">角色名称</span>
-                    </div>
-                    <input type="text" name="name" v-model="editForm.name"
-                           class="form-control" placeholder="角色名称">
-                </div>
-            </div>
-            <div class="col-lg-12">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">角色别名</span>
-                    </div>
-                    <input type="text" name="alias"  v-model="editForm.alias"
-                           class="form-control" placeholder="角色别名">
-                </div>
-            </div>
-            <div slot="modal-footer" class="w-100">
-                <b-button variant="primary" size="sm" @click="cancel('modal-role-edit')">取消</b-button>
-                <b-button variant="danger" size="sm" @click="submitEdit">提交</b-button>
-            </div>
-        </b-modal>
-
+        <create :title="'添加角色'" :is-create="isCreate"/>
+        <edit :title="'编辑角色'" :id="form.id" :is-edit="isEdit"/>
         <alert :alerts="alerts"/>
 
     </section>
@@ -147,16 +99,13 @@
 <script>
     import {getData, deleteData, createData, updateData} from "../../api/role";
     import Alert from '../../components/alert/Index'
-
+    import Create from './Create'
+    import Edit from './Edit'
     const form = {
         name: null,
         alias: null,
         limit: 20,
         page: 1,
-    };
-    const addForm = {
-        name:null,
-        alias: null
     };
     const deleteForm = {
         id: null,
@@ -166,17 +115,20 @@
     export default {
         name: "RoleList",
         components: {
-            Alert
+            Alert,
+            Create,
+            Edit
         },
         data() {
             return {
                 alerts: [],
                 isBusy: true,
+                isCreate: false,
+                isEdit: false,
                 total: 0,
                 items: [],
                 form: Object.assign({}, form),
-                addForm: Object.assign({}, addForm),
-                editForm: Object.assign({id: null}, addForm),
+                editForm: Object.assign({id: null}),
                 deleteForm: Object.assign({}, deleteForm),
                 sortBy: 'id',
                 sortDesc: false,
@@ -198,6 +150,9 @@
             },
         },
         methods: {
+            assign(data){
+                console.log(data)
+            },
             refresh(){
                 this.form = Object.assign({}, form);
                 this.getList()
@@ -219,6 +174,13 @@
                     console.log(error);
                 });
             },
+            openEditModal(data){
+              this.form.id = data.id;
+              this.isEdit = true;
+            },
+            openAddModal(){
+                this.isCreate = true
+            },
             openDeleteModal(data) {
                 this.deleteForm = data;
                 this.$root.$emit('bv::show::modal', 'modal-role-delete')
@@ -236,75 +198,12 @@
                     this.alerts.push({'type': 'danger','msg': error.toString(),'show': 10,'down': 0});
                 })
             },
-            openAddModal() {
-                this.$root.$emit('bv::show::modal', 'modal-role-add')
-            },
-            checkAddForm(){
-                if(!this.addForm.name){
-                    this.alerts.push({'type': 'danger','show': 10,'down': 0,'msg': '请输入角色名'});
-                    return false;
-                }
-                if(!this.addForm.alias){
-                    this.alerts.push({'type': 'danger','show': 10,'down': 0,'msg': '请输入角色别名'});
-                    return false;
-                }
-                return true;
-            },
-            submitAdd(){
-                if (this.checkAddForm()){
-                    createData(this.addForm).then(response => {
-                        this.alerts.push({'type': response.data.msg_type,'show': 10,'down': 0,'msg': response.data.msg});
-                        if(response.data.code==0){
-                            this.$bvModal.hide('modal-role-add');
-                            this.getList()
-                        }
-                    }).catch(error => {
-                        let error_message = error.response.data.message || error.message;
-                        this.alerts.push({'type': 'danger','msg': '系统出错，请联系管理员查看','show': 10,'down': 0});
-                        console.log(error_message)
-                    })
-                }
-            },
-            openEditModal(data) {
-                this.editForm = data;
-                this.$root.$emit('bv::show::modal', 'modal-role-edit')
-            },
-            checkEditForm(){
-                if(!this.editForm.id){
-                    this.alerts.push({'type': 'danger','show': 10,'down': 0,'msg': '角色获取失败'});
-                    return false;
-                }
-                if(!this.editForm.name){
-                    this.alerts.push({'type': 'danger','show': 10,'down': 0,'msg': '请输入角色名'});
-                    return false;
-                }
-                if(!this.editForm.alias){
-                    this.alerts.push({'type': 'danger','show': 10,'down': 0,'msg': '请输入角色别名'});
-                    return false;
-                }
-                return true;
-            },
-            submitEdit(){
-                if (this.checkEditForm()){
-                    updateData(this.editForm).then(response => {
-                        this.alerts.push({'type': response.data.msg_type,'show': 10,'down': 0,'msg': response.data.msg});
-                        if(response.data.code==0){
-                            this.$bvModal.hide('modal-role-edit');
-                            this.getList()
-                        }
-                    }).catch(error => {
-                        let error_message = error.response.data.message || error.message;
-                        this.alerts.push({'type': 'danger','msg': '系统出错，请联系管理员查看','show': 10,'down': 0});
-                        console.log(error_message)
-                    })
-                }
-            },
             cancel(modal) {
                 this.$bvModal.hide(modal)
             },
             resetModal() {
-                this.addForm = Object.assign({}, addForm);
-                this.editForm = Object.assign({id: null}, addForm);
+                // this.addForm = Object.assign({}, addForm);
+                // this.editForm = Object.assign({id: null}, addForm);
             }
         }
     }

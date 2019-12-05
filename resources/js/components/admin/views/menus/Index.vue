@@ -80,9 +80,9 @@
             </div>
         </b-modal>
         <!--    添加菜单    -->
-        <create :is-create="isCreate" :parent-nodes="parentNodes"/>
+        <create :title="'添加菜单'" :is-create="isCreate" :parent-nodes="parentNodes"/>
         <!--    编辑菜单    -->
-        <edit :id="this.form.id" :isEdit="isEdit"/>
+        <edit :title="'编辑菜单'" :id="this.form.id" :isEdit="isEdit"/>
         <alert :alerts="alerts"/>
     </section>
 </template>
@@ -106,6 +106,11 @@
         parent_id: null,
         order: null
     };
+    const defaultElementForm = {
+        router_id: null,
+        page: 1,
+        limit: 20,
+    };
     export default {
         name: "MenuList",
         components: {
@@ -123,21 +128,14 @@
                 isEdit: false,
                 isCreate: false,
                 parentNodes: {},
-                menus: [{code: 'ADD_MENU', label: '添加子菜单'}, {code: 'DELETE_MENU', label: '删除菜单'}, {
-                    code: 'RENAME_MENU',
-                    label: '编辑菜单'
-                }],
+                menus: [{code: 'ADD_MENU', label: '添加子菜单'}, {code: 'RENAME_MENU',label: '编辑菜单'}, {code: 'DELETE_MENU', label: '删除菜单'}, ],
                 form: Object.assign({}, defaultForm),
+                elementForm: Object.assign({}, defaultElementForm),
                 node: null,
                 loading: true,
                 isBusy: true,
                 sortBy: 'id',
                 sortDesc: false,
-                elementForm: {
-                    router_id: null,
-                    page: 1,
-                    limit: 20,
-                },
                 fields: [
                     {label: 'ID', key: 'id', sortable: true},
                     {label: '资源名称', key: 'name', sortable: false},
@@ -158,11 +156,12 @@
                 this.isCreate = true;
             },
             nodeSelect(node, isSelected) {
+                this.elementForm = Object.assign({}, defaultElementForm);
                 if (isSelected) {
                     this.form = Object.assign({}, node.data);
                     this.elementForm.router_id = this.form.id;
                     this.isBusy = true;
-                    this.getElement()
+                    this.getElement();
                 }
             },
             menuItemSelected(item, node) {
@@ -204,7 +203,7 @@
             getElement() {
                 getElement(this.elementForm).then(response => {
                     if (response.data.code == 0) {
-                        this.isBusy = false
+                        this.isBusy = false;
                         this.elements = response.data.data.data;
                         this.elementForm.page = response.data.data.current_page;
                         this.total = response.data.data.total;
@@ -239,7 +238,7 @@
                 this.$bvModal.hide(modal)
             },
             resetModal() {
-                this.form = defaultForm
+                this.form = Object.assign({}, defaultForm)
             }
         }
     }

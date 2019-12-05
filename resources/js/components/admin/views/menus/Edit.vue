@@ -1,5 +1,5 @@
 <template>
-    <b-modal centered  id="modal-menu-edit" title="编辑菜单" v-model="show" @hidden="resetModal">
+    <b-modal centered title="编辑菜单" v-model="show" @hidden="resetModal">
         <div class="col-lg-12">
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
@@ -78,7 +78,7 @@
         </div>
 
         <div slot="modal-footer" class="w-100">
-            <b-button variant="primary" size="sm" @click="cancel">取消</b-button>
+            <b-button variant="primary" size="sm" @click="resetModal">取消</b-button>
             <b-button :disabled="disabled" variant="danger" size="sm" @click="submitUpdate">确认</b-button>
         </div>
     </b-modal>
@@ -190,11 +190,8 @@
                     })
                 }
             },
-            cancel() {
-                this.$bvModal.hide('modal-menu-edit')
-            },
             resetModal() {
-                this.form = defaultForm;
+                this.form = Object.assign({}, defaultForm);
                 this.show = false;
                 this.$parent.isEdit = false;
             }
