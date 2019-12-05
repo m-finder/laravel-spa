@@ -15,7 +15,7 @@ class MenuController extends ApiController {
     }
 
     public function all() {
-        $menus = Menu::get();
+        $menus = Menu::orderBy('order_num', 'asc')->get();
         return $this->json_response(make_tree($menus->toArray()));
     }
 

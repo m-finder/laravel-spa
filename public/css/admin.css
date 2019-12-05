@@ -12359,8 +12359,7 @@ h3 {
 }
 
 .default {
-  background: url(../images/bg.svg), radial-gradient(farthest-side ellipse at 10% 0, #ffffff 10%, rgba(0, 0, 0, 0.1)), no-repeat, fixed;
-  background-size: cover;
+  background: none;
 }
 
 .bg-dark-blue {
@@ -12462,7 +12461,6 @@ h3 {
 th {
   color: #495057;
   background-color: rgba(0, 0, 0, 0.1) !important;
-  border-color: rgba(0, 0, 0, 0.1) !important;
 }
 
 .page-item.disabled .page-link, .page-item .page-link {

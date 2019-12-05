@@ -1,6 +1,7 @@
 <template>
     <section class="content container-fluid">
         <div class="row justify-content-center p-3">
+
             <div class="col-4">
                 <div class="card card-primary card-outline">
                     <div class="card-header">
@@ -18,36 +19,53 @@
                             <strong>Loading...</strong>
                         </div>
 
-                        <b-tree-view v-if="items && items.length" :nodeLabelProp="'title'" :data="items" :contextMenuItems="menus" @nodeSelect="nodeSelect" @contextMenuItemSelect="menuItemSelected"/>
+                        <b-tree-view v-if="items && items.length" :nodeLabelProp="'title'" :data="items"
+                                     :contextMenuItems="menus" @nodeSelect="nodeSelect"
+                                     @contextMenuItemSelect="menuItemSelected"/>
                     </div>
                 </div>
             </div>
+
             <div class="col-8">
-                <div class="card card-primary card-outline">
-                    <div class="card-header">
-                        <h3 class="card-title mb-0">资源列表</h3>
-                    </div>
-                    <div class="card-body">
-                        <div class="card-tools mb-3">
-                            <div class="btn-group mr-3">
-                                <b-button class="btn-sm" variant="primary" @click="addMenu">添加资源</b-button>
-                            </div>
+                <transition name="fade" mode="out-in">
+                    <div class="card card-primary card-outline" v-if="elementForm.router_id">
+                        <div class="card-header">
+                            <h3 class="card-title mb-0">资源列表</h3>
                         </div>
+                        <div class="card-body">
+                            <div class="card-tools mb-3">
+                                <div class="btn-group mr-3">
+                                    <b-button class="btn-sm" variant="primary" @click="addMenu">添加资源</b-button>
+                                </div>
+                            </div>
 
-                        <b-table hover responsive="sm" outlined ref="table" show-empty sticky-header>
+                            <b-table hover :items="elements" :fields="fields" :sort-by.sync="sortBy"
+                                     :sort-desc.sync="sortDesc" :busy.sync="isBusy"
+                                     responsive="sm" outlined ref="table" show-empty>
 
-                           <tr>
-                               <td>2222</td>
-                           </tr>
-                        </b-table>
+                                <div slot="table-busy" class="text-center text-danger my-2">
+                                    <b-spinner class="align-middle"></b-spinner>
+                                    <strong>Loading...</strong>
+                                </div>
 
-                        <b-row>
-                            <b-col md="6" class="my-1">
-                               分页111222
-                            </b-col>
-                        </b-row>
+                                <template v-slot:cell(actions)="row">
+                                    <b-button variant="link" class="text-danger mr-1" @click="openDeleteModal(row.item)">
+                                        删除
+                                    </b-button>
+                                    <b-button variant="link" @click="openEditModal(row.item)">编辑</b-button>
+                                </template>
+                            </b-table>
+
+                            <b-row>
+                                <b-col md="6" class="my-1">
+                                    <b-pagination v-model="elementForm.page" :total-rows="total"
+                                                  :per-page="elementForm.limit" class="my-0"/>
+                                    <b-card-text class="mt-3 text-secondary">共 {{ total }} 条数据</b-card-text>
+                                </b-col>
+                            </b-row>
+                        </div>
                     </div>
-                </div>
+                </transition>
             </div>
         </div>
 
@@ -61,180 +79,21 @@
                 <b-button variant="danger" size="sm" @click="deleteData">确认</b-button>
             </div>
         </b-modal>
-
-        <!--   添加子菜单     -->
-        <b-modal centered id="modal-menu-add" title="添加菜单" @hidden="resetModal">
-            <div class="col-lg-12">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">上级菜单</span>
-                    </div>
-                    <b-form-select v-model="form.parent_id">
-                        <template v-slot:first>
-                            <option :value="null" disabled>-- 请选择上级菜单 --</option>
-                        </template>
-                        <template v-for="(p, i) in parentNodes">
-                            <option :value="p.id">{{ p.title }}</option>
-                        </template>
-                    </b-form-select>
-                </div>
-            </div>
-
-            <div class="col-lg-12">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">视图名称</span>
-                    </div>
-                    <b-form-input v-model="form.name" placeholder="请输入视图名称(vue 组件 name)" required/>
-                </div>
-            </div>
-            <div class="col-lg-12">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">菜单名称</span>
-                    </div>
-                    <b-form-input v-model="form.title" placeholder="请输入菜单名称" required/>
-                </div>
-            </div>
-            <div class="col-lg-12">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">视图路径</span>
-                    </div>
-                    <b-form-input v-model="form.component" placeholder="请输入视图文件路径" required/>
-                </div>
-            </div>
-            <div class="col-lg-12">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">跳转地址</span>
-                    </div>
-                    <b-form-input v-model="form.path" placeholder="请输入跳转地址" required/>
-                </div>
-            </div>
-            <div class="col-lg-12">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">重定向&nbsp;&nbsp;&nbsp;</span>
-                    </div>
-                    <b-form-input v-model="form.redirect" placeholder="请输入重定向地址"/>
-                </div>
-            </div>
-            <div class="col-lg-12">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">图标文件</span>
-                    </div>
-                    <b-form-input v-model="form.icon" placeholder="请输入图标文件"/>
-                </div>
-            </div>
-
-            <div class="col-lg-12">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">排序编号</span>
-                    </div>
-                    <b-form-input v-model="form.order" placeholder="请输入排序编号，从小到大正序排列"/>
-                </div>
-            </div>
-            <div slot="modal-footer" class="w-100">
-                <b-button variant="primary" size="sm" @click="cancel('modal-menu-add')">取消</b-button>
-                <b-button variant="danger" size="sm" @click="submitAdd">确认</b-button>
-            </div>
-        </b-modal>
-
+        <!--    添加菜单    -->
+        <create :is-create="isCreate" :parent-nodes="parentNodes"/>
         <!--    编辑菜单    -->
-        <b-modal centered id="modal-menu-edit" title="编辑菜单">
-            <div class="col-lg-12">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">上级菜单</span>
-                    </div>
-                    <b-form-select v-model="form.parent_id">
-                        <template v-slot:first>
-                            <option :value="null" disabled>-- 请选择上级菜单 --</option>
-                            <option :value="0" >顶级菜单</option>
-                        </template>
-                        <template v-if="form.id != 1 " v-for="(p, i) in parentNodes">
-                            <option  v-if="form.id != p.id" :selected="p.id==form.parent_id ? true : false" :value="p.id">{{ p.title }}</option>
-                        </template>
-                    </b-form-select>
-                </div>
-            </div>
-
-            <div class="col-lg-12">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">视图名称</span>
-                    </div>
-                    <b-form-input v-model="form.name" placeholder="请输入视图名称(vue 组件 name)" required/>
-                </div>
-            </div>
-            <div class="col-lg-12">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">菜单名称</span>
-                    </div>
-                    <b-form-input v-model="form.title" placeholder="请输入菜单名称" required/>
-                </div>
-            </div>
-            <div class="col-lg-12">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">视图路径</span>
-                    </div>
-                    <b-form-input v-model="form.component" placeholder="请输入视图文件路径" required/>
-                </div>
-            </div>
-            <div class="col-lg-12">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">跳转地址</span>
-                    </div>
-                    <b-form-input v-model="form.path" placeholder="请输入跳转地址" required/>
-                </div>
-            </div>
-            <div class="col-lg-12">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">重定向&nbsp;&nbsp;&nbsp;</span>
-                    </div>
-                    <b-form-input v-model="form.redirect" placeholder="请输入重定向地址"/>
-                </div>
-            </div>
-            <div class="col-lg-12">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">图标文件</span>
-                    </div>
-                    <b-form-input v-model="form.icon" placeholder="请输入图标文件"/>
-                </div>
-            </div>
-
-            <div class="col-lg-12">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">排序编号</span>
-                    </div>
-                    <b-form-input v-model="form.order" placeholder="请输入排序编号，从小到大正序排列"/>
-                </div>
-            </div>
-
-            <div slot="modal-footer" class="w-100">
-                <b-button variant="primary" size="sm" @click="cancel('modal-menu-edit')">取消</b-button>
-                <b-button variant="danger" size="sm" @click="submitUpdate">确认</b-button>
-            </div>
-        </b-modal>
-
+        <edit :id="this.form.id" :isEdit="isEdit"/>
         <alert :alerts="alerts"/>
-
     </section>
 </template>
 
 <script>
-    import {getAll, deleteData, createData, getParents, updateData} from "../../api/menu";
+    import {getAll, deleteData, createData, getParents} from "../../api/menu";
+    import {getElement} from "../../api/menu";
     import Alert from '../../components/alert/Index'
-    import { bTreeView } from 'bootstrap-vue-treeview'
+    import {bTreeView} from 'bootstrap-vue-treeview'
+    import Edit from './Edit'
+    import Create from './Create'
 
     const defaultForm = {
         id: null,
@@ -249,34 +108,61 @@
     };
     export default {
         name: "MenuList",
-        components:{
+        components: {
             Alert,
-            bTreeView
+            bTreeView,
+            Create,
+            Edit
         },
         data() {
             return {
                 alerts: [],
                 items: [],
-                parentNodes: [],
-                menus: [{code: 'ADD_MENU', label: '添加子菜单'},{code: 'DELETE_MENU', label: '删除菜单'}, {code: 'RENAME_MENU', label: '编辑菜单'}],
-                form:  Object.assign({}, defaultForm),
+                elements: [],
+                total: 0,
+                isEdit: false,
+                isCreate: false,
+                parentNodes: {},
+                menus: [{code: 'ADD_MENU', label: '添加子菜单'}, {code: 'DELETE_MENU', label: '删除菜单'}, {
+                    code: 'RENAME_MENU',
+                    label: '编辑菜单'
+                }],
+                form: Object.assign({}, defaultForm),
                 node: null,
-                loading: true
+                loading: true,
+                isBusy: true,
+                sortBy: 'id',
+                sortDesc: false,
+                elementForm: {
+                    router_id: null,
+                    page: 1,
+                    limit: 20,
+                },
+                fields: [
+                    {label: 'ID', key: 'id', sortable: true},
+                    {label: '资源名称', key: 'name', sortable: false},
+                    {label: '资源编号', key: 'code', sortable: false},
+                    {label: '请求方法', key: 'method', sortable: false},
+                    {label: '请求路径', key: 'path', sortable: false},
+                    {label: '创建时间', key: 'created_at', sortable: true},
+                    {label: '操作', key: 'actions', sortable: false}
+                ]
             }
         },
         created() {
-            this.getList()
+            this.getAll()
         },
         methods: {
-            addMenu(){
-                this.parentNodes = [{id: 0, name: '顶级菜单'}];
-                this.form = Object.assign({}, defaultForm);
-                this.form.parent_id = 0;
-                this.$root.$emit('bv::show::modal', 'modal-menu-add');
+            addMenu() {
+                this.parentNodes = {id: 0, title: '顶级菜单'};
+                this.isCreate = true;
             },
             nodeSelect(node, isSelected) {
                 if (isSelected) {
                     this.form = Object.assign({}, node.data);
+                    this.elementForm.router_id = this.form.id;
+                    this.isBusy = true;
+                    this.getElement()
                 }
             },
             menuItemSelected(item, node) {
@@ -284,97 +170,52 @@
                 switch (item.code) {
                     case 'ADD_MENU':
                         let id = this.form.id;
-                        if(this.form.parent_id == 0){
-                            this.parentNodes = [{id: id, name: this.form.name}];
-                            this.form = Object.assign({}, defaultForm);
-                            this.form.parent_id = id;
-                            this.$root.$emit('bv::show::modal', 'modal-menu-add');
-                        }else{
-                            this.alerts.push({'type': 'danger','msg': '只支持二级菜单','show': 10,'down': 0});
+                        if (this.form.parent_id == 0) {
+                            this.parentNodes = {id: id, title: this.form.title};
+                            this.isCreate = true;
+                        } else {
+                            this.alerts.push({'type': 'danger', 'msg': '只支持二级菜单', 'show': 10, 'down': 0});
                         }
                         break;
                     case 'DELETE_MENU':
                         this.$root.$emit('bv::show::modal', 'modal-menu-delete');
                         break;
                     case 'RENAME_MENU':
-                        this.$root.$emit('bv::show::modal', 'modal-menu-edit');
-                        this.getParents();
+                        this.isEdit = true;
                         break;
-                    default: break;
+                    default:
+                        break;
                 }
             },
-            getList() {
+            getAll() {
                 getAll(this.form).then(response => {
-                    this.loading = false;
-                    this.items = response.data.data;
-                }).catch(error =>{
-                    this.alerts.push({'type': 'danger','msg': '系统出错，请联系管理员查看','show': 10,'down': 0});
+                    if (response.data.code == 0) {
+                        this.loading = false;
+                        this.items = response.data.data;
+                    } else {
+                        this.alerts.push({'type': 'danger', 'msg': response.data.msg, 'show': 10, 'down': 0});
+                        console.log(response);
+                    }
+                }).catch(error => {
+                    this.alerts.push({'type': 'danger', 'msg': '系统出错，请联系管理员查看', 'show': 10, 'down': 0});
                     console.log(error);
                 });
             },
-            getParents() {
-                getParents().then(response => {
-                    this.parentNodes = response.data.data;
-                }).catch(error =>{
-                    this.alerts.push({'type': 'danger','msg': '系统出错，请联系管理员查看','show': 10,'down': 0});
+            getElement() {
+                getElement(this.elementForm).then(response => {
+                    if (response.data.code == 0) {
+                        this.isBusy = false
+                        this.elements = response.data.data.data;
+                        this.elementForm.page = response.data.data.current_page;
+                        this.total = response.data.data.total;
+                    } else {
+                        this.alerts.push({'type': 'danger', 'msg': response.data.msg, 'show': 10, 'down': 0});
+                        console.log(response);
+                    }
+                }).catch(error => {
+                    this.alerts.push({'type': 'danger', 'msg': '系统出错，请联系管理员查看', 'show': 10, 'down': 0});
                     console.log(error);
                 });
-            },
-            checkForm(){
-                if(this.form.parent_id.length == 0){
-                    this.alerts.push({'type': 'danger','msg': '请选择上级菜单','show': 10,'down': 0});
-                    return false
-                }
-                if(this.form.name.length == 0){
-                    this.alerts.push({'type': 'danger','msg': '请输入视图名称','show': 10,'down': 0});
-                    return false
-                }
-                if(this.form.title.length == 0){
-                    this.alerts.push({'type': 'danger','msg': '请输入菜单名称','show': 10,'down': 0});
-                    return false
-                }
-                if(this.form.component.length == 0){
-                    this.alerts.push({'type': 'danger','msg': '请输入视图路径','show': 10,'down': 0});
-                    return false
-                }
-                if(this.form.path.length == 0){
-                    this.alerts.push({'type': 'danger','msg': '请输入跳转地址','show': 10,'down': 0});
-                    return false
-                }
-                return true
-            },
-            submitAdd(){
-                if (this.checkForm()){
-                    createData(this.form).then(response => {
-                        this.alerts.push({'type': response.data.msg_type,'msg': response.data.msg,'show': 10,'down': 0});
-                        if(response.data.code==0){
-                            this.$bvModal.hide('modal-menu-add');
-                            let id = response.data.data.id, title = response.data.data.title;
-                            if(this.form.parent_id == 0){
-                                this.items.push({id: id, title: title})
-                            }else{
-                                this.node.appendChild({id: id, title: title});
-                            }
-                        }
-                    }).catch((error) => {
-                        this.alerts.push({'type': 'danger','msg': error.toString(),'show': 10,'down': 0});
-                        console.log(error)
-                    })
-                }
-            },
-            submitUpdate(){
-                if (this.checkForm()){
-                    updateData(this.form).then(response => {
-                        this.alerts.push({'type': response.data.msg_type,'msg': response.data.msg,'show': 10,'down': 0});
-                        if(response.data.code==0){
-                            this.$bvModal.hide('modal-menu-edit');
-                            this.getList()
-                        }
-                    }).catch((error) => {
-                        this.alerts.push({'type': 'danger','msg': error.toString(),'show': 10,'down': 0});
-                        console.log(error)
-                    })
-                }
             },
             openDeleteModal(data) {
                 this.name = data.name;
@@ -384,13 +225,13 @@
             deleteData() {
                 this.$bvModal.hide('modal-menu-delete');
                 deleteData(this.form.id).then((response) => {
-                    this.alerts.push({'type': response.data.msg_type,'msg': response.data.msg, 'show': 10,'down': 0});
+                    this.alerts.push({'type': response.data.msg_type, 'msg': response.data.msg, 'show': 10, 'down': 0});
                     if (response.data.code == 0) {
                         this.$bvModal.hide('modal-menu-delete');
                         this.node.delete();
                     }
-                }).catch((error)=>{
-                    this.alerts.push({'type': 'danger','msg': '系统出错，请联系管理员查看','show': 10,'down': 0});
+                }).catch((error) => {
+                    this.alerts.push({'type': 'danger', 'msg': '系统出错，请联系管理员查看', 'show': 10, 'down': 0});
                     console.log(error);
                 });
             },
@@ -412,13 +253,23 @@
     }
 
     .btn, .btn-outline-info {
-        svg{
+        svg {
             fill: #ffffff;
         }
     }
-    .btn-outline-info{
-        &:hover{
+
+    .btn-outline-info {
+        &:hover {
             color: #ffffff;
         }
+    }
+    .fade-enter-active, .fade-leave-active {
+        transition-duration: 0.3s;
+        transition-property: opacity;
+        transition-timing-function: ease;
+    }
+
+    .fade-enter, .fade-leave-active {
+        opacity: 0
     }
 </style>

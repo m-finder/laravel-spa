@@ -22,7 +22,7 @@ class CreateMenusTable extends Migration
             $table->string('component');
             $table->string('path');
             $table->string('icon');
-            $table->integer('order')->nullable();
+            $table->integer('order_num')->default(0);
             $table->timestamps();
         });
     }
