@@ -48,6 +48,15 @@
                                     <strong>Loading...</strong>
                                 </div>
 
+                                <template v-slot:empty="scope">
+                                    <div class="text-center text-secondary">
+                                        <p>
+                                            <svg-vue icon="null" class="empty-data"/>
+                                        </p>
+                                        <h6>暂无数据</h6>
+                                    </div>
+                                </template>
+
                                 <template v-slot:cell(actions)="row">
                                     <b-button variant="link" class="text-danger mr-1" @click="openDeleteModal(row.item)">
                                         删除
