@@ -52,11 +52,3 @@ export function createData(data) {
         data: data
     })
 }
-
-export function getElement(params) {
-    return request({
-        url: '/admin-api/elements/list',
-        method: 'get',
-        params: params
-    })
-}
