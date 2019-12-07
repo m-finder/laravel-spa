@@ -20,8 +20,8 @@
                         </div>
 
                         <b-tree-view v-if="items && items.length" :nodeLabelProp="'title'" :data="items"
-                                     :contextMenuItems="menus" @nodeSelect="nodeSelect"
-                                     @contextMenuItemSelect="menuItemSelected"/>
+                                     :contextMenuItems="menus" @nodeSelect="nodeSelect" :nodesDraggable="false"
+                                     @contextMenuItemSelect="menuItemSelected" :renameNodeOnDblClick="false"/>
                     </div>
                 </div>
             </div>
@@ -85,7 +85,6 @@
             return {
                 alerts: [],
                 items: [],
-                elements: [],
                 isEdit: false,
                 isCreate: false,
                 parentNodes: {},
@@ -104,9 +103,10 @@
                 this.isCreate = true;
             },
             nodeSelect(node, isSelected) {
-                this.form = Object.assign({}, defaultForm);
                 if (isSelected) {
                     this.form = Object.assign({}, node.data);
+                } else if (node.data.id === this.form.id) {
+                    this.form = Object.assign({}, defaultForm)
                 }
             },
             menuItemSelected(item, node) {
@@ -118,7 +118,7 @@
                             this.parentNodes = {id: id, title: this.form.title};
                             this.isCreate = true;
                         } else {
-                            this.alerts.push({'type': 'danger', 'msg': '只支持二级菜单', 'show': 10, 'down': 0});
+                            this.alerts.push({'type': 'danger', 'msg': '暂只支持二级菜单', 'show': 10, 'down': 0});
                         }
                         break;
                     case 'DELETE_MENU':

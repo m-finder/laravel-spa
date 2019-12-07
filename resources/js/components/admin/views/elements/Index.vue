@@ -14,6 +14,15 @@
                      :sort-desc.sync="sortDesc" :busy.sync="isBusy"
                      responsive="sm" outlined ref="table" show-empty>
 
+                <template v-slot:empty="scope">
+                    <div class="text-center text-secondary">
+                        <p>
+                            <svg-vue icon="null" class="empty-data"/>
+                        </p>
+                        <h6>暂无数据</h6>
+                    </div>
+                </template>
+
                 <div slot="table-busy" class="text-center text-danger my-2">
                     <b-spinner class="align-middle"></b-spinner>
                     <strong>Loading...</strong>
@@ -48,18 +57,6 @@
     };
     export default {
         name: "ElementList",
-        props:{
-            'router-id': {
-                default: null
-            }
-        },
-        watch:{
-            routerId(value){
-                console.log(value)
-                this.form.router_id = value;
-                this.getElement()
-            }
-        },
         data(){
             return {
                 elements: [],
@@ -79,6 +76,22 @@
                 ]
             }
         },
+        props:{
+            'router-id': {
+                default: null
+            }
+        },
+        watch:{
+            routerId(value){
+                console.log(value);
+                this.form.router_id = value;
+                if(value){
+                    this.isBusy = true;
+                    this.getElement()
+                }
+            }
+        },
+
         methods: {
             openDeleteModal(){},
             openEditModal(){},
