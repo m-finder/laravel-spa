@@ -10,7 +10,7 @@
                 </div>
             </div>
 
-            <b-table hover :items="elements" :fields="fields" :sort-by.sync="sortBy"
+            <b-table hover :items="items" :fields="fields" :sort-by.sync="sortBy"
                      :sort-desc.sync="sortDesc" :busy.sync="isBusy"
                      responsive="sm" outlined ref="table" show-empty>
 
@@ -44,27 +44,61 @@
                 </b-col>
             </b-row>
         </div>
+
+        <create :title="'添加资源'" :router-id="routerId" :is-create="isCreate"/>
+        <edit :title="'编辑资源'" :id="form.id" :is-edit="isEdit"/>
+
+        <b-modal centered id="modal-element-delete" title="删除资源" @hidden="resetModal">
+            <p class="my-4">
+                {{ deleteForm.name ? '是否确认删除资源 ' + deleteForm.name + '？' : '是否删除该资源？'}}
+            </p>
+            <div slot="modal-footer" class="w-100">
+                <b-button variant="primary" size="sm" @click="resetModal">取消</b-button>
+                <b-button variant="danger" size="sm" @click="deleteData">提交</b-button>
+            </div>
+        </b-modal>
+
+        <!--    弹窗提醒    -->
+        <alert :alerts="alerts"/>
     </div>
 </template>
 
 <script>
-    import {getData} from "../../api/element";
+    import {getData, deleteData} from "../../api/element";
+    import Alert from '../../components/alert/Index'
+    import Create from './Create'
+    import Edit from './Edit'
 
     const defaultForm = {
         router_id: null,
         page: 1,
         limit: 20,
     };
+
+    const deleteForm = {
+        id: null,
+        name: null
+    };
+
     export default {
         name: "ElementList",
+        components: {
+            Alert,
+            Create,
+            Edit
+        },
         data(){
             return {
-                elements: [],
+                alerts: [],
+                items: [],
                 total: 0,
                 isBusy: true,
+                isCreate: false,
+                isEdit: false,
                 sortBy: 'id',
                 sortDesc: false,
-                form: Object.assign({router_id: this.routerId}, defaultForm),
+                form: Object.assign({}, defaultForm),
+                deleteForm: Object.assign({}, deleteForm),
                 fields: [
                     {label: 'ID', key: 'id', sortable: true},
                     {label: '资源名称', key: 'name', sortable: false},
@@ -73,7 +107,7 @@
                     {label: '请求路径', key: 'path', sortable: false},
                     {label: '创建时间', key: 'created_at', sortable: true},
                     {label: '操作', key: 'actions', sortable: false}
-                ]
+                ],
             }
         },
         props:{
@@ -83,35 +117,59 @@
         },
         watch:{
             routerId(value){
-                console.log(value);
                 this.form.router_id = value;
                 if(value){
                     this.isBusy = true;
-                    this.getElement()
+                    this.getList()
                 }
             }
         },
-
         methods: {
-            openDeleteModal(){},
-            openEditModal(){},
-            getElement() {
+            getList() {
                 getData(this.form).then(response => {
                     if (response.data.code == 0) {
                         this.isBusy = false;
-                        this.elements = response.data.data.data;
+                        this.items = response.data.data.data;
                         this.form.page = response.data.data.current_page;
                         this.total = response.data.data.total;
                     } else {
-                        this.$parent.alerts.push({'type': 'danger', 'msg': response.data.msg, 'show': 10, 'down': 0});
+                        this.alerts.push({'type': 'danger', 'msg': response.data.msg, 'show': 10, 'down': 0});
                         console.log(response);
                     }
                 }).catch(error => {
-                    this.$parent.alerts.push({'type': 'danger', 'msg': '系统出错，请联系管理员查看', 'show': 10, 'down': 0});
+                    this.alerts.push({'type': 'danger', 'msg': '系统出错，请联系管理员查看', 'show': 10, 'down': 0});
                     console.log(error);
                 });
             },
-            addElement(){},
+            openDeleteModal(data){
+                this.deleteForm = data;
+                this.$root.$emit('bv::show::modal', 'modal-element-delete')
+            },
+            openEditModal(data){
+                this.isEdit = true;
+                this.form.id = data.id;
+            },
+            addElement(){
+                this.isCreate = true
+            },
+            deleteData() {
+                let id = this.deleteForm.id;
+                this.$bvModal.hide('modal-element-delete');
+                deleteData(id).then((response) => {
+                    this.alerts.push({'type': response.data.msg_type,'msg': response.data.msg, 'show': 10,'down': 0});
+                    if (response.data.code == 0) {
+                        this.items = this.items.filter(item => item.id != id);
+                        this.total = this.total - 1;
+                    }
+                }).catch((error)=>{
+                    this.alerts.push({'type': 'danger','msg': '系统出错，请联系管理员查看','show': 10,'down': 0});
+                    console.log(error);
+                });
+            },
+            resetModal(){
+                this.deleteForm = Object.assign({}, deleteForm);
+                this.$bvModal.hide('modal-element-delete')
+            }
         }
     }
 </script>

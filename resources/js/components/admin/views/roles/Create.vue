@@ -46,7 +46,6 @@
         },
         data() {
             return {
-                alerts: [],
                 form: Object.assign({}, defaultForm),
                 show: this.isCreate
             }

@@ -9,16 +9,13 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
-class AdminController extends ApiController
-{
-    public function lists()
-    {
+class AdminController extends ApiController {
+    public function lists() {
         $users = Admin::name(request('name'))->email(request('email'))->with('role')->paginate(10);
         return $this->json_response($users);
     }
 
-    public function detail($id)
-    {
+    public function detail($id) {
         if (is_null($id)) {
             return $this->json_response(null, '参数错误', self::ERROR_PARAMS, self::MSG_TYPE_ERROR);
         }
@@ -26,8 +23,7 @@ class AdminController extends ApiController
         return $this->json_response($detail);
     }
 
-    public function update($id)
-    {
+    public function update($id) {
         $admin = Admin::where('id', $id)->first();
         try {
             if (is_null($admin)) {
@@ -48,8 +44,7 @@ class AdminController extends ApiController
         return $this->json_response();
     }
 
-    public function create()
-    {
+    public function create() {
         $admin = new Admin();
         try {
             if (Admin::checkUnique()) {
@@ -71,8 +66,7 @@ class AdminController extends ApiController
         return $this->json_response();
     }
 
-    public function delete($id)
-    {
+    public function delete($id) {
         $admin = Admin::find($id);
         if ($id == 1) return $this->json_response(null, '该用户内置，不可删除', self::ERROR_PARAMS, self::MSG_TYPE_ERROR);
         if (is_null($admin)) {

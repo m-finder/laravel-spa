@@ -18,6 +18,10 @@ Route::middleware('auth:admin-api')->group(function() {
     Route::delete('/menus/{id}/delete', 'Api\Admin\MenuController@delete');
 
     Route::get('/elements/list', 'Api\Admin\ElementController@lists');
+    Route::post('/elements/create', 'Api\Admin\ElementController@create');
+    Route::put('/elements/{id}/update', 'Api\Admin\ElementController@update');
+    Route::get('/elements/{id}/detail', 'Api\Admin\ElementController@detail');
+    Route::delete('/elements/{id}/delete', 'Api\Admin\ElementController@delete');
 
     Route::get('/roles/list', 'Api\Admin\RoleController@lists');
     Route::get('/roles/all', 'Api\Admin\RoleController@all');

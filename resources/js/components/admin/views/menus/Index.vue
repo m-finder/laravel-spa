@@ -25,7 +25,7 @@
                     </div>
                 </div>
             </div>
-
+            <!--      资源列表      -->
             <div class="col-8">
                 <transition name="fade" mode="out-in">
                     <elements :router-id="form.id"/>
@@ -43,10 +43,12 @@
                 <b-button variant="danger" size="sm" @click="deleteData">确认</b-button>
             </div>
         </b-modal>
+
         <!--    添加菜单    -->
         <create :title="'添加菜单'" :is-create="isCreate" :parent-nodes="parentNodes"/>
         <!--    编辑菜单    -->
         <edit :title="'编辑菜单'" :id="this.form.id" :isEdit="isEdit"/>
+        <!--    弹窗提醒    -->
         <alert :alerts="alerts"/>
     </section>
 </template>

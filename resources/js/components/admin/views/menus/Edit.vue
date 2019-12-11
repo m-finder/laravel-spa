@@ -1,5 +1,5 @@
 <template>
-    <b-modal centered title="编辑菜单" v-model="show" @hidden="resetModal">
+    <b-modal centered :title="title" v-model="show" @hidden="resetModal">
         <div class="col-lg-12">
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
@@ -107,11 +107,14 @@
             isEdit: {
                 type: Boolean,
                 default: false
+            },
+            title: {
+                type: String,
+                default: '编辑操作'
             }
         },
         data() {
             return {
-                alerts: [],
                 form: Object.assign({}, defaultForm),
                 parentNodes: [],
                 show: this.isEdit,

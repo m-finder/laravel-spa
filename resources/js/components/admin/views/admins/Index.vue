@@ -98,106 +98,10 @@
                 {{ deleteForm.name ? '是否确认删除用户 ' + deleteForm.name + '？' : '是否删除该用户？'}}
             </p>
             <div slot="modal-footer" class="w-100">
-                <b-button variant="primary" size="sm" @click="cancel('modal-admin-delete')">取消</b-button>
+                <b-button variant="primary" size="sm" @click="resetModal">取消</b-button>
                 <b-button variant="danger" size="sm" @click="deleteData">提交</b-button>
             </div>
         </b-modal>
-
-<!--        <b-modal centered id="modal-admin-add" title="添加用户" @hidden="resetModal">-->
-<!--            <div class="col-lg-12">-->
-<!--                <div class="input-group mb-3">-->
-<!--                    <div class="input-group-prepend">-->
-<!--                        <span class="input-group-text">用户名称</span>-->
-<!--                    </div>-->
-<!--                    <input type="text" name="name" v-model="addForm.name"-->
-<!--                           class="form-control" placeholder="角色名称">-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="col-lg-12">-->
-<!--                <div class="input-group mb-3">-->
-<!--                    <div class="input-group-prepend">-->
-<!--                        <span class="input-group-text">登录邮箱</span>-->
-<!--                    </div>-->
-<!--                    <input type="email" name="email"  v-model="addForm.email"-->
-<!--                           class="form-control" placeholder="登录邮箱">-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="col-lg-12">-->
-<!--                <div class="input-group mb-3">-->
-<!--                    <div class="input-group-prepend">-->
-<!--                        <span class="input-group-text">登录密码</span>-->
-<!--                    </div>-->
-<!--                    <input type="password" name="password"  v-model="addForm.password" class="form-control" placeholder="登录密码">-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="col-lg-12">-->
-<!--                <div class="input-group mb-3">-->
-<!--                    <div class="input-group-prepend">-->
-<!--                        <span class="input-group-text">角色绑定</span>-->
-<!--                    </div>-->
-<!--                    <b-form-select v-model="addForm.role_id">-->
-<!--                        <template v-slot:first>-->
-<!--                            <option :value="null" disabled>&#45;&#45; 请选择角色进行绑定 &#45;&#45;</option>-->
-<!--                        </template>-->
-<!--                        <template v-for="(role, i) in roles">-->
-<!--                            <option :value="role.id">{{role.alias}}</option>-->
-<!--                        </template>-->
-<!--                    </b-form-select>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div slot="modal-footer" class="w-100">-->
-<!--                <b-button variant="primary" size="sm" @click="cancel('modal-admin-add')">取消</b-button>-->
-<!--                <b-button variant="danger" size="sm" @click="submitAdd">确认</b-button>-->
-<!--            </div>-->
-<!--        </b-modal>-->
-
-<!--        <b-modal centered id="modal-admin-edit" title="编辑用户" @hidden="resetModal">-->
-<!--            <div class="col-lg-12">-->
-<!--                <div class="input-group mb-3">-->
-<!--                    <div class="input-group-prepend">-->
-<!--                        <span class="input-group-text">用户名称</span>-->
-<!--                    </div>-->
-<!--                    <input type="text" name="name" v-model="editForm.name"-->
-<!--                           class="form-control" placeholder="角色名称">-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="col-lg-12">-->
-<!--                <div class="input-group mb-3">-->
-<!--                    <div class="input-group-prepend">-->
-<!--                        <span class="input-group-text">登录邮箱</span>-->
-<!--                    </div>-->
-<!--                    <input type="email" name="email"  v-model="editForm.email"-->
-<!--                           class="form-control" placeholder="登录邮箱">-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="col-lg-12">-->
-<!--                <div class="input-group mb-3">-->
-<!--                    <div class="input-group-prepend">-->
-<!--                        <span class="input-group-text">登录密码</span>-->
-<!--                    </div>-->
-<!--                    <input type="password" name="password"  v-model="editForm.password" class="form-control" placeholder="登录密码">-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="col-lg-12">-->
-<!--                <div class="input-group mb-3">-->
-<!--                    <div class="input-group-prepend">-->
-<!--                        <span class="input-group-text">角色绑定</span>-->
-<!--                    </div>-->
-<!--                    <b-form-select v-model="editForm.role_id">-->
-<!--                        <template v-slot:first>-->
-<!--                            <option :value="null" disabled>&#45;&#45; 请选择角色进行绑定 &#45;&#45;</option>-->
-<!--                        </template>-->
-<!--                        <template v-for="(role, i) in roles">-->
-<!--                            <option :selected="role.id == editForm.role_id" :value="role.id">{{role.alias}}</option>-->
-<!--                        </template>-->
-<!--                    </b-form-select>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div slot="modal-footer" class="w-100">-->
-<!--                <b-button variant="primary" size="sm" @click="cancel('modal-admin-edit')">取消</b-button>-->
-<!--                <b-button variant="danger" size="sm" @click="submitEdit">提交</b-button>-->
-<!--            </div>-->
-<!--        </b-modal>-->
 
         <create :title="'添加用户'" :is-create="isCreate"/>
         <edit :id="this.id" :title="'编辑用户'" :is-edit="isEdit"/>
@@ -290,13 +194,13 @@
                 this.$root.$emit('bv::show::modal', 'modal-admin-delete')
             },
             deleteData() {
-                this.$bvModal.hide('modal-admin-delete')
-                deleteData(this.deleteForm.id).then((response) => {
+                let id = this.deleteForm.id;
+                this.$bvModal.hide('modal-admin-delete');
+                deleteData(id).then((response) => {
                     this.alerts.push({'type': response.data.msg_type,'msg': response.data.msg, 'show': 10,'down': 0});
                     if (response.data.code == 0) {
-                        this.items = this.items.filter(item => item.id != this.deleteForm.id);
+                        this.items = this.items.filter(item => item.id != id);
                         this.total = this.total - 1;
-                        this.deleteForm = Object.assign({}, deleteForm);
                     }
                 }).catch((error)=>{
                     this.alerts.push({'type': 'danger','msg': '系统出错，请联系管理员查看','show': 10,'down': 0});
@@ -322,11 +226,10 @@
                 this.id = data.id;
                 this.isEdit = true;
             },
-            cancel(modal) {
-                this.$bvModal.hide(modal)
-            },
-            resetModal() {
 
+            resetModal() {
+                this.deleteForm = Object.assign({}, deleteForm);
+                this.$bvModal.hide('modal-admin-delete')
             }
         }
     }

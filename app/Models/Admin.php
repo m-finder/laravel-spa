@@ -24,6 +24,7 @@ class Admin extends Authenticatable
     public function role(){
         return $this->hasOne(Role::class, 'id', 'role_id');
     }
+
     public static function checkUnique(){
         $admin = self::where(function ($query){
             $query->where('name', request('name'))->orWhere('email', request('email'));

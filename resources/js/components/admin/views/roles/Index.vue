@@ -89,12 +89,12 @@
             </div>
         </div>
 
-        <b-modal centered id="modal-role-delete" title="删除角色">
+        <b-modal centered id="modal-role-delete" title="删除角色" @hidden="resetModal">
             <p class="my-4">
                 {{ deleteForm.name ? '是否确认删除角色 ' + deleteForm.name + '？' : '是否删除该角色？'}}
             </p>
             <div slot="modal-footer" class="w-100">
-                <b-button variant="primary" size="sm" @click="cancel('modal-role-delete')">取消</b-button>
+                <b-button variant="primary" size="sm" @click="resetModal">取消</b-button>
                 <b-button variant="danger" size="sm" @click="deleteData">确认</b-button>
             </div>
         </b-modal>
@@ -195,24 +195,20 @@
                 this.$root.$emit('bv::show::modal', 'modal-role-delete')
             },
             deleteData() {
+                let id = this.deleteForm.id;
                 this.$bvModal.hide('modal-role-delete');
-                deleteData(this.deleteForm.id).then((response) => {
+                deleteData(id).then((response) => {
                     this.alerts.push({'type': response.data.msg_type,'msg': response.data.msg,'show': 10,'down': 0});
                     if (response.data.code == 0) {
-                        this.items = this.items.filter(item => item.id != this.deleteForm.id);
+                        this.items = this.items.filter(item => item.id != id);
                         this.total = this.total - 1;
-                        this.deleteForm = Object.assign({}, deleteForm);
                     }
                 }).catch((error) => {
                     this.alerts.push({'type': 'danger','msg': error.toString(),'show': 10,'down': 0});
                 })
             },
-            cancel(modal) {
-                this.$bvModal.hide(modal)
-            },
             resetModal() {
-                // this.addForm = Object.assign({}, addForm);
-                // this.editForm = Object.assign({id: null}, addForm);
+                this.deleteForm = Object.assign({}, deleteForm);
             }
         }
     }
