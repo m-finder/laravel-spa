@@ -8,6 +8,7 @@
                     </div>
 
                     <div class="card-body">
+
                         <div class="card-tools mb-3">
 
                             <div class="btn-group  mr-3">
@@ -49,15 +50,11 @@
                             </div>
                         </div>
 
-                        <b-table hover :items="items" :fields="fields" :sort-by.sync="sortBy"
-                                 :sort-desc.sync="sortDesc" :busy.sync="isBusy"
-                                 responsive="sm" outlined ref="table" show-empty sticky-header>
-
+                        <b-table hover :items="items" :fields="fields" :sort-by.sync="sortBy" :sort-desc.sync="sortDesc" :busy.sync="isBusy" responsive="sm" outlined ref="table" show-empty sticky-header>
                             <div slot="table-busy" class="text-center text-danger my-2">
                                 <b-spinner class="align-middle"></b-spinner>
                                 <strong>Loading...</strong>
                             </div>
-
                             <template v-slot:empty="scope">
                                 <div class="text-center text-secondary">
                                     <p>
@@ -66,9 +63,7 @@
                                     <h6>暂无数据</h6>
                                 </div>
                             </template>
-
                             <template v-slot:cell(actions)="row">
-
                                 <b-button v-if="row.item.id != 1" variant="link" @click="openEditModal(row.item)">编辑</b-button>
                                 <b-button variant="link" class="text-danger" @click="assign(row.item)">权限分配</b-button>
                                 <b-button v-if="row.item.id != 1" variant="link" class="text-danger" @click="openDeleteModal(row.item)">
@@ -79,8 +74,7 @@
 
                         <b-row>
                             <b-col md="6" class="my-1">
-                                <b-pagination v-model="form.page" :total-rows="total" :per-page="form.limit"
-                                              class="my-0"/>
+                                <b-pagination v-model="form.page" :total-rows="total" :per-page="form.limit" class="my-0"/>
                                 <b-card-text class="mt-3 text-secondary">共 {{ total }} 条数据</b-card-text>
                             </b-col>
                         </b-row>
@@ -89,36 +83,30 @@
             </div>
         </div>
 
-        <b-modal centered id="modal-role-delete" title="删除角色" @hidden="resetModal">
-            <p class="my-4">
-                {{ deleteForm.name ? '是否确认删除角色 ' + deleteForm.name + '？' : '是否删除该角色？'}}
-            </p>
-            <div slot="modal-footer" class="w-100">
-                <b-button variant="primary" size="sm" @click="resetModal">取消</b-button>
-                <b-button variant="danger" size="sm" @click="deleteData">确认</b-button>
-            </div>
-        </b-modal>
         <create :title="'添加角色'" :is-create="isCreate"/>
-        <edit :title="'编辑角色'" :id="form.id" :is-edit="isEdit"/>
+        <edit :title="'编辑角色'" :id="selectForm.id" :is-edit="isEdit"/>
+        <delete :title="'删除角色'" :data="selectForm" :is-delete="isDelete"/>
         <alert :alerts="alerts"/>
-
     </section>
 </template>
 
 <script>
-    import {getData, deleteData, createData, updateData} from "../../api/role";
-    import Alert from '../../components/alert/Index'
-    import Create from './Create'
-    import Edit from './Edit'
+    import {getData, deleteData} from "../../api/role";
+    import Alert from '../../components/alert/Index';
+    import Create from './Create';
+    import Edit from './Edit';
+    import Delete from '../../components/delete/Index';
+
     const form = {
         name: null,
         alias: null,
         limit: 20,
         page: 1,
     };
-    const deleteForm = {
+
+    const defaultForm = {
         id: null,
-        name: null
+        name: null,
     };
 
     export default {
@@ -126,7 +114,8 @@
         components: {
             Alert,
             Create,
-            Edit
+            Edit,
+            Delete
         },
         data() {
             return {
@@ -134,11 +123,11 @@
                 isBusy: true,
                 isCreate: false,
                 isEdit: false,
+                isDelete: false,
                 total: 0,
                 items: [],
                 form: Object.assign({}, form),
-                editForm: Object.assign({id: null}),
-                deleteForm: Object.assign({}, deleteForm),
+                selectForm: Object.assign({}, defaultForm),
                 sortBy: 'id',
                 sortDesc: false,
                 fields: [
@@ -184,31 +173,28 @@
                 });
             },
             openEditModal(data){
-              this.form.id = data.id;
+              this.selectForm.id = data.id;
               this.isEdit = true;
             },
             openAddModal(){
                 this.isCreate = true
             },
             openDeleteModal(data) {
-                this.deleteForm = data;
-                this.$root.$emit('bv::show::modal', 'modal-role-delete')
+                this.selectForm = data;
+                this.isDelete = true;
             },
             deleteData() {
-                let id = this.deleteForm.id;
-                this.$bvModal.hide('modal-role-delete');
+                let id = this.selectForm.id;
                 deleteData(id).then((response) => {
                     this.alerts.push({'type': response.data.msg_type,'msg': response.data.msg,'show': 10,'down': 0});
                     if (response.data.code == 0) {
                         this.items = this.items.filter(item => item.id != id);
                         this.total = this.total - 1;
+                        this.isDelete = false;
                     }
                 }).catch((error) => {
                     this.alerts.push({'type': 'danger','msg': error.toString(),'show': 10,'down': 0});
                 })
-            },
-            resetModal() {
-                this.deleteForm = Object.assign({}, deleteForm);
             }
         }
     }

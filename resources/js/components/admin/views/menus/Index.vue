@@ -33,45 +33,25 @@
             </div>
         </div>
 
-        <!--   删除菜单     -->
-        <b-modal centered id="modal-menu-delete" title="删除菜单" @hidden="resetModal">
-            <p class="my-4">
-                {{ form.name ? '是否确认删除菜单 ' + form.name + '？' : '是否删除该菜单？'}}
-            </p>
-            <div slot="modal-footer" class="w-100">
-                <b-button variant="primary" size="sm" @click="cancel('modal-menu-delete')">取消</b-button>
-                <b-button variant="danger" size="sm" @click="deleteData">确认</b-button>
-            </div>
-        </b-modal>
-
-        <!--    添加菜单    -->
         <create :title="'添加菜单'" :is-create="isCreate" :parent-nodes="parentNodes"/>
-        <!--    编辑菜单    -->
-        <edit :title="'编辑菜单'" :id="this.form.id" :isEdit="isEdit"/>
-        <!--    弹窗提醒    -->
+        <edit :title="'编辑菜单'" :id="form.id" :isEdit="isEdit"/>
+        <delete :title="'删除菜单'" :data="form" :is-delete="isDelete"/>
         <alert :alerts="alerts"/>
     </section>
 </template>
 
 <script>
     import {getAll, deleteData} from "../../api/menu";
-
-    import Alert from '../../components/alert/Index'
-    import {bTreeView} from 'bootstrap-vue-treeview'
-    import Edit from './Edit'
-    import Create from './Create'
-    import Elements from '../elements/Index'
+    import Alert from '../../components/alert/Index';
+    import {bTreeView} from 'bootstrap-vue-treeview';
+    import Edit from './Edit';
+    import Create from './Create';
+    import Delete from '../../components/delete/Index';
+    import Elements from '../elements/Index';
 
     const defaultForm = {
         id: null,
         name: null,
-        title: null,
-        path: null,
-        component: null,
-        redirect: null,
-        icon: null,
-        parent_id: null,
-        order: null
     };
 
     export default {
@@ -81,6 +61,7 @@
             bTreeView,
             Create,
             Edit,
+            Delete,
             Elements
         },
         data() {
@@ -89,6 +70,7 @@
                 items: [],
                 isEdit: false,
                 isCreate: false,
+                isDelete: false,
                 parentNodes: {},
                 menus: [{code: 'ADD_MENU', label: '添加子菜单'}, {code: 'RENAME_MENU',label: '编辑菜单'}, {code: 'DELETE_MENU', label: '删除菜单'}, ],
                 form: Object.assign({}, defaultForm),
@@ -124,7 +106,8 @@
                         }
                         break;
                     case 'DELETE_MENU':
-                        this.$root.$emit('bv::show::modal', 'modal-menu-delete');
+                        this.form.name = this.form.title;
+                        this.isDelete = true;
                         break;
                     case 'RENAME_MENU':
                         this.isEdit = true;
@@ -147,30 +130,17 @@
                     console.log(error);
                 });
             },
-
-            openDeleteModal(data) {
-                this.name = data.name;
-                this.id = data.id;
-                this.$root.$emit('bv::show::modal', 'modal-menu-delete')
-            },
             deleteData() {
-                this.$bvModal.hide('modal-menu-delete');
                 deleteData(this.form.id).then((response) => {
                     this.alerts.push({'type': response.data.msg_type, 'msg': response.data.msg, 'show': 10, 'down': 0});
                     if (response.data.code == 0) {
-                        this.$bvModal.hide('modal-menu-delete');
                         this.node.delete();
+                        this.isDelete = false;
                     }
                 }).catch((error) => {
                     this.alerts.push({'type': 'danger', 'msg': '系统出错，请联系管理员查看', 'show': 10, 'down': 0});
                     console.log(error);
                 });
-            },
-            cancel(modal) {
-                this.$bvModal.hide(modal)
-            },
-            resetModal() {
-                this.form = Object.assign({}, defaultForm)
             }
         }
     }

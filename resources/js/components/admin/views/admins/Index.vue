@@ -48,15 +48,11 @@
                             </div>
                         </div>
 
-                        <b-table hover :items="items" :fields="fields" :sort-by.sync="sortBy"
-                                 :sort-desc.sync="sortDesc" :busy.sync="isBusy"
-                                 responsive="sm" outlined ref="table" show-empty sticky-header>
-
+                        <b-table hover :items="items" :fields="fields" :sort-by.sync="sortBy" :sort-desc.sync="sortDesc" :busy.sync="isBusy" responsive="sm" outlined ref="table" show-empty sticky-header>
                             <div slot="table-busy" class="text-center text-danger my-2">
                                 <b-spinner class="align-middle"></b-spinner>
                                 <strong>Loading...</strong>
                             </div>
-
                             <template v-slot:empty="scope">
                                 <div class="text-center text-secondary">
                                     <p>
@@ -65,20 +61,17 @@
                                     <h6>暂无数据</h6>
                                 </div>
                             </template>
-
                             <template v-slot:cell(avatar)="data">
                                 <img :src="getAvatar(data.value) " class="img-circle row-user-avatar" alt="用户头像">
                             </template>
-
                             <template v-slot:cell(role)="row">
                                 {{ row.item.role.alias}}
                             </template>
-
                             <template v-slot:cell(actions)="row">
+                                <b-button v-if="row.item.id != 1" variant="link" @click="openEditModal(row.item)">编辑</b-button>
                                 <b-button v-if="row.item.id != 1" variant="link" class="text-danger mr-1" @click="openDeleteModal(row.item)">
                                     删除
                                 </b-button>
-                                <b-button v-if="row.item.id != 1" variant="link" @click="openEditModal(row.item)">编辑</b-button>
                             </template>
                         </b-table>
 
@@ -93,33 +86,23 @@
             </div>
         </div>
 
-        <b-modal centered id="modal-admin-delete" title="删除用户" @hidden="resetModal">
-            <p class="my-4">
-                {{ deleteForm.name ? '是否确认删除用户 ' + deleteForm.name + '？' : '是否删除该用户？'}}
-            </p>
-            <div slot="modal-footer" class="w-100">
-                <b-button variant="primary" size="sm" @click="resetModal">取消</b-button>
-                <b-button variant="danger" size="sm" @click="deleteData">提交</b-button>
-            </div>
-        </b-modal>
-
         <create :title="'添加用户'" :is-create="isCreate"/>
-        <edit :id="this.id" :title="'编辑用户'" :is-edit="isEdit"/>
+        <edit :id="selectForm.id" :title="'编辑用户'" :is-edit="isEdit"/>
+        <delete :title="'删除用户'" :data="selectForm" :is-delete="isDelete"/>
         <alert :alerts="alerts"/>
-
     </section>
 </template>
 
 <script>
-    import {getData, deleteData, createData, updateData, getDetail} from "../../api/admin";
+    import {getData, deleteData} from "../../api/admin";
     import Alert from '../../components/alert/Index';
     import Create from "./Create";
     import Edit from "./Edit";
-    import {getAll} from "../../api/role";
+    import Delete from '../../components/delete/Index';
 
-    const deleteForm = {
+    const defaultForm = {
         id: null,
-        name: null
+        name: null,
     };
 
     const form = {
@@ -134,7 +117,8 @@
         components:{
             Alert,
             Create,
-            Edit
+            Edit,
+            Delete
         },
         data() {
             return {
@@ -142,11 +126,10 @@
                 isBusy: true,
                 isCreate: false,
                 isEdit: false,
+                isDelete: false,
                 total: 0,
                 items: [],
-                roles: [],
-                id: null,
-                deleteForm: Object.assign({}, deleteForm),
+                selectForm: Object.assign({}, defaultForm),
                 form: Object.assign({}, form),
                 sortBy: 'id',
                 sortDesc: false,
@@ -190,17 +173,17 @@
                 return '/' + avatar;
             },
             openDeleteModal(data) {
-                this.deleteForm = data;
-                this.$root.$emit('bv::show::modal', 'modal-admin-delete')
+                this.selectForm = data;
+                this.isDelete = true;
             },
             deleteData() {
-                let id = this.deleteForm.id;
-                this.$bvModal.hide('modal-admin-delete');
+                let id = this.selectForm.id;
                 deleteData(id).then((response) => {
                     this.alerts.push({'type': response.data.msg_type,'msg': response.data.msg, 'show': 10,'down': 0});
                     if (response.data.code == 0) {
                         this.items = this.items.filter(item => item.id != id);
                         this.total = this.total - 1;
+                        this.isDelete = false;
                     }
                 }).catch((error)=>{
                     this.alerts.push({'type': 'danger','msg': '系统出错，请联系管理员查看','show': 10,'down': 0});
@@ -210,26 +193,9 @@
             openAddModal(){
                 this.isCreate = true;
             },
-            getRole(){
-                getAll().then(response => {
-                    if(response.data.code == 0){
-                        this.roles = response.data.data;
-                    }else{
-                        this.alerts.push({'type': response.data.msg_type,'msg': response.data.msg,'show': 10,'down': 0});
-                    }
-                }).catch(error => {
-                    this.alerts.push({'type': 'danger','msg': '系统出错，请联系管理员查看','show': 10,'down': 0 });
-                    console.log(error);
-                })
-            },
             openEditModal(data){
-                this.id = data.id;
+                this.selectForm.id = data.id;
                 this.isEdit = true;
-            },
-
-            resetModal() {
-                this.deleteForm = Object.assign({}, deleteForm);
-                this.$bvModal.hide('modal-admin-delete')
             }
         }
     }

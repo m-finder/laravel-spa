@@ -96,8 +96,8 @@
                     updateData(this.form).then(response => {
                         this.$parent.alerts.push({'type': response.data.msg_type,'msg': response.data.msg,'show': 10,'down': 0 });
                         if (response.data.code == 0) {
+                            this.resetModal();
                             this.$parent.getList();
-                            this.cancel()
                         }
                     }).catch((error) => {
                         this.$parent.alerts.push({'type': 'danger', 'msg': error.toString(), 'show': 10, 'down': 0});

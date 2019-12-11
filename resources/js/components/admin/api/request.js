@@ -18,7 +18,7 @@ service.interceptors.request.use(
     error => {
         // todo 添加接口统一报错
         // do something with request error
-        console.log(error) // for debug
+        console.log('api error',error) // for debug
         return Promise.reject(error)
     }
 );
