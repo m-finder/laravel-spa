@@ -326,7 +326,7 @@
                 this.$bvModal.hide(modal)
             },
             resetModal() {
-                
+
             }
         }
     }
