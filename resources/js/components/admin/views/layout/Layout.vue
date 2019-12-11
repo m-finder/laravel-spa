@@ -5,12 +5,14 @@
             <nav-bar/>
             <tags/>
             <app-main/>
+            <go-top/>
         </section>
     </section>
 </template>
 <script>
-    import {mapGetters} from 'vuex'
-    import {Navbar, Sidebar, AppMain, Tags} from './components'
+    import {mapGetters} from 'vuex';
+    import {Navbar, Sidebar, AppMain, Tags} from './components';
+    import GoTop from '../../components/gotop/Index';
 
     export default {
         name: 'Layout',
@@ -18,7 +20,8 @@
             'side-bar': Sidebar,
             'nav-bar': Navbar,
             'app-main': AppMain,
-            'tags': Tags
+            'tags': Tags,
+            'go-top': GoTop,
         },
         computed: {
             ...mapGetters([
