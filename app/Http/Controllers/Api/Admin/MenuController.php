@@ -19,6 +19,15 @@ class MenuController extends ApiController {
         return $this->json_response(make_tree($menus->toArray()));
     }
 
+    public function allWithElements(){
+        $menu = Menu::orderBy('order_num', 'asc')->with('elements')->get();
+        return $this->json_response($menu);
+    }
+
+    public function roleAuth(){
+
+    }
+
     public function parents() {
         $menus = Menu::where('parent_id', 0)->get();
         return $this->json_response($menus);

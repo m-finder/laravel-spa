@@ -15,7 +15,7 @@ class CreateElementsTable extends Migration
     {
         Schema::create('elements', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('router_id');
+            $table->integer('menu_id');
             $table->string('name');
             $table->string('code');
             $table->string('method');

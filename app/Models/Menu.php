@@ -10,4 +10,7 @@ class Menu extends Model
         'id', 'parent_id', 'name', 'title', 'path', 'icon', 'component', 'redirect', 'order'
     ];
 
+    public function elements(){
+        return $this->hasMany(Element::class, 'menu_id', 'id');
+    }
 }

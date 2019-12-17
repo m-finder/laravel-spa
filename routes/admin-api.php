@@ -11,6 +11,7 @@ Route::middleware('auth:admin-api')->group(function() {
 
     Route::get('/menus/list', 'Api\Admin\MenuController@lists');
     Route::get('/menus/all', 'Api\Admin\MenuController@all');
+    Route::get('/menus/all/with/elements', 'Api\Admin\MenuController@allWithElements');
     Route::get('/menus/parents', 'Api\Admin\MenuController@parents');
     Route::post('/menus/create', 'Api\Admin\MenuController@create');
     Route::get('/menus/{id}/detail', 'Api\Admin\MenuController@detail');

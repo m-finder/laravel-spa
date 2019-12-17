@@ -53,7 +53,7 @@
     import {createData} from "../../api/element";
 
     const defaultForm = {
-        router_id: null,
+        menu_id: null,
         name: null,
         code: null,
         method: 'get',
@@ -68,7 +68,7 @@
             }
         },
         props:{
-            'router-id': {
+            'menu-id': {
                 default: null
             },
             'is-create': {
@@ -82,14 +82,14 @@
         },
         watch:{
             isCreate(value){
-                this.form.router_id = this.routerId;
+                this.form.menu_id = this.menuId;
                 this.show = value;
             }
 
         },
         methods: {
             checkForm(){
-                if(!this.form.router_id){
+                if(!this.form.menu_id){
                     this.$parent.alerts.push({'type': 'danger','show': 10,'down': 0,'msg': '菜单数据获取失败，请重试'});
                     return false;
                 }

@@ -13,7 +13,7 @@ class ElementsTableSeeder extends Seeder
     {
         $db = new \App\Models\Element();
         $db->name = '角色列表';
-        $db->router_id = 2;
+        $db->menu_id = 2;
         $db->code = 'role:list';
         $db->method =  'get';
         $db->path = '/roles/list';
@@ -21,7 +21,7 @@ class ElementsTableSeeder extends Seeder
 
         $db = new \App\Models\Element();
         $db->name = '添加角色';
-        $db->router_id = 2;
+        $db->menu_id = 2;
         $db->code = 'role:add';
         $db->method =  'post';
         $db->path = '/roles/create';
@@ -29,7 +29,7 @@ class ElementsTableSeeder extends Seeder
 
         $db = new \App\Models\Element();
         $db->name = '修改角色';
-        $db->router_id = 2;
+        $db->menu_id = 2;
         $db->code = 'role:edit';
         $db->method =  'put';
         $db->path = '/roles/{*}/update';
@@ -37,7 +37,7 @@ class ElementsTableSeeder extends Seeder
 
         $db = new \App\Models\Element();
         $db->name = '删除角色';
-        $db->router_id = 2;
+        $db->menu_id = 2;
         $db->code = 'role:delete';
         $db->method =  'delete';
         $db->path = '/roles/{*}/delete';
@@ -45,7 +45,7 @@ class ElementsTableSeeder extends Seeder
 
         $db = new \App\Models\Element();
         $db->name = '角色详情';
-        $db->router_id = 2;
+        $db->menu_id = 2;
         $db->code = 'role:detail';
         $db->method =  'get';
         $db->path = '/roles/{*}/detail';

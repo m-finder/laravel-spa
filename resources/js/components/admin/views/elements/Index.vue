@@ -1,5 +1,5 @@
 <template>
-    <div class="card card-primary card-outline" v-if="routerId">
+    <div class="card card-primary card-outline" v-if="menuId">
         <div class="card-header">
             <h3 class="card-title mb-0">资源列表</h3>
         </div>
@@ -45,7 +45,7 @@
             </b-row>
         </div>
 
-        <create :title="'添加资源'" :router-id="routerId" :is-create="isCreate"/>
+        <create :title="'添加资源'" :menu-id="menuId" :is-create="isCreate"/>
         <edit :title="'编辑资源'" :id="form.id" :is-edit="isEdit"/>
 
         <b-modal centered id="modal-element-delete" title="删除资源" @hidden="resetModal">
@@ -70,7 +70,7 @@
     import Edit from './Edit'
 
     const defaultForm = {
-        router_id: null,
+        menu_id: null,
         page: 1,
         limit: 20,
     };
@@ -111,13 +111,13 @@
             }
         },
         props:{
-            'router-id': {
+            'menu-id': {
                 default: null
             }
         },
         watch:{
-            routerId(value){
-                this.form.router_id = value;
+            menuId(value){
+                this.form.menu_id = value;
                 if(value){
                     this.isBusy = true;
                     this.getList()

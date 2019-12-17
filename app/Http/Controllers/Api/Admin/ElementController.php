@@ -9,7 +9,7 @@ use App\Models\Element;
 class ElementController extends ApiController {
 
     public function lists() {
-        $elements = Element::routerId(request('router_id'))->paginate(10);
+        $elements = Element::menuId()->paginate(10);
         return $this->json_response($elements);
     }
 

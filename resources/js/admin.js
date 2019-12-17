@@ -9,14 +9,16 @@ import BootstrapVue from 'bootstrap-vue'
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css' // progress bar style
 import storage from "./storage";
-import store from './components/admin/store'
+import store from './components/admin/store';
 import SvgVue from 'svg-vue';
+import Alert from 'vue-izitoast';
 
 NProgress.configure({showSpinner: false});
-
 Vue.use(BootstrapVue);
 Vue.use(SvgVue);
+Vue.use(Alert);
 
+import 'izitoast/dist/css/iziToast.min.css';
 import App from './components/admin/App'
 import getPageTitle from './components/admin/utils/get-page-title'
 import router, {asyncRouter} from './components/admin/router/routers'

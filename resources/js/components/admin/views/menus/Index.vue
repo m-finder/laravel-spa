@@ -28,7 +28,7 @@
             <!--      资源列表      -->
             <div class="col-8">
                 <transition name="fade" mode="out-in">
-                    <elements :router-id="form.id"/>
+                    <elements :menu-id="form.id"/>
                 </transition>
             </div>
         </div>
@@ -117,7 +117,7 @@
                 }
             },
             getAll() {
-                getAll(this.form).then(response => {
+                getAll().then(response => {
                     if (response.data.code == 0) {
                         this.loading = false;
                         this.items = response.data.data;

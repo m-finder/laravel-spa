@@ -86,6 +86,7 @@
         <create :title="'添加角色'" :is-create="isCreate"/>
         <edit :title="'编辑角色'" :id="selectForm.id" :is-edit="isEdit"/>
         <delete :title="'删除角色'" :data="selectForm" :is-delete="isDelete"/>
+        <assign :title="'权限分配'" :id="selectForm.id" :is-assign="isAssign"/>
         <alert :alerts="alerts"/>
     </section>
 </template>
@@ -96,6 +97,7 @@
     import Create from './Create';
     import Edit from './Edit';
     import Delete from '../../components/delete/Index';
+    import Assign from '../roles-permissions/Index';
 
     const form = {
         name: null,
@@ -115,7 +117,8 @@
             Alert,
             Create,
             Edit,
-            Delete
+            Delete,
+            Assign
         },
         data() {
             return {
@@ -124,6 +127,7 @@
                 isCreate: false,
                 isEdit: false,
                 isDelete: false,
+                isAssign: false,
                 total: 0,
                 items: [],
                 form: Object.assign({}, form),
@@ -149,7 +153,8 @@
         },
         methods: {
             assign(data){
-                console.log(data)
+                this.selectForm = data;
+                this.isAssign = true;
             },
             refresh(){
                 this.form = Object.assign({}, form);
@@ -163,9 +168,6 @@
                         this.form.page = response.data.data.current_page;
                         this.items = response.data.data.data;
                         this.total = response.data.data.total;
-                    }else{
-                        this.alerts.push({'type': 'danger','msg': response.data.msg,'show': 10,'down': 0});
-                        console.log(response);
                     }
                 }).catch((error) => {
                     this.alerts.push({'type': 'danger','msg': '系统出错，请联系管理员查看','show': 10,'down': 0});

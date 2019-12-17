@@ -23,7 +23,8 @@ mix.js('resources/js/admin.js', 'public/js')
         'vuex',
         'vue-router',
         'echarts',
-        'vue-echarts'
+        'vue-echarts',
+        'vue-izitoast'
     ])
     .options({
         processCssUrls: false,

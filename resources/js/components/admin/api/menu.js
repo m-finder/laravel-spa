@@ -14,6 +14,12 @@ export function getAll() {
         method: 'get'
     })
 }
+export function getAllWithElements() {
+    return request({
+        url: '/admin-api/menus/all/with/elements',
+        method: 'get'
+    })
+}
 
 export function getParents() {
     return request({

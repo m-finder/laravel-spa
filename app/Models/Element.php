@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Element extends Model
 {
     protected $fillable = [
-        'router_id', 'name', 'code', 'method', 'path',
+        'menu_id', 'name', 'code', 'method', 'path',
     ];
 
-    public function scopeRouterId($query){
-        return request('router_id') ? $query->where('router_id', request('router_id')) : $query;
+    public function scopeMenuId($query){
+        return request('menu_id') ? $query->where('menu_id', request('menu_id')) : $query;
     }
 
     public static function checkUnique(){
