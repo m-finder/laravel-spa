@@ -135,61 +135,44 @@
         methods: {
             getDetail() {
                 getDetail(this.id).then(res => {
-                    if (res.data.code == 0) {
-                        this.form = res.data.data;
-                        this.disabled = false;
-                    } else {
-                        this.$parent.alerts.push({'type': 'danger', 'msg': res.data.msg, 'show': 10, 'down': 0});
-                        console.log(res);
-                    }
+                    this.form = res.data;
+                    this.disabled = false;
                 })
             },
             getParents() {
                 getParents().then(res => {
-                    if (res.data.code == 0) {
-                        this.parentNodes = res.data.data;
-                    } else {
-                        this.$parent.alerts.push({'type': 'danger', 'msg': res.data.msg, 'show': 10, 'down': 0});
-                    }
-                }).catch(error => {
-                    this.$parent.alerts.push({'type': 'danger', 'msg': '系统出错，请联系管理员查看', 'show': 10, 'down': 0});
-                    console.log(error);
-                });
+                    this.parentNodes = res.data;
+                })
             },
             checkForm() {
                 if (this.form.parent_id.length == 0) {
-                    this.$parent.alerts.push({'type': 'danger', 'msg': '请选择上级菜单', 'show': 10, 'down': 0});
+                    this.$toast.warning('请选择上级菜单', 'Warning');
                     return false
                 }
                 if (this.form.name.length == 0) {
-                    this.$parent.alerts.push({'type': 'danger', 'msg': '请输入视图名称', 'show': 10, 'down': 0});
+                    this.$toast.warning('请输入视图名称', 'Warning');
                     return false
                 }
                 if (this.form.title.length == 0) {
-                    this.$parent.alerts.push({'type': 'danger', 'msg': '请输入菜单名称', 'show': 10, 'down': 0});
+                    this.$toast.warning('请输入菜单名称', 'Warning');
                     return false
                 }
                 if (this.form.component.length == 0) {
-                    this.$parent.alerts.push({'type': 'danger', 'msg': '请输入视图路径', 'show': 10, 'down': 0});
+                    this.$toast.warning('请输入视图路径', 'Warning');
                     return false
                 }
                 if (this.form.path.length == 0) {
-                    this.$parent.alerts.push({'type': 'danger', 'msg': '请输入跳转地址', 'show': 10, 'down': 0});
+                    this.$toast.warning('请输入跳转地址', 'Warning');
                     return false
                 }
                 return true
             },
             submitUpdate() {
                 if (this.checkForm()) {
-                    updateData(this.form).then(response => {
-                        this.$parent.alerts.push({'type': response.data.msg_type,'msg': response.data.msg,'show': 10,'down': 0 });
-                        if (response.data.code == 0) {
-                            this.$parent.getAll();
-                            this.resetModal()
-                        }
-                    }).catch((error) => {
-                        this.$parent.alerts.push({'type': 'danger', 'msg': error.toString(), 'show': 10, 'down': 0});
-                        console.log(error)
+                    updateData(this.form).then(res => {
+                        this.$toast.success(res.msg, 'Success');
+                        this.$parent.getAll();
+                        this.resetModal()
                     })
                 }
             },

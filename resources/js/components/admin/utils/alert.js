@@ -1,19 +1,21 @@
 import 'izitoast/dist/css/iziToast.min.css'
-import {VueIzitoast} from 'vue-izitoast'
+import alert from 'izitoast'
 
 export default {
     error: (message, title = 'Error') => {
-        return VueIzitoast.error({
+        return alert.error({
             title: title,
             message: message,
-            position: 'bottomCenter'
+            position: 'topCenter',
+            timeout: 10000,
         });
     },
     success: (message, title = 'Success') => {
-        return VueIzitoast.success({
+        return alert.success({
             title: title,
             message: message,
-            position: 'bottomCenter'
+            position: 'topCenter',
+            timeout: 10000,
         });
     }
-};;
+};

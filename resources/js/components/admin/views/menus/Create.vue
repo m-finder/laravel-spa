@@ -129,38 +129,33 @@
         methods: {
             checkForm() {
                 if (this.form.parent_id.length == 0) {
-                    this.$parent.alerts.push({'type': 'danger', 'msg': '请选择上级菜单', 'show': 10, 'down': 0});
+                    this.$toast.warning('请选择上级菜单', 'Warning');
                     return false
                 }
                 if (this.form.name.length == 0) {
-                    this.$parent.alerts.push({'type': 'danger', 'msg': '请输入视图名称', 'show': 10, 'down': 0});
+                    this.$toast.warning('请输入视图名称', 'Warning');
                     return false
                 }
                 if (this.form.title.length == 0) {
-                    this.$parent.alerts.push({'type': 'danger', 'msg': '请输入菜单名称', 'show': 10, 'down': 0});
+                    this.$toast.warning('请输入菜单名称', 'Warning');
                     return false
                 }
                 if (this.form.component.length == 0) {
-                    this.$parent.alerts.push({'type': 'danger', 'msg': '请输入视图路径', 'show': 10, 'down': 0});
+                    this.$toast.warning('请输入视图路径', 'Warning');
                     return false
                 }
                 if (this.form.path.length == 0) {
-                    this.$parent.alerts.push({'type': 'danger', 'msg': '请输入跳转地址', 'show': 10, 'down': 0});
+                    this.$toast.warning('请输入跳转地址', 'Warning');
                     return false
                 }
                 return true
             },
             submitCreate() {
                 if (this.checkForm()) {
-                    createData(this.form).then(response => {
-                        this.$parent.alerts.push({'type': response.data.msg_type,'msg': response.data.msg,'show': 10,'down': 0 });
-                        if (response.data.code == 0) {
-                            this.$parent.getAll();
-                            this.resetModal()
-                        }
-                    }).catch((error) => {
-                        this.$parent.alerts.push({'type': 'danger', 'msg': error.toString(), 'show': 10, 'down': 0});
-                        console.log(error)
+                    createData(this.form).then(res => {
+                        this.$toast.success(res.msg, 'Success');
+                        this.$parent.getAll();
+                        this.resetModal()
                     })
                 }
             },

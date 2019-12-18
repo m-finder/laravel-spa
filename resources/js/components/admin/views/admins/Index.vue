@@ -48,39 +48,20 @@
                             </div>
                         </div>
 
-                        <b-table hover :items="items" :fields="fields" :sort-by.sync="sortBy" :sort-desc.sync="sortDesc" :busy.sync="isBusy" responsive="sm" outlined ref="table" show-empty sticky-header>
-                            <div slot="table-busy" class="text-center text-danger my-2">
-                                <b-spinner class="align-middle"></b-spinner>
-                                <strong>Loading...</strong>
-                            </div>
-                            <template v-slot:empty="scope">
-                                <div class="text-center text-secondary">
-                                    <p>
-                                        <svg-vue icon="null" class="empty-data"/>
-                                    </p>
-                                    <h6>暂无数据</h6>
-                                </div>
-                            </template>
+                        <data-table :is-busy="isBusy" :items="items" :fields="fields" :notice="notice" :total="total" :limit="form.limit" :page="form.page">
                             <template v-slot:cell(avatar)="data">
                                 <img :src="getAvatar(data.value) " class="img-circle row-user-avatar" alt="用户头像">
                             </template>
+
                             <template v-slot:cell(role)="row">
                                 {{ row.item.role.alias}}
                             </template>
+
                             <template v-slot:cell(actions)="row">
                                 <b-button v-if="row.item.id != 1" variant="link" @click="openEditModal(row.item)">编辑</b-button>
-                                <b-button v-if="row.item.id != 1" variant="link" class="text-danger mr-1" @click="openDeleteModal(row.item)">
-                                    删除
-                                </b-button>
+                                <b-button v-if="row.item.id != 1" variant="link" class="text-danger mr-1" @click="openDeleteModal(row.item)">删除</b-button>
                             </template>
-                        </b-table>
-
-                        <b-row>
-                            <b-col md="6" class="my-1">
-                                <b-pagination v-model="form.page" :total-rows="total" :per-page="form.limit" class="my-0"/>
-                                <b-card-text class="mt-3 text-secondary">共 {{ total }} 条数据</b-card-text>
-                            </b-col>
-                        </b-row>
+                        </data-table>
                     </div>
                 </div>
             </div>
@@ -89,16 +70,15 @@
         <create :title="'添加用户'" :is-create="isCreate"/>
         <edit :id="selectForm.id" :title="'编辑用户'" :is-edit="isEdit"/>
         <delete :title="'删除用户'" :data="selectForm" :is-delete="isDelete"/>
-        <alert :alerts="alerts"/>
     </section>
 </template>
 
 <script>
     import {getData, deleteData} from "../../api/admin";
-    import Alert from '../../components/alert/Index';
     import Create from "./Create";
     import Edit from "./Edit";
-    import Delete from '../../components/delete/Index';
+    import Delete from '../../components/delete';
+    import DataTable from '../../components/table'
 
     const defaultForm = {
         id: null,
@@ -115,24 +95,22 @@
     export default {
         name: "AdminList",
         components:{
-            Alert,
+            DataTable,
             Create,
             Edit,
             Delete
         },
         data() {
             return {
-                alerts: [],
                 isBusy: true,
                 isCreate: false,
                 isEdit: false,
                 isDelete: false,
                 total: 0,
                 items: [],
+                notice: '暂无数据',
                 selectForm: Object.assign({}, defaultForm),
                 form: Object.assign({}, form),
-                sortBy: 'id',
-                sortDesc: false,
                 fields: [
                     {label: 'ID', key: 'id', sortable: true},
                     {label: '昵称', key: 'name', sortable: false},
@@ -148,7 +126,7 @@
             this.getList()
         },
         watch: {
-            'form.page'() {
+            'form.page'(value) {
                 this.getList()
             },
         },
@@ -159,14 +137,14 @@
             },
             getList() {
                 this.isBusy = true;
-                getData(this.form).then((response) => {
+                getData(this.form).then(res => {
                     this.isBusy = false;
-                    this.currentPage = response.data.data.current_page;
-                    this.items = response.data.data.data;
-                    this.total = response.data.data.total;
-                }).catch((error)=>{
-                    this.alerts.push({'type': 'danger','msg': '系统出错，请联系管理员查看','show': 10,'down': 0});
-                    console.log(error);
+                    this.currentPage = res.data.current_page;
+                    this.items = res.data.data;
+                    this.total = res.data.total;
+                }).catch(error=>{
+                    this.isBusy = false;
+                    this.notice = (error.response.data.message) || '系统出错';
                 });
             },
             getAvatar(avatar) {
@@ -178,17 +156,12 @@
             },
             deleteData() {
                 let id = this.selectForm.id;
-                deleteData(id).then((response) => {
-                    this.alerts.push({'type': response.data.msg_type,'msg': response.data.msg, 'show': 10,'down': 0});
-                    if (response.data.code == 0) {
-                        this.items = this.items.filter(item => item.id != id);
-                        this.total = this.total - 1;
-                        this.isDelete = false;
-                    }
-                }).catch((error)=>{
-                    this.alerts.push({'type': 'danger','msg': '系统出错，请联系管理员查看','show': 10,'down': 0});
-                    console.log(error);
-                });
+                deleteData(id).then(res => {
+                    this.$toast.success(res.msg, 'Success');
+                    this.items = this.items.filter(item => item.id != id);
+                    this.total = this.total - 1;
+                    this.isDelete = false;
+                })
             },
             openAddModal(){
                 this.isCreate = true;

@@ -11,7 +11,8 @@ use Illuminate\Support\Str;
 
 class AdminController extends ApiController {
     public function lists() {
-        $users = Admin::name(request('name'))->email(request('email'))->with('role')->paginate(10);
+        $page = request('limit', 20);
+        $users = Admin::name(request('name'))->email(request('email'))->with('role')->paginate($page);
         return $this->json_response($users);
     }
 

@@ -151,11 +151,6 @@
                 }
             }
         },
-        created() {
-            this.$toast.info('Welcome!', 'Hey', {
-                position: "topCenter",
-            });
-        }
     }
 </script>
 <style lang="scss" scoped>

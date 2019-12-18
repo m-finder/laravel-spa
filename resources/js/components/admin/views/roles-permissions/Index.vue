@@ -6,24 +6,45 @@
             <strong>Loading...</strong>
         </div>
 
-        <div>
-            <template v-for="(item,i) in menus">
-                <div class="card mb-3">
-                    <h5 class="card-title border-bottom pl-2 pb-1 mt-2 mb-2 ">
-                        <b-form-checkbox :value="item.id" switch @change="toggleMenu($event, item.id)"
-                                         v-model="menuArray">
-                            {{ item.title }}
-                        </b-form-checkbox>
-                    </h5>
-                    <div class="card-body" v-if="item.elements">
-                        <template v-for="(e,ei) in item.elements">
-                            <b-form-checkbox :value="e.id" @change="toggleElement($event, e.id)" v-model="elementArray">
-                                {{ e.name }}
-                            </b-form-checkbox>
-                        </template>
+        <div v-if="empty" class="text-center my-2">
+            <p>
+                <svg-vue icon="null" class="empty-data"/>
+            </p>
+            <h6>暂无数据</h6>
+        </div>
+
+        <div v-if="menus">
+            <div class="row p-3">
+                <template v-for="(item,i) in menus">
+                    <div class="col-6">
+                        <div class="card mb-3">
+                            <h5 class="card-title border-bottom pl-2 pb-1 mt-2 mb-2 ">
+                                <b-form-checkbox :value="item.id" switch @change="toggleMenu($event, item.id)"
+                                                 v-model="menuArray">
+                                    {{ item.title }}
+                                </b-form-checkbox>
+                            </h5>
+                            <div class="card-body">
+                                <div v-if="item.elements && item.elements.length > 0">
+                                    <b-form-checkbox-group :id="'element-' + item.id" v-model="elementArray">
+                                        <template v-for="(e,ei) in item.elements">
+                                            <b-form-checkbox :value="e.id" @change="toggleElement($event, e.id)">
+                                                {{ e.name }}
+                                            </b-form-checkbox>
+                                        </template>
+                                    </b-form-checkbox-group>
+                                </div>
+                                <div v-else class="text-center">
+                                    <p>
+                                        <svg-vue icon="null" class="empty-data"/>
+                                    </p>
+                                    <h6>暂无数据</h6>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </template>
+                </template>
+            </div>
         </div>
 
         <div slot="modal-footer" class="w-100">
@@ -35,6 +56,7 @@
 
 <script>
     import {getAllWithElements} from '../../api/menu'
+    import {getAuth, setAuth} from '../../api/role'
 
     export default {
         name: "RolePermission",
@@ -56,47 +78,55 @@
                 show: this.isCreate,
                 disabled: true,
                 loading: true,
+                empty: false,
                 menus: [],
-                menuArray: [1],
-                elementArray: [13, 5],
+                menuArray: [],
+                elementArray: [],
             }
         },
         watch: {
             isAssign(value) {
                 this.show = value;
                 if (value) {
-                    this.disabled = true;
-                    this.getMenus()
+                    this.menus = [];
+                    this.getMenus();
+                    this.getAuth();
                 }
             }
         },
         methods: {
+            getAuth() {
+                getAuth(this.id).then(res => {
+                    this.menuArray = res.data.menus;
+                    this.elementArray = res.data.elements;
+                })
+            },
             toggleMenu(checked, id) {
-                checked ?  this.menuArray.push(id) : this.menuArray = this.menuArray.filter(item => item != id);
-                console.log(this.menuArray)
+                let elements = (this.menus.filter(item => item.id == id)[0].elements).map(item => item.id);
+                checked ? (this.menuArray.push(id), this.elementArray.push.apply(this.elementArray, elements)) : (this.menuArray = this.menuArray.filter(item => item != id), this.elementArray = this.elementArray.filter(item => !elements.includes(item)));
             },
             toggleElement(checked, id) {
                 checked ? this.elementArray.push(id) : this.elementArray = this.elementArray.filter(item => item != id);
                 console.log(this.elementArray)
             },
             getMenus() {
+                this.loading = this.disabled = true;
+                this.empty = false;
                 getAllWithElements().then(res => {
-                    if (res.data.code == 0) {
-                        this.loading = false;
-                        this.disabled = false;
-                        this.menus = res.data.data;
-                    } else {
-                        this.alerts.push({'type': 'danger', 'msg': res.data.msg, 'show': 10, 'down': 0});
-                        console.log(res);
-                    }
+                    this.loading = this.disabled = false;
+                    this.menus = res.data;
                 }).catch(error => {
-                    this.alerts.push({'type': 'danger', 'msg': '系统出错，请联系管理员查看', 'show': 10, 'down': 0});
-                    console.log(error);
+                    this.loading = false;
+                    this.empty = true;
                 });
             },
             submitAssign() {
-                console.log(this.menuArray)
-                console.log(this.elementArray)
+                this.disabled = true;
+                let data = {menus: this.menuArray, elements: this.elementArray};
+                setAuth(this.id, data).then(res => {
+                    this.$toast.success(res.msg, 'Success');
+                    this.resetModal();
+                })
             },
             resetModal() {
                 this.show = false;

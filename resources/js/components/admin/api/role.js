@@ -15,6 +15,20 @@ export function getAll() {
     })
 }
 
+export function getAuth(id) {
+    return request({
+        url: '/admin-api/roles/' + id + '/auth',
+        method: 'get'
+    })
+}
+
+export function setAuth(id, data) {
+    return request({
+        url: '/admin-api/roles/' + id + '/set/auth',
+        method: 'post',
+        data: data
+    })
+}
 export function getDetail(id) {
     return request({
         url: '/admin-api/roles/' + id + '/detail',

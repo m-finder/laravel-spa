@@ -10,7 +10,8 @@ use Illuminate\Support\Facades\Log;
 
 class MenuController extends ApiController {
     public function lists() {
-        $menus = Menu::name(request('name'))->paginate(10);
+        $page = request('limit', 20);
+        $menus = Menu::name(request('name'))->paginate($page);
         return $this->json_response($menus);
     }
 
@@ -22,10 +23,6 @@ class MenuController extends ApiController {
     public function allWithElements(){
         $menu = Menu::orderBy('order_num', 'asc')->with('elements')->get();
         return $this->json_response($menu);
-    }
-
-    public function roleAuth(){
-
     }
 
     public function parents() {

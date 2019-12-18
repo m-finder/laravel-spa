@@ -14,10 +14,8 @@ class CreateRoleElementsTable extends Migration
     public function up()
     {
         Schema::create('role_elements', function (Blueprint $table) {
-            $table->bigIncrements('id');
             $table->integer('role_id')->index();
             $table->integer('element_id')->index();
-            $table->timestamps();
         });
     }
 

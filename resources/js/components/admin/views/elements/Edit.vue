@@ -94,49 +94,39 @@
         methods: {
             getDetail(){
                 getDetail(this.id).then(res => {
-                    if (res.data.code == 0) {
-                        this.form = res.data.data;
-                        this.disabled = false;
-                    } else {
-                        this.$parent.alerts.push({'type': 'danger', 'msg': res.data.msg, 'show': 10, 'down': 0});
-                        console.log(res);
-                    }
+                    this.form = res.data;
+                    this.disabled = false;
                 })
             },
             checkForm(){
-                if(!this.form.router_id){
-                    this.$parent.alerts.push({'type': 'danger','show': 10,'down': 0,'msg': '菜单数据获取失败，请重试'});
+                if(!this.form.menu_id){
+                    this.$toast.warning('菜单数据获取失败，请重试', 'Warning');
                     return false;
                 }
                 if(!this.form.name){
-                    this.$parent.alerts.push({'type': 'danger','show': 10,'down': 0,'msg': '请输入资源名称'});
+                    this.$toast.warning('请输入资源名称', 'Warning');
                     return false;
                 }
                 if(!this.form.code){
-                    this.$parent.alerts.push({'type': 'danger','show': 10,'down': 0,'msg': '请输入资源编号'});
+                    this.$toast.warning('请输入资源编号', 'Warning');
                     return false;
                 }
                 if(!this.form.method){
-                    this.$parent.alerts.push({'type': 'danger','show': 10,'down': 0,'msg': '请选择请求方法'});
+                    this.$toast.warning('请选择请求方法', 'Warning');
                     return false;
                 }
                 if(!this.form.path){
-                    this.$parent.alerts.push({'type': 'danger','show': 10,'down': 0,'msg': '请输入请求路径'});
+                    this.$toast.warning('请输入请求路径', 'Warning');
                     return false;
                 }
                 return true;
             },
             submitUpdate(){
                 if(this.checkForm()){
-                    updateData(this.form).then(response => {
-                        this.$parent.alerts.push({'type': response.data.msg_type,'msg': response.data.msg,'show': 10,'down': 0 });
-                        if (response.data.code == 0) {
-                            this.$parent.getList();
-                            this.resetModal();
-                        }
-                    }).catch((error) => {
-                        this.$parent.alerts.push({'type': 'danger', 'msg': error.toString(), 'show': 10, 'down': 0});
-                        console.log(error)
+                    updateData(this.form).then(res => {
+                        this.$toast.success(res.msg, 'Success');
+                        this.$parent.getList();
+                        this.resetModal();
                     })
                 }
             },

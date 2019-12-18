@@ -11,14 +11,18 @@ import 'nprogress/nprogress.css' // progress bar style
 import storage from "./storage";
 import store from './components/admin/store';
 import SvgVue from 'svg-vue';
-import Alert from 'vue-izitoast';
+import VueIziToast from 'vue-izitoast';
+import 'izitoast/dist/css/iziToast.min.css';
 
 NProgress.configure({showSpinner: false});
 Vue.use(BootstrapVue);
 Vue.use(SvgVue);
-Vue.use(Alert);
+let defaultAlertOptions = {
+    position: 'topCenter',
+    timeout: 10000,
+};
+Vue.use(VueIziToast, defaultAlertOptions);
 
-import 'izitoast/dist/css/iziToast.min.css';
 import App from './components/admin/App'
 import getPageTitle from './components/admin/utils/get-page-title'
 import router, {asyncRouter} from './components/admin/router/routers'

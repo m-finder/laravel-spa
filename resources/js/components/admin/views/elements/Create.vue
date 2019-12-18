@@ -61,13 +61,13 @@
     };
     export default {
         name: "ElementCreate",
-        data (){
+        data() {
             return {
                 form: Object.assign({}, defaultForm),
                 show: false
             }
         },
-        props:{
+        props: {
             'menu-id': {
                 default: null
             },
@@ -80,52 +80,47 @@
                 default: '添加操作'
             }
         },
-        watch:{
-            isCreate(value){
+        watch: {
+            isCreate(value) {
                 this.form.menu_id = this.menuId;
                 this.show = value;
             }
 
         },
         methods: {
-            checkForm(){
-                if(!this.form.menu_id){
-                    this.$parent.alerts.push({'type': 'danger','show': 10,'down': 0,'msg': '菜单数据获取失败，请重试'});
+            checkForm() {
+                if (!this.form.menu_id) {
+                    this.$toast.warning('菜单数据获取失败，请重试', 'Warning');
                     return false;
                 }
-                if(!this.form.name){
-                    this.$parent.alerts.push({'type': 'danger','show': 10,'down': 0,'msg': '请输入资源名称'});
+                if (!this.form.name) {
+                    this.$toast.warning('请输入资源名称', 'Warning');
                     return false;
                 }
-                if(!this.form.code){
-                    this.$parent.alerts.push({'type': 'danger','show': 10,'down': 0,'msg': '请输入资源编号'});
+                if (!this.form.code) {
+                    this.$toast.warning('请输入资源编号', 'Warning');
                     return false;
                 }
-                if(!this.form.method){
-                    this.$parent.alerts.push({'type': 'danger','show': 10,'down': 0,'msg': '请选择请求方法'});
+                if (!this.form.method) {
+                    this.$toast.warning('请选择请求方法', 'Warning');
                     return false;
                 }
-                if(!this.form.path){
-                    this.$parent.alerts.push({'type': 'danger','show': 10,'down': 0,'msg': '请输入请求路径'});
+                if (!this.form.path) {
+                    this.$toast.warning('请输入请求路径', 'Warning');
                     return false;
                 }
                 return true;
             },
-            submitCreate(){
-                if(this.checkForm()){
-                    createData(this.form).then(response => {
-                        this.$parent.alerts.push({'type': response.data.msg_type,'msg': response.data.msg,'show': 10,'down': 0 });
-                        if (response.data.code == 0) {
-                            this.$parent.getList();
-                            this.resetModal();
-                        }
-                    }).catch((error) => {
-                        this.$parent.alerts.push({'type': 'danger', 'msg': error.toString(), 'show': 10, 'down': 0});
-                        console.log(error)
+            submitCreate() {
+                if (this.checkForm()) {
+                    createData(this.form).then(res => {
+                        this.$toast.success(res.msg, 'Success');
+                        this.$parent.getList();
+                        this.resetModal();
                     })
                 }
             },
-            resetModal(){
+            resetModal() {
                 this.form = Object.assign({}, defaultForm);
                 this.show = false;
                 this.$parent.isCreate = false;

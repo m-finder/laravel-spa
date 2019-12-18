@@ -214,8 +214,7 @@
         }
 
         .open {
-            border-bottom-left-radius: 15px;
-            border-top-right-radius: 15px;
+            border-radius: 5px;
         }
     }
 </style>

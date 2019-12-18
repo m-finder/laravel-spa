@@ -14,7 +14,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">角色别名-中</span>
                 </div>
-                <input type="text" name="alias"  v-model="form.alias"
+                <input type="text" name="alias" v-model="form.alias"
                        class="form-control" placeholder="角色别名">
             </div>
         </div>
@@ -28,8 +28,9 @@
 
 <script>
     import {createData} from "../../api/role";
+
     const defaultForm = {
-        name:null,
+        name: null,
         alias: null
     };
     export default {
@@ -51,33 +52,28 @@
             }
         },
         watch: {
-            isCreate(value){
+            isCreate(value) {
                 this.show = value;
             }
         },
         methods: {
             checkForm() {
-                if(!this.form.name){
-                    this.$parent.alerts.push({'type': 'danger','show': 10,'down': 0,'msg': '请输入角色名'});
+                if (!this.form.name) {
+                    this.$toast.warning('请输入角色名称', 'Warning');
                     return false;
                 }
-                if(!this.form.alias){
-                    this.$parent.alerts.push({'type': 'danger','show': 10,'down': 0,'msg': '请输入角色别名'});
+                if (!this.form.alias) {
+                    this.$toast.warning('请输入角色别名', 'Warning');
                     return false;
                 }
                 return true;
             },
             submitCreate() {
                 if (this.checkForm()) {
-                    createData(this.form).then(response => {
-                        this.$parent.alerts.push({'type': response.data.msg_type,'msg': response.data.msg,'show': 10,'down': 0 });
-                        if (response.data.code == 0) {
-                            this.$parent.getList();
-                            this.resetModal()
-                        }
-                    }).catch((error) => {
-                        this.$parent.alerts.push({'type': 'danger', 'msg': error.toString(), 'show': 10, 'down': 0});
-                        console.log(error)
+                    createData(this.form).then(res => {
+                        this.$toast.success(res.msg, 'Success');
+                        this.$parent.getList();
+                        this.resetModal()
                     })
                 }
             },

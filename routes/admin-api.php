@@ -30,4 +30,6 @@ Route::middleware('auth:admin-api')->group(function() {
     Route::put('/roles/{id}/update', 'Api\Admin\RoleController@update');
     Route::get('/roles/{id}/detail', 'Api\Admin\RoleController@detail');
     Route::delete('/roles/{id}/delete', 'Api\Admin\RoleController@delete');
+    Route::get('/roles/{id}/auth', 'Api\Admin\RoleController@auth');
+    Route::post('/roles/{id}/set/auth', 'Api\Admin\RoleController@setAuth');
 });

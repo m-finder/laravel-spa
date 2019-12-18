@@ -14,7 +14,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">登录邮箱</span>
                 </div>
-                <input type="email" name="email"  v-model="form.email"
+                <input type="email" name="email" v-model="form.email"
                        class="form-control" placeholder="登录邮箱">
             </div>
         </div>
@@ -23,7 +23,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">登录密码</span>
                 </div>
-                <input type="password" name="password"  v-model="form.password" class="form-control" placeholder="登录密码">
+                <input type="password" name="password" v-model="form.password" class="form-control" placeholder="登录密码">
             </div>
         </div>
         <div class="col-lg-12">
@@ -83,9 +83,9 @@
             }
         },
         watch: {
-            isEdit(value){
+            isEdit(value) {
                 this.show = value;
-                if(value){
+                if (value) {
                     this.disabled = true;
                     this.getRole();
                     this.getDetail();
@@ -93,70 +93,53 @@
             }
         },
         methods: {
-            getRole(){
-                getAll().then(response => {
-                    if(response.data.code == 0){
-                        this.roles = response.data.data;
-                    }else{
-                        this.alerts.push({'type': response.data.msg_type,'msg': response.data.msg,'show': 10,'down': 0});
-                    }
-                }).catch(error => {
-                    this.alerts.push({'type': 'danger','msg': '系统出错，请联系管理员查看','show': 10,'down': 0 });
-                    console.log(error);
+            getRole() {
+                getAll().then(res => {
+                    this.roles = res.data;
                 })
             },
             checkForm() {
-                if(!this.form.name){
-                    this.$parent.alerts.push({'type': 'danger','show': 10,'down': 0,'msg': '请输入用户名'});
+                if (!this.form.name) {
+                    this.$toast.warning('请输入用户名', 'Warning');
                     return false;
                 }
-                if(!this.form.role_id){
-                    this.$parent.alerts.push({'type': 'danger','show': 10,'down': 0,'msg': '请选择绑定角色'});
+                if (!this.form.role_id) {
+                    this.$toast.warning('请选择绑定角色', 'Warning');
                     return false;
                 }
-                if(!this.form.email){
-                    this.$parent.alerts.push({'type': 'danger','show': 10,'down': 0,'msg': '请输入登录邮箱'});
+                if (!this.form.email) {
+                    this.$toast.warning('请输入登录邮箱', 'Warning');
                     return false;
                 }
                 let reg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
                 let email = reg.test(this.form.email);
-                if(!email){
-                    this.$parent.alerts.push({'type': 'danger','show': 10,'down': 0,'msg': '请输入正确的登录邮箱'});
+                if (!email) {
+                    this.$toast.warning('请输入正确的登录邮箱', 'Warning');
                     return false;
                 }
-                if(!this.form.password){
-                    this.$parent.alerts.push({'type': 'danger','show': 10,'down': 0,'msg': '请输入登录密码'});
+                if (!this.form.password) {
+                    this.$toast.warning('请输入登录密码', 'Warning');
                     return false;
                 }
-                if(this.form.password.length > 32 || this.form.password.length<6){
-                    this.$parent.alerts.push({'type': 'danger','show': 10,'down': 0,'msg': '密码应为长度 6 - 32 位的字符串'});
+                if (this.form.password.length > 32 || this.form.password.length < 6) {
+                    this.$toast.warning('密码应为长度 6 - 32 位的字符串', 'Warning');
                     return false;
                 }
                 return true;
             },
             getDetail() {
                 getDetail(this.id).then(res => {
-                    if (res.data.code == 0) {
-                        this.form = res.data.data;
-                        this.form.password = null;
-                        this.disabled = false;
-                    } else {
-                        this.$parent.alerts.push({'type': 'danger', 'msg': res.data.msg, 'show': 10, 'down': 0});
-                        console.log(res);
-                    }
+                    this.form = res.data;
+                    this.form.password = null;
+                    this.disabled = false;
                 })
             },
             submitUpdate() {
                 if (this.checkForm()) {
-                    updateData(this.form).then(response => {
-                        this.$parent.alerts.push({'type': response.data.msg_type,'msg': response.data.msg,'show': 10,'down': 0 });
-                        if (response.data.code == 0) {
-                            this.$parent.getList();
-                            this.resetModal()
-                        }
-                    }).catch((error) => {
-                        this.$parent.alerts.push({'type': 'danger', 'msg': error.toString(), 'show': 10, 'down': 0});
-                        console.log(error)
+                    updateData(this.form).then(res => {
+                        this.$toast.success(res.msg, 'Success');
+                        this.$parent.getList();
+                        this.resetModal()
                     })
                 }
             },

@@ -33,7 +33,7 @@ export const baseRouters = [
                 name: '404',
             },
             {
-                path: '/401',
+                path: '401',
                 meta: {title: '401'},
                 component: () => import('../views/error/401'),
                 name: '401',

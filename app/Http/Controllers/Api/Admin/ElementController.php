@@ -4,12 +4,14 @@ namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Api\ApiController;
 use App\Models\Element;
+use Illuminate\Support\Facades\Log;
 
 
 class ElementController extends ApiController {
 
     public function lists() {
-        $elements = Element::menuId()->paginate(10);
+        $page = request('limit', 20);
+        $elements = Element::menuId()->paginate($page);
         return $this->json_response($elements);
     }
 
@@ -26,7 +28,7 @@ class ElementController extends ApiController {
         try {
             if (Element::checkUnique()) {
                 $model->create(request_intersect([
-                    'router_id', 'name', 'code', 'method', 'path',
+                    'menu_id', 'name', 'code', 'method', 'path',
                 ]));
             } else {
                 return $this->json_response(null, '该资源已存在', self::ERROR_PARAMS, self::MSG_TYPE_ERROR);

@@ -19,6 +19,13 @@
                             <strong>Loading...</strong>
                         </div>
 
+                        <div v-if="empty" class="text-center text-danger my-2">
+                            <p>
+                                <svg-vue icon="null" class="empty-data"/>
+                            </p>
+                            <h6>暂无数据</h6>
+                        </div>
+
                         <b-tree-view v-if="items && items.length" :nodeLabelProp="'title'" :data="items"
                                      :contextMenuItems="menus" @nodeSelect="nodeSelect" :nodesDraggable="false"
                                      @contextMenuItemSelect="menuItemSelected" :renameNodeOnDblClick="false"/>
@@ -36,18 +43,16 @@
         <create :title="'添加菜单'" :is-create="isCreate" :parent-nodes="parentNodes"/>
         <edit :title="'编辑菜单'" :id="form.id" :isEdit="isEdit"/>
         <delete :title="'删除菜单'" :data="form" :is-delete="isDelete"/>
-        <alert :alerts="alerts"/>
     </section>
 </template>
 
 <script>
     import {getAll, deleteData} from "../../api/menu";
-    import Alert from '../../components/alert/Index';
     import {bTreeView} from 'bootstrap-vue-treeview';
     import Edit from './Edit';
     import Create from './Create';
-    import Delete from '../../components/delete/Index';
-    import Elements from '../elements/Index';
+    import Delete from '../../components/delete';
+    import Elements from '../elements';
 
     const defaultForm = {
         id: null,
@@ -57,7 +62,6 @@
     export default {
         name: "MenuList",
         components: {
-            Alert,
             bTreeView,
             Create,
             Edit,
@@ -66,7 +70,6 @@
         },
         data() {
             return {
-                alerts: [],
                 items: [],
                 isEdit: false,
                 isCreate: false,
@@ -76,6 +79,7 @@
                 form: Object.assign({}, defaultForm),
                 node: null,
                 loading: true,
+                empty: false,
             }
         },
         created() {
@@ -102,7 +106,7 @@
                             this.parentNodes = {id: id, title: this.form.title};
                             this.isCreate = true;
                         } else {
-                            this.alerts.push({'type': 'danger', 'msg': '暂只支持二级菜单', 'show': 10, 'down': 0});
+                            this.$toast.warning('暂只支持二级菜单', 'Warning');
                         }
                         break;
                     case 'DELETE_MENU':
@@ -117,30 +121,22 @@
                 }
             },
             getAll() {
-                getAll().then(response => {
-                    if (response.data.code == 0) {
-                        this.loading = false;
-                        this.items = response.data.data;
-                    } else {
-                        this.alerts.push({'type': 'danger', 'msg': response.data.msg, 'show': 10, 'down': 0});
-                        console.log(response);
-                    }
+                this.loading = true;
+                getAll().then(res => {
+                    this.loading = false;
+                    this.empty = false;
+                    this.items = res.data;
                 }).catch(error => {
-                    this.alerts.push({'type': 'danger', 'msg': '系统出错，请联系管理员查看', 'show': 10, 'down': 0});
-                    console.log(error);
+                    this.loading = false;
+                    this.empty = true;
                 });
             },
             deleteData() {
-                deleteData(this.form.id).then((response) => {
-                    this.alerts.push({'type': response.data.msg_type, 'msg': response.data.msg, 'show': 10, 'down': 0});
-                    if (response.data.code == 0) {
-                        this.node.delete();
-                        this.isDelete = false;
-                    }
-                }).catch((error) => {
-                    this.alerts.push({'type': 'danger', 'msg': '系统出错，请联系管理员查看', 'show': 10, 'down': 0});
-                    console.log(error);
-                });
+                deleteData(this.form.id).then(res => {
+                    this.$toast.success(res.msg, 'Success');
+                    this.node.delete();
+                    this.isDelete = false;
+                })
             }
         }
     }
