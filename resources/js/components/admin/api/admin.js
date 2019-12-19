@@ -15,6 +15,14 @@ export function getDetail(id) {
     })
 }
 
+export function getAdminAuth(token) {
+    return request({
+        url: '/admin-api/admins/auth',
+        method: 'get',
+        params: {token: token}
+    })
+}
+
 export function deleteData(id) {
     return request({
         url: '/admin-api/admins/' + id + '/delete',

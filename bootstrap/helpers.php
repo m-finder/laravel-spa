@@ -27,6 +27,9 @@ if (!function_exists('make_tree')) {
         $newList = [];
         foreach ($list as $k => $v) {
             $newList[$v['id']] = $v;
+            $newList[$v['id']]['meta'] = [
+                'title' => $v['title']
+            ];
         }
 
         foreach ($newList as $value) {

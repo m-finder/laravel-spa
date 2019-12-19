@@ -72,6 +72,12 @@
             </div>
         </div>
 
+        <div class="col-lg-12">
+            <div class="input-group mb-3">
+                <b-form-checkbox switch value="1" v-model="form.hidden">是否隐藏</b-form-checkbox>
+            </div>
+        </div>
+
         <div slot="modal-footer" class="w-100">
             <b-button variant="primary" size="sm" @click="resetModal">取消</b-button>
             <b-button variant="danger" size="sm" @click="submitCreate">确认</b-button>
@@ -90,7 +96,8 @@
         redirect: null,
         icon: null,
         parent_id: null,
-        order_num: null
+        order_num: null,
+        hidden: 0
     };
     export default {
         name: "MenuCreate",

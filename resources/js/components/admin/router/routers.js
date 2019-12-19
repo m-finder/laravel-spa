@@ -7,6 +7,7 @@ export const baseRouters = [
     {
         path: '/login',
         name: 'Login',
+        hidden: true,
         component: () => import('../views/login/Index'),
     },
     {
@@ -15,6 +16,7 @@ export const baseRouters = [
         hidden: true,
         children: [
             {
+                hidden: true,
                 path: '/redirect/:path*',
                 component: () => import('../components/redirect/Index')
             }
@@ -24,81 +26,42 @@ export const baseRouters = [
         path: '/error',
         name: 'Error',
         component: Layout,
+        hidden: true,
         redirect: '/error/404',
         children: [
             {
                 path: '404',
+                hidden: true,
                 meta: {title: '404'},
                 component: () => import('../views/error/404'),
                 name: '404',
             },
             {
                 path: '401',
+                hidden: true,
                 meta: {title: '401'},
                 component: () => import('../views/error/401'),
                 name: '401',
             },
         ]
     },
-    {
-        path: '/',
-        name: 'Home',
-        component: Layout,
-        redirect: '/dashboard',
-        children: [
-            {
-                path: 'dashboard',
-                meta: {title: '首页', affix: true},
-                name: 'Dashboard',
-                component: () => import('../views/dashboard/Index')
-            },
-        ]
-    },
+    // {
+    //     path: '/',
+    //     name: 'Home',
+    //     component: Layout,
+    //     redirect: '/dashboard',
+    //     children: [
+    //         {
+    //             path: '/dashboard',
+    //             meta: {title: '首页', affix: true},
+    //             icon: 'dashboard',
+    //             name: 'Dashboard',
+    //             component: () => import('../views/dashboard/Index')
+    //         },
+    //     ]
+    // },
 ];
 
-export const asyncRouter = [
-    {
-        meta: {title: '权限管理'},
-        path: '/auth',
-        redirect: '/auth/roles',
-        component: Layout,
-        children: [
-            {
-                name: 'RoleList',
-                meta: {title: '角色列表', noCache: false},
-                path: 'roles',
-                component: () => import('../views/roles/Index'),
-            },
-            {
-                name: 'AdminList',
-                meta: {title: '用户列表', noCache: false},
-                path: 'admins',
-                component: () => import('../views/admins/Index'),
-            },
-            {
-                name: 'MenuList',
-                meta: {title: '权限管理'},
-                path: 'menus',
-                component: () => import('../views/menus/Index')
-            },
-        ]
-    },
-    {
-        path: '/base',
-        name: 'Base',
-        meta: {title: 'Base'},
-        redirect: '/base/icons',
-        component: Layout,
-        children: [
-            {
-                path: 'icons',
-                name: 'Icons',
-                meta: {title: 'Icons'},
-                component: () => import('../views/icons/Index'),
-            }
-        ]
-    },
-];
 
 // 解决路由重写
 const routerPush = Router.prototype.push;

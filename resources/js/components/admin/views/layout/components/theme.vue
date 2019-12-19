@@ -32,7 +32,7 @@
 </template>
 
 <script>
-    import storage from '../../../../../storage'
+    import storage from '../../../utils/storage'
 
     export default {
         name: "theme",

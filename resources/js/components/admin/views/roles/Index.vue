@@ -74,9 +74,9 @@
     import {getData, deleteData} from "../../api/role";
     import Create from './Create';
     import Edit from './Edit';
-    import Delete from '../../components/delete';
-    import Assign from '../roles-permissions';
-    import DataTable from '../../components/table'
+    import Delete from '../../components/delete/Index';
+    import Assign from '../roles-permissions/Index';
+    import DataTable from '../../components/table/Index'
 
     const form = {
         name: null,
@@ -145,8 +145,9 @@
                     this.items = res.data.data;
                     this.total = res.data.total;
                 }).catch(error => {
+                    console.log(error)
                     this.isBusy = false;
-                    this.notice = (error.response.data.message) || '系统出错';
+                    this.notice = '系统出错';
                 });
             },
             openEditModal(data) {

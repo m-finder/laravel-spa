@@ -1,4 +1,4 @@
-import storage from '../../../../storage'
+import storage from '../../utils/storage'
 
 const state = {
     sidebar: {

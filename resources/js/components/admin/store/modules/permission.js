@@ -10,10 +10,12 @@ const permission = {
   },
   mutations: {
     SET_ROUTERS: (state, routers) => {
+      state.addRouters = [];
+      state.routers = baseRouters;
       // 动态路由
       state.addRouters = routers;
       // 全路由：静态路由 + 动态路由
-      state.routers = baseRouters.concat(routers)
+      state.routers = baseRouters.concat(routers);
     },
     SET_ELEMENTS: (state, elements) => {
       state.elements = elements
@@ -23,7 +25,7 @@ const permission = {
     // 生成全部路由
     GenerateRoutes({ commit }, data) {
       return new Promise(resolve => {
-        commit('SET_ROUTERS', data)
+        commit('SET_ROUTERS', data);
         resolve()
       })
     },

@@ -41,7 +41,7 @@
 </template>
 <script>
     import {mapGetters} from 'vuex'
-    import storage from '../../../../../storage'
+    import storage from '../../../utils/storage'
     import BreadCrumb from '../../../components/breadcrumb/Index'
     import Theme from './theme'
 

@@ -82,19 +82,14 @@
                 </b-col>
             </b-row>
         </b-container>
-        <alert :alerts="alerts"/>
     </b-container>
 </template>
 
 <script>
     import {login} from '../../api/login'
-    import storage from '../../../../storage'
-    import Alert from '../../components/alert/Index'
+    import storage from '../../utils/storage'
     export default {
         name: 'Login',
-        components:{
-            Alert
-        },
         data() {
             return {
                 text: '登录',
@@ -204,38 +199,17 @@
                 let emailCheck = this.checkEmail(email);
                 let passwordCheck = this.checkPassword(password);
                 if (emailCheck && passwordCheck) {
-                    login(this.form).then((response) => {
-                        if (response.data.code == 0) {
-                            this.alerts.push({
-                                'type': response.data.msg_type,
-                                'msg': response.data.msg,
-                                'show': 10,
-                                'down': 0
-                            });
-                            let data = {'user-info': response.data.data};
-                            this.form.status === true
-                                ? (storage.set(data), storage.set({'token': response.data.data.api_token}))
-                                : (storage.remove(), storage.sessionSet(data), storage.sessionSet({'token': response.data.data.api_token}))
+                    login(this.form).then(res => {
+                        if (res.data.code == 0) {
+                            this.$toast.success(res.data.msg, 'Success');
+                            let data = {'user-info': res.data.data, 'token': res.data.data.api_token};
+                            this.form.status === true ? storage.set(data) : (storage.remove(), storage.sessionSet(data));
                             this.$router.push({path: this.redirect || '/'})
                         } else {
                             this.restForm();
-                            this.alerts.push({
-                                'type': response.data.msg_type,
-                                'msg': response.data.msg,
-                                'show': 10,
-                                'down': 0
-                            });
-
+                            this.$toast.error(res.data.msg, 'Error')
                         }
-                    }).catch((error)=>{
-                        this.alerts.push({
-                            'type': 'danger',
-                            'msg': '出错了',
-                            'show': 10,
-                            'down': 0
-                        });
-                        console.log(error);
-                    });
+                    })
                 }
             },
             onForgetSubmit: function (evt) {

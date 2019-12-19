@@ -8,6 +8,7 @@ Route::middleware('auth:admin-api')->group(function() {
     Route::get('/admins/{id}/detail', 'Api\Admin\AdminController@detail');
     Route::put('/admins/{id}/update', 'Api\Admin\AdminController@update');
     Route::delete('/admins/{id}/delete', 'Api\Admin\AdminController@delete');
+    Route::get('/admins/auth', 'Api\Admin\AdminController@adminAuth');
 
     Route::get('/menus/list', 'Api\Admin\MenuController@lists');
     Route::get('/menus/all', 'Api\Admin\MenuController@all');

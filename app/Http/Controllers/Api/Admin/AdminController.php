@@ -3,6 +3,10 @@
 namespace App\Http\Controllers\Api\Admin;
 
 use App\Models\Admin;
+use App\Models\Element;
+use App\Models\Menu;
+use App\Models\RoleElement;
+use App\Models\RolePermission;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Api\ApiController;
 use Illuminate\Support\Facades\Hash;
@@ -10,12 +14,30 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class AdminController extends ApiController {
+
     public function lists() {
         $page = request('limit', 20);
         $users = Admin::name(request('name'))->email(request('email'))->with('role')->paginate($page);
         return $this->json_response($users);
     }
 
+    public function adminAuth(){
+        $token = request('token');
+        $admin = Admin::where('api_token', $token)->first();
+        if(is_null($admin)){
+            return $this->json_response(null, '参数错误', self::ERROR_PARAMS, self::MSG_TYPE_ERROR);
+        }
+        $role_menus = RolePermission::select('permission_id')->where('role_id', $admin->role_id)->get()->toArray();
+        $role_elements = RoleElement::select('element_id')->where('role_id', $admin->role_id)->get()->toArray();
+
+        $menus = Menu::whereIn('id', array_column($role_menus, 'permission_id'))->get();
+        $elements = Element::whereIn('id', array_column($role_elements, 'element_id'))->get();
+        $data = [
+            'menus' => make_tree($menus->toArray()),
+            'elements' => $elements
+        ];
+        return $this->json_response($data);
+    }
     public function detail($id) {
         if (is_null($id)) {
             return $this->json_response(null, '参数错误', self::ERROR_PARAMS, self::MSG_TYPE_ERROR);

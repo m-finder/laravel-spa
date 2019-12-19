@@ -2,7 +2,7 @@
     <router-view></router-view>
 </template>
 <script>
-    import storage from '../../storage'
+    import storage from './utils/storage'
     import {mapGetters} from 'vuex'
 
     export default {

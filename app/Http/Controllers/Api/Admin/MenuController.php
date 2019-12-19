@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\ApiController;
 use App\Models\Menu;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class MenuController extends ApiController {
@@ -44,9 +45,10 @@ class MenuController extends ApiController {
             if (is_null($menu)) {
                 return $this->json_response(null, '该菜单不存在', self::ERROR_USER_NOT_EXIST, self::MSG_TYPE_ERROR);
             }
-            $menu->update(request_intersect([
-                'parent_id', 'name', 'title', 'path', 'icon', 'component', 'redirect', 'order'
-            ]));
+            $data = request_intersect([
+                'parent_id', 'name', 'title', 'path', 'icon', 'component', 'redirect', 'order', 'hidden'
+            ]);
+            $menu->update($data);
         } catch (\Exception $exception) {
             Log::error($exception);
             return $this->json_response(null, '系统错误', self::ERROR_SYSTEM_INTERRUPTED, self::MSG_TYPE_ERROR);
@@ -58,7 +60,7 @@ class MenuController extends ApiController {
         $model = new Menu();
         try {
             $data = request_intersect([
-                'parent_id', 'name', 'title', 'path', 'icon', 'component', 'redirect', 'order'
+                'parent_id', 'name', 'title', 'path', 'icon', 'component', 'redirect', 'order', 'hidden'
             ]);
             $data['icon'] = is_null($data['icon']) ? 'smile' : $data['icon'];
             $menu = $model->firstOrCreate($data);

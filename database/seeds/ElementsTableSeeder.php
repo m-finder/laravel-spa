@@ -13,7 +13,7 @@ class ElementsTableSeeder extends Seeder
     {
         $db = new \App\Models\Element();
         $db->name = '角色列表';
-        $db->menu_id = 2;
+        $db->menu_id = 4;
         $db->code = 'role:list';
         $db->method =  'get';
         $db->path = '/roles/list';
@@ -21,7 +21,7 @@ class ElementsTableSeeder extends Seeder
 
         $db = new \App\Models\Element();
         $db->name = '添加角色';
-        $db->menu_id = 2;
+        $db->menu_id = 4;
         $db->code = 'role:add';
         $db->method =  'post';
         $db->path = '/roles/create';
@@ -29,7 +29,7 @@ class ElementsTableSeeder extends Seeder
 
         $db = new \App\Models\Element();
         $db->name = '修改角色';
-        $db->menu_id = 2;
+        $db->menu_id = 4;
         $db->code = 'role:edit';
         $db->method =  'put';
         $db->path = '/roles/{*}/update';
@@ -37,7 +37,7 @@ class ElementsTableSeeder extends Seeder
 
         $db = new \App\Models\Element();
         $db->name = '删除角色';
-        $db->menu_id = 2;
+        $db->menu_id = 4;
         $db->code = 'role:delete';
         $db->method =  'delete';
         $db->path = '/roles/{*}/delete';
@@ -45,7 +45,7 @@ class ElementsTableSeeder extends Seeder
 
         $db = new \App\Models\Element();
         $db->name = '角色详情';
-        $db->menu_id = 2;
+        $db->menu_id = 4;
         $db->code = 'role:detail';
         $db->method =  'get';
         $db->path = '/roles/{*}/detail';
@@ -53,7 +53,7 @@ class ElementsTableSeeder extends Seeder
 
         $db = new \App\Models\Element();
         $db->name = '角色权限';
-        $db->menu_id = 2;
+        $db->menu_id = 4;
         $db->code = 'role:auth';
         $db->method =  'get';
         $db->path = '/roles/{*}/auth';
@@ -61,7 +61,7 @@ class ElementsTableSeeder extends Seeder
 
         $db = new \App\Models\Element();
         $db->name = '分配权限';
-        $db->menu_id = 2;
+        $db->menu_id = 4;
         $db->code = 'role:setAuth';
         $db->method =  'get';
         $db->path = '/roles/{*}/set/auth';
@@ -69,7 +69,7 @@ class ElementsTableSeeder extends Seeder
 
         $db = new \App\Models\Element();
         $db->name = '所有权限';
-        $db->menu_id = 2;
+        $db->menu_id = 4;
         $db->code = 'role:menus';
         $db->method =  'get';
         $db->path = '/menus/all/with/elements';
@@ -78,7 +78,7 @@ class ElementsTableSeeder extends Seeder
 
         $db = new \App\Models\Element();
         $db->name = '用户列表';
-        $db->menu_id = 3;
+        $db->menu_id = 5;
         $db->code = 'admin:list';
         $db->method =  'get';
         $db->path = '/admins/list';
@@ -86,7 +86,7 @@ class ElementsTableSeeder extends Seeder
 
         $db = new \App\Models\Element();
         $db->name = '添加用户';
-        $db->menu_id = 2;
+        $db->menu_id = 5;
         $db->code = 'admin:add';
         $db->method =  'post';
         $db->path = '/admins/create';
@@ -94,7 +94,7 @@ class ElementsTableSeeder extends Seeder
 
         $db = new \App\Models\Element();
         $db->name = '修改用户';
-        $db->menu_id = 3;
+        $db->menu_id = 5;
         $db->code = 'admin:edit';
         $db->method =  'put';
         $db->path = '/admins/{*}/update';
@@ -102,7 +102,7 @@ class ElementsTableSeeder extends Seeder
 
         $db = new \App\Models\Element();
         $db->name = '删除用户';
-        $db->menu_id = 3;
+        $db->menu_id = 5;
         $db->code = 'admin:delete';
         $db->method =  'delete';
         $db->path = '/admins/{*}/delete';
@@ -110,7 +110,7 @@ class ElementsTableSeeder extends Seeder
 
         $db = new \App\Models\Element();
         $db->name = '用户详情';
-        $db->menu_id = 3;
+        $db->menu_id = 5;
         $db->code = 'admin:detail';
         $db->method =  'get';
         $db->path = '/admins/{*}/detail';
@@ -118,7 +118,7 @@ class ElementsTableSeeder extends Seeder
 
         $db = new \App\Models\Element();
         $db->name = '所有菜单';
-        $db->menu_id = 4;
+        $db->menu_id = 6;
         $db->code = 'menu:all';
         $db->method =  'get';
         $db->path = '/menus/all';
@@ -126,7 +126,7 @@ class ElementsTableSeeder extends Seeder
 
         $db = new \App\Models\Element();
         $db->name = '添加菜单';
-        $db->menu_id = 4;
+        $db->menu_id = 6;
         $db->code = 'menu:create';
         $db->method =  'post';
         $db->path = '/menus/create';
@@ -134,7 +134,7 @@ class ElementsTableSeeder extends Seeder
 
         $db = new \App\Models\Element();
         $db->name = '修改菜单';
-        $db->menu_id = 4;
+        $db->menu_id = 6;
         $db->code = 'menu:edit';
         $db->method =  'put';
         $db->path = '/menus/{*}/update';
@@ -142,7 +142,7 @@ class ElementsTableSeeder extends Seeder
 
         $db = new \App\Models\Element();
         $db->name = '删除菜单';
-        $db->menu_id = 4;
+        $db->menu_id = 6;
         $db->code = 'menu:delete';
         $db->method =  'delete';
         $db->path = '/menus/{*}/delete';
@@ -150,7 +150,7 @@ class ElementsTableSeeder extends Seeder
 
         $db = new \App\Models\Element();
         $db->name = '菜单详情';
-        $db->menu_id = 4;
+        $db->menu_id = 6;
         $db->code = 'menu:detail';
         $db->method =  'get';
         $db->path = '/menus/{*}/detail';
@@ -158,7 +158,7 @@ class ElementsTableSeeder extends Seeder
 
         $db = new \App\Models\Element();
         $db->name = '上级菜单';
-        $db->menu_id = 4;
+        $db->menu_id = 6;
         $db->code = 'menu:parents';
         $db->method =  'get';
         $db->path = '/menus/parents';
@@ -166,7 +166,7 @@ class ElementsTableSeeder extends Seeder
 
         $db = new \App\Models\Element();
         $db->name = '资源列表';
-        $db->menu_id = 4;
+        $db->menu_id = 6;
         $db->code = 'elements:list';
         $db->method =  'get';
         $db->path = '/elements/list';
@@ -174,7 +174,7 @@ class ElementsTableSeeder extends Seeder
 
         $db = new \App\Models\Element();
         $db->name = '添加资源';
-        $db->menu_id = 4;
+        $db->menu_id = 6;
         $db->code = 'element:create';
         $db->method =  'post';
         $db->path = '/elements/create';
@@ -182,7 +182,7 @@ class ElementsTableSeeder extends Seeder
 
         $db = new \App\Models\Element();
         $db->name = '修改资源';
-        $db->menu_id = 4;
+        $db->menu_id = 6;
         $db->code = 'element:edit';
         $db->method =  'put';
         $db->path = '/elements/{*}/update';
@@ -190,7 +190,7 @@ class ElementsTableSeeder extends Seeder
 
         $db = new \App\Models\Element();
         $db->name = '删除资源';
-        $db->menu_id = 4;
+        $db->menu_id = 6;
         $db->code = 'element:delete';
         $db->method =  'delete';
         $db->path = '/element/{*}/delete';
@@ -198,7 +198,7 @@ class ElementsTableSeeder extends Seeder
 
         $db = new \App\Models\Element();
         $db->name = '资源详情';
-        $db->menu_id = 4;
+        $db->menu_id = 6;
         $db->code = 'element:detail';
         $db->method =  'get';
         $db->path = '/elements/{*}/detail';

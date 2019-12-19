@@ -77,8 +77,8 @@
     import {getData, deleteData} from "../../api/admin";
     import Create from "./Create";
     import Edit from "./Edit";
-    import Delete from '../../components/delete';
-    import DataTable from '../../components/table'
+    import Delete from '../../components/delete/Index';
+    import DataTable from '../../components/table/Index'
 
     const defaultForm = {
         id: null,
@@ -143,8 +143,9 @@
                     this.items = res.data.data;
                     this.total = res.data.total;
                 }).catch(error=>{
+                    console.log(error)
                     this.isBusy = false;
-                    this.notice = (error.response.data.message) || '系统出错';
+                    this.notice = '系统出错';
                 });
             },
             getAvatar(avatar) {

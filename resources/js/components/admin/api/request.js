@@ -1,10 +1,10 @@
 import axios from 'axios'
-import storage from "../../../storage";
+import storage from "../utils/storage";
 import alert from '../utils/alert';
 import router from '../router/routers'
 
 const service = axios.create({
-    timeout: 5000
+    timeout: 50000
 });
 
 service.interceptors.request.use(

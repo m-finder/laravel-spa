@@ -51,8 +51,8 @@
     import {bTreeView} from 'bootstrap-vue-treeview';
     import Edit from './Edit';
     import Create from './Create';
-    import Delete from '../../components/delete';
-    import Elements from '../elements';
+    import Delete from '../../components/delete/Index';
+    import Elements from '../elements/Index';
 
     const defaultForm = {
         id: null,
