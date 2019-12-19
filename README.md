@@ -36,18 +36,21 @@ account: yf-wu@qq.com
 password: 111111
 ```
 #### 截图
+> 登录页面，忘记密码未完成，代码未优化。
 ![登录](screenshot/1.png)
-忘记密码未完成，代码未优化。
 
+> 首页，图表为静态数据，占坑中，非最终版本。
 ![首页](screenshot/2.png)
-表格为静态数据，占坑中，非最终版本。
 
+> 主题设置，太丑，功能做好继续优化。
 ![主题](screenshot/6.png)
-太丑，功能做好继续优化。
 
+> 权限管理
 ![权限管理](screenshot/3.png)
 
+> 角色权限分配
 ![角色权限分配](screenshot/4.png)
 
+> svg 图标
 ![svg图标](screenshot/5.png)
 
