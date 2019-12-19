@@ -8,7 +8,7 @@
                             <img src="/favicon.ico" alt="">
                             <div class="title">
                                 <a>
-                                    <span>Laravel  Admin  </span><span class="subtitle">spa</span>
+                                    <span>Laravel-vue  </span><span class="subtitle">spa</span>
                                 </a>
                             </div>
                         </div>
@@ -45,7 +45,7 @@
                     <div v-else>
                         <div class="title forget-wrap-title">
                             <a>
-                                <span>Laravel  Admin  </span><span class="subtitle">spa</span>
+                                <span>Laravel-vue  </span><span class="subtitle">spa</span>
                             </a>
                         </div>
                         <b-form @submit="onForgetSubmit" class="forget-form">

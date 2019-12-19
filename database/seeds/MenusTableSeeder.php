@@ -86,7 +86,7 @@ class MenusTableSeeder extends Seeder
 
         $db = new \App\Models\Menu();
         $db->id = 8;
-        $db->parent_id = 5;
+        $db->parent_id = 7;
         $db->name = 'Icons';
         $db->title = '图标';
         $db->path = '/base/icons';

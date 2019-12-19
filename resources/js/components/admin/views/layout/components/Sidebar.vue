@@ -22,7 +22,7 @@
                                        boundary="window" triggers="hover">
                                 {{ getTitle(item.children[0]) }}
                             </b-tooltip>
-                            <span>{{ getTitle(item.children[0]) }}222</span>
+                            <span>{{ getTitle(item.children[0]) }}</span>
                         </b-nav-item>
 
                         <b-nav-item v-else-if="noShowingChildren(item.children) && !item.hidden"
