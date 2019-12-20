@@ -41,7 +41,6 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapAdminRoutes();
 
-        $this->mapAdminApiRoutes();
     }
 
     /**
@@ -84,19 +83,5 @@ class RouteServiceProvider extends ServiceProvider
         Route::middleware('web')
             ->namespace($this->namespace)
             ->group(base_path('routes/admin.php'));
-    }
-
-    /**
-     * @desc admin api
-     * @access public
-     * author m-finder
-     * date 2019/10/17 22:11
-     */
-    protected function mapAdminApiRoutes()
-    {
-        Route::prefix('admin-api')
-            ->middleware('api')
-            ->namespace($this->namespace)
-            ->group(base_path('routes/admin-api.php'));
     }
 }
