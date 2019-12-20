@@ -1,7 +1,7 @@
 <?php
 
 Route::post('login', 'Api\Admin\LoginController@login');
-
+//->prefix
 Route::middleware(['auth:admin-api', 'admin.api.permission'])->group(function() {
     Route::get('/admins/list', 'Api\Admin\AdminController@lists');
     Route::post('/admins/create', 'Api\Admin\AdminController@create');

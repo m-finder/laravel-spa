@@ -3,7 +3,6 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Route;
 
 class ApiAuthenticate
 {
@@ -16,8 +15,7 @@ class ApiAuthenticate
      */
     public function handle($request, Closure $next)
     {
-        $permission = Route::currentRouteName();
-        dd($permission);
+//        dd($request->route());
         return $next($request);
     }
 }
