@@ -2,7 +2,7 @@
 
 Route::post('login', 'Api\Admin\LoginController@login');
 
-Route::middleware('auth:admin-api')->group(function() {
+Route::middleware(['auth:admin-api', 'admin.api.permission'])->group(function() {
     Route::get('/admins/list', 'Api\Admin\AdminController@lists');
     Route::post('/admins/create', 'Api\Admin\AdminController@create');
     Route::get('/admins/{id}/detail', 'Api\Admin\AdminController@detail');

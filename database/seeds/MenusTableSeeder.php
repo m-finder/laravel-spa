@@ -30,6 +30,7 @@ class MenusTableSeeder extends Seeder
         $db->path = '/dashboard';
         $db->icon = 'dashboard';
         $db->component = '/dashboard/Index';
+        $db->affix = true;
         $db->save();
 
         $db = new \App\Models\Menu();
@@ -38,7 +39,7 @@ class MenusTableSeeder extends Seeder
         $db->name = 'Auth';
         $db->title = '权限管理';
         $db->path = '/auth';
-        $db->icon = 'security';
+        $db->icon = 'auth';
         $db->redirect = '/auth/roles';
         $db->component = 'Layout';
         $db->save();
@@ -67,7 +68,7 @@ class MenusTableSeeder extends Seeder
         $db->id = 6;
         $db->parent_id = 3;
         $db->name = 'MenuList';
-        $db->title = '权限管理';
+        $db->title = '权限列表';
         $db->path = '/auth/menus';
         $db->icon = 'security';
         $db->component = '/menus/Index';
@@ -90,7 +91,7 @@ class MenusTableSeeder extends Seeder
         $db->name = 'Icons';
         $db->title = '图标';
         $db->path = '/base/icons';
-        $db->icon = 'smile';
+        $db->icon = 'discount';
         $db->component = '/icons/Index';
         $db->save();
     }

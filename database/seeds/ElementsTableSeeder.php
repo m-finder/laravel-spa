@@ -127,7 +127,7 @@ class ElementsTableSeeder extends Seeder
         $db = new \App\Models\Element();
         $db->name = '添加菜单';
         $db->menu_id = 6;
-        $db->code = 'menu:create';
+        $db->code = 'menu:add';
         $db->method =  'post';
         $db->path = '/menus/create';
         $db->save();
@@ -175,7 +175,7 @@ class ElementsTableSeeder extends Seeder
         $db = new \App\Models\Element();
         $db->name = '添加资源';
         $db->menu_id = 6;
-        $db->code = 'element:create';
+        $db->code = 'element:add';
         $db->method =  'post';
         $db->path = '/elements/create';
         $db->save();

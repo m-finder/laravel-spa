@@ -9,7 +9,7 @@
                     <div class="card-body">
                         <div class="card-tools mb-3">
 
-                            <div class="btn-group mr-3">
+                            <div class="btn-group mr-3" v-has="'admin:list'">
                                 <form model="form">
                                     <div class="row">
                                         <div class="col-6">
@@ -39,11 +39,11 @@
                                 </form>
                             </div>
 
-                            <div class="btn-group mr-3">
+                            <div class="btn-group mr-3" v-has="'admin:add'">
                                 <b-button class="btn-sm" variant="primary" @click="openAddModal">添加用户</b-button>
                             </div>
 
-                            <div class="btn-group mr-3">
+                            <div class="btn-group mr-3" v-has="'admin:list'">
                                 <b-button class="btn-sm" variant="primary" @click="refresh">刷新列表</b-button>
                             </div>
                         </div>
@@ -58,8 +58,8 @@
                             </template>
 
                             <template v-slot:cell(actions)="row">
-                                <b-button v-if="row.item.id != 1" variant="link" @click="openEditModal(row.item)">编辑</b-button>
-                                <b-button v-if="row.item.id != 1" variant="link" class="text-danger mr-1" @click="openDeleteModal(row.item)">删除</b-button>
+                                <b-button v-if="row.item.id != 1" v-has="'admin:edit'" variant="link" @click="openEditModal(row.item)">编辑</b-button>
+                                <b-button v-if="row.item.id != 1" v-has="'admin:delete'" variant="link" class="text-danger mr-1" @click="openDeleteModal(row.item)">删除</b-button>
                             </template>
                         </data-table>
                     </div>
@@ -67,9 +67,9 @@
             </div>
         </div>
 
-        <create :title="'添加用户'" :is-create="isCreate"/>
-        <edit :id="selectForm.id" :title="'编辑用户'" :is-edit="isEdit"/>
-        <delete :title="'删除用户'" :data="selectForm" :is-delete="isDelete"/>
+        <create :title="'添加用户'" :is-create="isCreate" v-has="'admin:add'"/>
+        <edit :id="selectForm.id" :title="'编辑用户'" :is-edit="isEdit" v-has="'admin:edit'"/>
+        <delete :title="'删除用户'" :data="selectForm" :is-delete="isDelete" v-has="'admin:delete'"/>
     </section>
 </template>
 

@@ -202,6 +202,7 @@
                     login(this.form).then(res => {
                         if (res.data.code == 0) {
                             this.$toast.success(res.data.msg, 'Success');
+                            this.$store.dispatch('ClearRoutes');
                             let data = {'user-info': res.data.data, 'token': res.data.data.api_token};
                             this.form.status === true ? storage.set(data) : (storage.remove(), storage.sessionSet(data));
                             this.$router.push({path: this.redirect || '/'})

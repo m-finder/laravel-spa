@@ -6,21 +6,21 @@
         <div class="card-body">
             <div class="card-tools mb-3">
                 <div class="btn-group mr-3">
-                    <b-button class="btn-sm" variant="primary" @click="add">添加资源</b-button>
+                    <b-button v-has="'element:add'" class="btn-sm" variant="primary" @click="add">添加资源</b-button>
                 </div>
             </div>
 
             <data-table :is-busy="isBusy" :items="items" :fields="fields" :notice="notice" :total="total" :limit="form.limit" :page="form.page">
                 <template v-slot:cell(actions)="row">
-                    <b-button variant="link" @click="openEditModal(row.item)">编辑</b-button>
-                    <b-button variant="link" class="text-danger mr-1" @click="openDeleteModal(row.item)">删除</b-button>
+                    <b-button v-has="'element:edit'" variant="link" @click="openEditModal(row.item)">编辑</b-button>
+                    <b-button v-has="'element:delete'" variant="link" class="text-danger mr-1" @click="openDeleteModal(row.item)">删除</b-button>
                 </template>
             </data-table>
         </div>
 
-        <create :title="'添加资源'" :menu-id="menuId" :is-create="isCreate"/>
-        <edit :title="'编辑资源'" :id="form.id" :is-edit="isEdit"/>
-        <delete :title="'删除资源'" :data="form" :is-delete="isDelete"/>
+        <create :title="'添加资源'" :menu-id="menuId" :is-create="isCreate" v-has="'element:add'"/>
+        <edit :title="'编辑资源'" :id="form.id" :is-edit="isEdit" v-has="'element:edit'"/>
+        <delete :title="'删除资源'" :data="form" :is-delete="isDelete" v-has="'element:delete'"/>
     </div>
 </template>
 

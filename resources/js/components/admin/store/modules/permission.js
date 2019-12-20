@@ -6,16 +6,19 @@ const permission = {
     routers: baseRouters,
     // 动态路由
     addRouters: [],
-    elements: []
+    elements: [],
+    permissions: []
   },
   mutations: {
     SET_ROUTERS: (state, routers) => {
-      state.addRouters = [];
-      state.routers = baseRouters;
       // 动态路由
       state.addRouters = routers;
       // 全路由：静态路由 + 动态路由
       state.routers = baseRouters.concat(routers);
+    },
+    RE_SET_ROUTERS: (state) => {
+      state.addRouters = [];
+      state.routers = baseRouters;
     },
     SET_ELEMENTS: (state, elements) => {
       state.elements = elements
@@ -29,9 +32,15 @@ const permission = {
         resolve()
       })
     },
+    ClearRoutes({ commit }) {
+      return new Promise(resolve => {
+        commit('RE_SET_ROUTERS');
+        resolve()
+      })
+    },
     GenerateElements({ commit }, data) {
       return new Promise(resolve => {
-        commit('SET_ELEMENTS', data.localHash)
+        commit('SET_ELEMENTS', data)
         resolve()
       })
     }

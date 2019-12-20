@@ -44,7 +44,7 @@
 
         <div slot="modal-footer" class="w-100">
             <b-button variant="primary" size="sm" @click="resetModal">取消</b-button>
-            <b-button :disabled="disabled" variant="danger" size="sm" @click="submitUpdate">确认</b-button>
+            <b-button v-has="'element:edit'" :disabled="disabled" variant="danger" size="sm" @click="submitUpdate">确认</b-button>
         </div>
     </b-modal>
 </template>

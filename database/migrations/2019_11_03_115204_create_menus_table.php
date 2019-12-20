@@ -24,6 +24,7 @@ class CreateMenusTable extends Migration
             $table->string('icon');
             $table->integer('order_num')->default(0);
             $table->boolean('hidden')->nullable()->default(false);
+            $table->boolean('affix')->nullable()->default(false);
             $table->timestamps();
         });
     }

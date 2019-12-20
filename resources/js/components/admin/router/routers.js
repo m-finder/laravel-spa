@@ -36,13 +36,6 @@ export const baseRouters = [
                 component: () => import('../views/error/404'),
                 name: '404',
             },
-            {
-                path: '401',
-                hidden: true,
-                meta: {title: '401'},
-                component: () => import('../views/error/401'),
-                name: '401',
-            },
         ]
     },
     // {

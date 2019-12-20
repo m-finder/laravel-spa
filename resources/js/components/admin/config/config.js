@@ -1,3 +1,3 @@
 export default {
-    title: 'M-laravel-spa',
+    title: 'Laravel-vue spa',
 }

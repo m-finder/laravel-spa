@@ -24,7 +24,7 @@
                             </b-tooltip>
                             <span>{{ getTitle(item.children[0]) }}</span>
                         </b-nav-item>
-
+                        <!-- 没有子菜单 -->
                         <b-nav-item v-else-if="noShowingChildren(item.children) && !item.hidden"
                                 :to="item.path" :id="item.path">
                             <svg-vue :icon="item.icon || 'smile'"/>
@@ -32,7 +32,7 @@
                                        boundary="window" triggers="hover">
                                 {{ getTitle(item) }}
                             </b-tooltip>
-                            <span>{{ getTitle(item) }}111</span>
+                            <span>{{ getTitle(item) }}</span>
                         </b-nav-item>
 
                         <sitebar-item v-else-if="!item.hidden" :name="getTitle(item)" :icon="item.icon" :href="item.path" :id="item.path">

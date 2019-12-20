@@ -73,8 +73,15 @@
         </div>
 
         <div class="col-lg-12">
-            <div class="input-group mb-3">
-                <b-form-checkbox switch value="1" v-model="form.hidden">是否隐藏</b-form-checkbox>
+            <div class="col-lg-6">
+                <div class="input-group mb-3">
+                    <b-form-checkbox switch value="1" v-model="form.hidden">是否隐藏</b-form-checkbox>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="input-group mb-3">
+                    <b-form-checkbox switch value="1" v-model="form.affix">常驻标题栏</b-form-checkbox>
+                </div>
             </div>
         </div>
 
@@ -97,7 +104,8 @@
         icon: null,
         parent_id: null,
         order_num: null,
-        hidden: 0
+        hidden: 0,
+        affix: 0
     };
     export default {
         name: "MenuCreate",

@@ -11,7 +11,7 @@
 
                         <div class="card-tools mb-3">
 
-                            <div class="btn-group  mr-3">
+                            <div class="btn-group  mr-3" v-has="'role:list'">
                                 <form model="form">
                                     <div class="row">
                                         <div class="col-6">
@@ -42,19 +42,19 @@
                             </div>
 
                             <div class="btn-group mr-3">
-                                <b-button class="btn-sm" variant="primary" @click="openAddModal">添加角色</b-button>
+                                <b-button v-has="'role:add'" class="btn-sm" variant="primary" @click="openAddModal">添加角色</b-button>
                             </div>
 
-                            <div class="btn-group">
+                            <div class="btn-group" v-has="'role:list'">
                                 <b-button class="btn-sm" variant="primary" @click="refresh">刷新列表</b-button>
                             </div>
                         </div>
 
                         <data-table :is-busy="isBusy" :items="items" :fields="fields" :notice="notice" :total="total" :limit="form.limit" :page="form.page">
                             <template v-slot:cell(actions)="row">
-                                <b-button v-if="row.item.id != 1" variant="link" @click="openEditModal(row.item)">编辑</b-button>
-                                <b-button variant="link" class="text-danger" @click="assign(row.item)">权限分配</b-button>
-                                <b-button v-if="row.item.id != 1" variant="link" class="text-danger" @click="openDeleteModal(row.item)">删除</b-button>
+                                <b-button v-has="'role:edit'" v-if="row.item.id != 1" variant="link" @click="openEditModal(row.item)">编辑</b-button>
+                                <b-button v-has="'role:setAuth'" variant="link" class="text-danger" @click="assign(row.item)">权限分配</b-button>
+                                <b-button v-has="'role:delete'" v-if="row.item.id != 1" variant="link" class="text-danger" @click="openDeleteModal(row.item)">删除</b-button>
                             </template>
                         </data-table>
 
@@ -63,10 +63,10 @@
             </div>
         </div>
 
-        <create :title="'添加角色'" :is-create="isCreate"/>
-        <edit :title="'编辑角色'" :id="selectForm.id" :is-edit="isEdit"/>
-        <delete :title="'删除角色'" :data="selectForm" :is-delete="isDelete"/>
-        <assign :title="'权限分配'" :id="selectForm.id" :is-assign="isAssign"/>
+        <create :title="'添加角色'" :is-create="isCreate" v-has="'role:add'"/>
+        <edit :title="'编辑角色'" :id="selectForm.id" :is-edit="isEdit" v-has="'role:edit'"/>
+        <delete :title="'删除角色'" :data="selectForm" :is-delete="isDelete" v-has="'role:delete'"/>
+        <assign :title="'权限分配'" :id="selectForm.id" :is-assign="isAssign" v-has="'role:setAuth'"/>
     </section>
 </template>
 

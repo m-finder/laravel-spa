@@ -10,7 +10,7 @@
                     <div class="card-body">
                         <div class="card-tools mb-3">
                             <div class="btn-group mr-3">
-                                <b-button class="btn-sm" variant="primary" @click="addMenu">添加菜单</b-button>
+                                <b-button v-has="'menu:add'" class="btn-sm" variant="primary" @click="addMenu">添加菜单</b-button>
                             </div>
                         </div>
 
@@ -40,9 +40,9 @@
             </div>
         </div>
 
-        <create :title="'添加菜单'" :is-create="isCreate" :parent-nodes="parentNodes"/>
-        <edit :title="'编辑菜单'" :id="form.id" :isEdit="isEdit"/>
-        <delete :title="'删除菜单'" :data="form" :is-delete="isDelete"/>
+        <create :title="'添加菜单'" :is-create="isCreate" :parent-nodes="parentNodes" v-has="'menu:add'"/>
+        <edit :title="'编辑菜单'" :id="form.id" :isEdit="isEdit" v-has="'menu:edit'"/>
+        <delete :title="'删除菜单'" :data="form" :is-delete="isDelete" v-has="'menu:delete'"/>
     </section>
 </template>
 

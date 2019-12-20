@@ -45,10 +45,9 @@ class MenuController extends ApiController {
             if (is_null($menu)) {
                 return $this->json_response(null, '该菜单不存在', self::ERROR_USER_NOT_EXIST, self::MSG_TYPE_ERROR);
             }
-            $data = request_intersect([
-                'parent_id', 'name', 'title', 'path', 'icon', 'component', 'redirect', 'order', 'hidden'
-            ]);
-            $menu->update($data);
+            $menu->update(request_intersect([
+                'parent_id', 'name', 'title', 'path', 'icon', 'component', 'redirect', 'order', 'hidden', 'affix'
+            ]));
         } catch (\Exception $exception) {
             Log::error($exception);
             return $this->json_response(null, '系统错误', self::ERROR_SYSTEM_INTERRUPTED, self::MSG_TYPE_ERROR);
@@ -60,7 +59,7 @@ class MenuController extends ApiController {
         $model = new Menu();
         try {
             $data = request_intersect([
-                'parent_id', 'name', 'title', 'path', 'icon', 'component', 'redirect', 'order', 'hidden'
+                'parent_id', 'name', 'title', 'path', 'icon', 'component', 'redirect', 'order', 'hidden', 'affix'
             ]);
             $data['icon'] = is_null($data['icon']) ? 'smile' : $data['icon'];
             $menu = $model->firstOrCreate($data);

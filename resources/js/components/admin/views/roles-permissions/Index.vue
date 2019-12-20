@@ -49,7 +49,7 @@
 
         <div slot="modal-footer" class="w-100">
             <b-button variant="primary" size="sm" @click="resetModal">取消</b-button>
-            <b-button :disabled="disabled" variant="danger" size="sm" @click="submitAssign">确认</b-button>
+            <b-button v-has="'role:setAuth'" :disabled="disabled" variant="danger" size="sm" @click="submitAssign">确认</b-button>
         </div>
     </b-modal>
 </template>
@@ -103,11 +103,11 @@
             },
             toggleMenu(checked, id) {
                 let elements = (this.menus.filter(item => item.id == id)[0].elements).map(item => item.id);
-                checked ? (this.menuArray.push(id), this.elementArray.push.apply(this.elementArray, elements)) : (this.menuArray = this.menuArray.filter(item => item != id), this.elementArray = this.elementArray.filter(item => !elements.includes(item)));
+                checked ? (this.menuArray.push(id), this.elementArray.push.apply(this.elementArray, elements))
+                    : (this.menuArray = this.menuArray.filter(item => item != id), this.elementArray = this.elementArray.filter(item => !elements.includes(item)));
             },
             toggleElement(checked, id) {
                 checked ? this.elementArray.push(id) : this.elementArray = this.elementArray.filter(item => item != id);
-                console.log(this.elementArray)
             },
             getMenus() {
                 this.loading = this.disabled = true;
