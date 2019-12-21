@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 
 class Admin extends Authenticatable
 {
-    protected $guard_name = 'admin';
+    protected $guard_name = 'admin-api';
 
     protected $fillable = [
         'role_id','name', 'email', 'password', 'avatar', 'api_token',
