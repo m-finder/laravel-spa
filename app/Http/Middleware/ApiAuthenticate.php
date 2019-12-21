@@ -12,7 +12,6 @@ class ApiAuthenticate
     {
         $url = str_replace($request->route()->getPrefix(), '','/'. $request->route()->uri);
         $url_replace = preg_replace("/\{.*\}/", '{*}', $url);
-//        dd(Auth::user());
         if (Auth::user()->checkAuth($url_replace)) {
             return $next($request);
         }
