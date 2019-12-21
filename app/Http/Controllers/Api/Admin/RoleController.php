@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Api\ApiController;
+use App\Models\Admin;
 use App\Models\Role;
 use App\Models\RoleElement;
 use App\Models\RolePermission;
@@ -106,6 +107,12 @@ class RoleController extends ApiController
     {
         $role = Role::findOrFail($id);
         if ($id == 1) return $this->error('该角色内置，不可删除');
+        if(Admin::where('role_id', $id)->count()){
+            return $this->error('请先删除该角色下的用户');
+        }
+        # 清除该角色所属权限
+        RolePermission::where('role_id', $id)->delete();
+        RoleElement::where('role_id', $id)->delete();
         $role->delete();
         return $this->success();
     }

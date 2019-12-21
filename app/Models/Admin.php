@@ -4,12 +4,18 @@ namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class Admin extends Authenticatable
 {
+    protected $guard_name = 'admin';
 
     protected $fillable = [
         'role_id','name', 'email', 'password', 'avatar', 'api_token',
+    ];
+
+    protected $hidden = [
+        'password', 'api_token',
     ];
 
     public function scopeName($query, $name)
