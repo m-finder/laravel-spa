@@ -87,7 +87,7 @@
 
         <div slot="modal-footer" class="w-100">
             <b-button variant="primary" size="sm" @click="resetModal">取消</b-button>
-            <b-button variant="danger" size="sm" @click="submitCreate">确认</b-button>
+            <b-button v-has="'menu:add'" variant="danger" size="sm" @click="submitCreate">确认</b-button>
         </div>
     </b-modal>
 </template>
@@ -168,7 +168,7 @@
             submitCreate() {
                 if (this.checkForm()) {
                     createData(this.form).then(res => {
-                        this.$toast.success(res.msg, 'Success');
+                        this.$toast.success('添加成功。', 'Success');
                         this.$parent.getAll();
                         this.resetModal()
                     })

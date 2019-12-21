@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Auth;
 
 class Admin extends Authenticatable
 {
@@ -30,5 +31,12 @@ class Admin extends Authenticatable
             $query->where('name', request('name'))->orWhere('email', request('email'));
         })->where('id', '!=', request('id'))->first();
         return is_null($admin) ? true : false;
+    }
+
+    public function checkAuth($path){
+        $role_id = Auth::user()->role->id;
+        $element = Element::where('path', $path)->first();
+        $has = RoleElement::where('element_id', $element->id)->where('role_id', $role_id)->count();
+        return $has;
     }
 }

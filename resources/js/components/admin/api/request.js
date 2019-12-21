@@ -26,32 +26,25 @@ service.interceptors.request.use(
 // 报错统一拦截
 service.interceptors.response.use(
     response => {
-        const res = response.data;
-        if (res.code !== 0) {
-            alert.error(res.msg);
-            return false;
-        } else {
-            return res
-        }
+        return response
     },
     error => {
         if (error.response && error.response.status) {
             let msg = error.response.data.message;
-
             switch (error.response.status) {
                 case 401:
-                    msg = '登录已失效，请重新登录';
+                    msg = '登录已失效，请重新登录。';
                     storage.remove('user-info') && storage.sessionRemove('user-info');
                     storage.remove('token') && storage.sessionRemove('token');
                     router.push({path: '/login'});
                     alert.error(msg);
                     break;
                 case 404:
-                    msg = '您要访问的资源不存在';
+                    msg = '您要操作的对象不存在。';
                     alert.error(msg);
                     break;
                 case 500:
-                    alert.error('系统故障：' + msg);
+                    alert.error('系统出错：' + msg);
                     break;
                 default:
                     alert.error(msg);

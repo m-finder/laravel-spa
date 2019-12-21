@@ -124,7 +124,7 @@
                 this.disabled = true;
                 let data = {menus: this.menuArray, elements: this.elementArray};
                 setAuth(this.id, data).then(res => {
-                    this.$toast.success(res.msg, 'Success');
+                    this.$toast.success('权限分配成。', 'Success');
                     this.resetModal();
                 })
             },

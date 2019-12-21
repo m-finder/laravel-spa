@@ -4,12 +4,12 @@ namespace App\Models;
 
 class Role extends Model
 {
-    public function scopeName($query, $name){
-        return !is_null($name) ? $query->where('name', $name) : $query;
+    public function scopeName($query){
+        return !is_null(request('name')) ? $query->where('name', request('name')) : $query;
     }
 
-    public function scopeAlias($query, $alias){
-        return !is_null($alias) ? $query->where('alias', $alias) : $query;
+    public function scopeAlias($query){
+        return !is_null(request('alias')) ? $query->where('alias', request('alias')) : $query;
     }
 
     public static function checkUnique(){

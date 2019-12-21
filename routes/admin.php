@@ -8,6 +8,12 @@ Route::post('/admin-api/login', 'Api\Admin\LoginController@login');
 
 Route::prefix('admin-api')
     ->namespace('\App\Http\Controllers\Api\Admin')
+    ->middleware(['auth:admin-api'])->group(function () {
+        Route::get('/admins/auth', 'AdminController@adminAuth');
+    });
+
+Route::prefix('admin-api')
+    ->namespace('\App\Http\Controllers\Api\Admin')
     ->middleware(['auth:admin-api', 'admin.api.permission'])
     ->group(function () {
         Route::get('/admins/list', 'AdminController@lists');
@@ -15,7 +21,6 @@ Route::prefix('admin-api')
         Route::get('/admins/{id}/detail', 'AdminController@detail');
         Route::put('/admins/{id}/update', 'AdminController@update');
         Route::delete('/admins/{id}/delete', 'AdminController@delete');
-        Route::get('/admins/auth', 'AdminController@adminAuth');
 
         Route::get('/menus/list', 'MenuController@lists');
         Route::get('/menus/all', 'MenuController@all');
@@ -32,7 +37,7 @@ Route::prefix('admin-api')
         Route::get('/elements/{id}/detail', 'ElementController@detail');
         Route::delete('/elements/{id}/delete', 'ElementController@delete');
 
-        Route::get('/roles/list', 'RoleController@lists');
+        Route::get('roles/list', 'RoleController@lists');
         Route::get('/roles/all', 'RoleController@all');
         Route::post('/roles/create', 'RoleController@create');
         Route::put('/roles/{id}/update', 'RoleController@update');

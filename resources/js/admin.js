@@ -49,7 +49,7 @@ function filterAsyncRouter(asyncRouterMap) {
 }
 
 function getAsyncRouter(token, to, next) {
-    getAdminAuth(token).then(res => {
+    getAdminAuth().then(res => {
         let asyncRouter = filterAsyncRouter(res.data.menus);
         let asyncElements = res.data.elements;
         addRouters(asyncRouter, to, next)

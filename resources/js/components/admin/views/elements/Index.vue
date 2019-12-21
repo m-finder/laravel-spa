@@ -108,7 +108,7 @@
             deleteData() {
                 let id = this.form.id;
                 deleteData(id).then(res => {
-                    this.$toast.success(res.msg, 'Success');
+                    this.$toast.success('删除成功。', 'Success');
                     this.items = this.items.filter(item => item.id != id);
                     this.total = this.total - 1;
                     this.isDelete = false;

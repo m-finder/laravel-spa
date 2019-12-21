@@ -15,11 +15,10 @@ export function getDetail(id) {
     })
 }
 
-export function getAdminAuth(token) {
+export function getAdminAuth() {
     return request({
         url: '/admin-api/admins/auth',
         method: 'get',
-        params: {token: token}
     })
 }
 

@@ -143,7 +143,7 @@
                     this.items = res.data.data;
                     this.total = res.data.total;
                 }).catch(error=>{
-                    console.log(error)
+                    console.log(error);
                     this.isBusy = false;
                     this.notice = '系统出错';
                 });
@@ -158,7 +158,7 @@
             deleteData() {
                 let id = this.selectForm.id;
                 deleteData(id).then(res => {
-                    this.$toast.success(res.msg, 'Success');
+                    this.$toast.success('删除成功。', 'Success');
                     this.items = this.items.filter(item => item.id != id);
                     this.total = this.total - 1;
                     this.isDelete = false;

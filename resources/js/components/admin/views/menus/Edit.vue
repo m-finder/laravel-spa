@@ -92,7 +92,7 @@
 
         <div slot="modal-footer" class="w-100">
             <b-button variant="primary" size="sm" @click="resetModal">取消</b-button>
-            <b-button :disabled="disabled"  variant="danger" size="sm" @click="submitUpdate">确认</b-button>
+            <b-button v-has="'menu:edit'" :disabled="disabled"  variant="danger" size="sm" @click="submitUpdate">确认</b-button>
         </div>
     </b-modal>
 </template>
@@ -185,7 +185,7 @@
             submitUpdate() {
                 if (this.checkForm()) {
                     updateData(this.form).then(res => {
-                        this.$toast.success(res.msg, 'Success');
+                        this.$toast.success('编辑成功。', 'Success');
                         this.$parent.getAll();
                         this.resetModal()
                     })

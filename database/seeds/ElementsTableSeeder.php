@@ -20,6 +20,14 @@ class ElementsTableSeeder extends Seeder
         $db->save();
 
         $db = new \App\Models\Element();
+        $db->name = '所有角色';
+        $db->menu_id = 4;
+        $db->code = 'role:all';
+        $db->method =  'get';
+        $db->path = '/roles/all';
+        $db->save();
+
+        $db = new \App\Models\Element();
         $db->name = '添加角色';
         $db->menu_id = 4;
         $db->code = 'role:add';

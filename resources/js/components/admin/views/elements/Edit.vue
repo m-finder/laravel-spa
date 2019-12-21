@@ -124,7 +124,7 @@
             submitUpdate(){
                 if(this.checkForm()){
                     updateData(this.form).then(res => {
-                        this.$toast.success(res.msg, 'Success');
+                        this.$toast.success('编辑成功。', 'Success');
                         this.$parent.getList();
                         this.resetModal();
                     })

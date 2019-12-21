@@ -24,7 +24,7 @@
                             <b-form-invalid-feedback id="password-feedback">
                                 {{ error.password }}
                             </b-form-invalid-feedback>
-                            <b-button type="submit" block variant="outline-primary" :disabled="disabled">
+                            <b-button @click="onSubmit" block variant="outline-primary" :disabled="disabled">
                                 <span v-if="loading" class="spinner-border spinner-border-sm"></span>
                                 {{ text }}
                             </b-button>
@@ -88,6 +88,7 @@
 <script>
     import {login} from '../../api/login'
     import storage from '../../utils/storage'
+
     export default {
         name: 'Login',
         data() {
@@ -144,10 +145,10 @@
                 value.length === 0 ? this.passwordState = this.error.password = null : this.checkPassword(value)
             },
             $route: {
-                handler: function(route) {
-                    const query = route.query
+                handler: function (route) {
+                    const query = route.query;
                     if (query) {
-                        this.redirect = query.redirect
+                        this.redirect = query.redirect;
                         this.otherQuery = this.getOtherQuery(query)
                     }
                 },
@@ -168,48 +169,36 @@
                 this.switchRight = !this.switchRight;
                 setTimeout(() => {
                     this.notForget = state
-                    // this.$refs['ruleForm'].resetFields()
-                    // this.$refs['forgetRuleForm'].resetFields()
                 }, 300)
             },
-            checkEmail: function (value) {
+            checkEmail: function () {
                 let reg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-                let email = reg.test(value);
-                this.error.email = email ? null : '请输入正确的邮箱地址';
-                this.emailState = email ? true : false;
-                if (!email) {
-                    this.restForm()
-                }
+                let email = reg.test(this.form.email);
+                email ?
+                    (this.error.email = null, this.emailState = true) :
+                    (this.error.email = '请输入正确的邮箱地址', this.emailState = false, this.restForm());
                 return email;
             },
-            checkPassword: function (value) {
+            checkPassword: function () {
+                let value = this.form.password;
                 let password = value === null ? false : (value.length >= 6 && value.length <= 32);
-                this.error.password = password ? null : '密码应为长度 6 - 32 位的字符串';
-                this.passwordState = password ? true : false;
-                if (!password) {
-                    this.restForm()
-                }
+                password ?
+                    (this.error.password = null, this.passwordState = true) :
+                    (this.passwordState = false, this.error.password = '密码应为长度 6 - 32 位的字符串', this.restForm());
                 return password;
             },
-            onSubmit: function (evt) {
-                evt.preventDefault();
+            onSubmit: function () {
                 this.loginSubmit();
-                let email = this.form.email;
-                let password = this.form.password;
-                let emailCheck = this.checkEmail(email);
-                let passwordCheck = this.checkPassword(password);
-                if (emailCheck && passwordCheck) {
+                if (this.checkEmail() && this.checkPassword()) {
                     login(this.form).then(res => {
-                        if (res.data.code == 0) {
-                            this.$toast.success(res.data.msg, 'Success');
-                            this.$store.dispatch('ClearRoutes');
-                            let data = {'user-info': res.data.data, 'token': res.data.data.api_token};
-                            this.form.status === true ? storage.set(data) : (storage.remove(), storage.sessionSet(data));
-                            this.$router.push({path: this.redirect || '/'})
-                        } else {
-                            this.restForm();
-                            this.$toast.error(res.data.msg, 'Error')
-                        }
+                        this.$toast.success('欢迎回来', 'Success');
+                        this.$store.dispatch('ClearRoutes');
+                        let data = {'user-info': res.data, 'token': res.data.api_token};
+                        this.form.status === true ? storage.set(data) : (storage.remove(), storage.sessionSet(data));
+                        this.$router.push({path: this.redirect || '/'})
+                    }).catch(error => {
+                        this.$toast.error(error.response.data.message, 'Error');
+                        this.restForm();
                     })
                 }
             },

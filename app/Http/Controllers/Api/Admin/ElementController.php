@@ -7,66 +7,53 @@ use App\Models\Element;
 use Illuminate\Support\Facades\Log;
 
 
-class ElementController extends ApiController {
+class ElementController extends ApiController
+{
 
-    public function lists() {
+    public function lists()
+    {
         $page = request('limit', 20);
         $elements = Element::menuId()->paginate($page);
-        return $this->json_response($elements);
+        return $this->success($elements);
     }
 
-    public function detail($id) {
-        if (is_null($id)) {
-            return $this->json_response(null, '参数错误', self::ERROR_PARAMS, self::MSG_TYPE_ERROR);
-        }
-        $detail = Element::find($id);
-        return $this->json_response($detail);
+    public function detail($id)
+    {
+        $detail = Element::findOrFail($id);
+        return $this->success($detail);
     }
 
-    public function create() {
+    public function create()
+    {
         $model = new Element();
-        try {
-            if (Element::checkUnique()) {
-                $model->create(request_intersect([
-                    'menu_id', 'name', 'code', 'method', 'path',
-                ]));
-            } else {
-                return $this->json_response(null, '该资源已存在', self::ERROR_PARAMS, self::MSG_TYPE_ERROR);
-            }
-        } catch (\Exception $exception) {
-            Log::error($exception);
-            return $this->json_response(null, '系统错误', self::ERROR_SYSTEM_INTERRUPTED, self::MSG_TYPE_ERROR);
-        }
-        return $this->json_response();
-    }
-
-    public function update($id) {
-        $element = Element::where('id', $id)->first();
-        try {
-            if (is_null($element)) {
-                return $this->json_response(null, '资源不存在', self::ERROR_USER_NOT_EXIST, self::MSG_TYPE_ERROR);
-            }
-            if (Element::checkUnique()) {
-                $element->update(request_intersect([
-                   'name', 'code', 'method', 'path',
-                ]));
-            } else {
-                return $this->json_response(null, '该资源已存在', self::ERROR_PARAMS, self::MSG_TYPE_ERROR);
-            }
-        } catch (\Exception $exception) {
-            Log::error($exception);
-            return $this->json_response(null, '系统错误', self::ERROR_SYSTEM_INTERRUPTED, self::MSG_TYPE_ERROR);
-        }
-        return $this->json_response();
-    }
-
-    public function delete($id) {
-        $element = Element::find($id);
-        if (is_null($element)) {
-            return $this->json_response(null, '资源不存在', self::ERROR_USER_NOT_EXIST, self::MSG_TYPE_ERROR);
+        if (Element::checkUnique()) {
+            $model->create(request_intersect([
+                'menu_id', 'name', 'code', 'method', 'path',
+            ]));
         } else {
-            $element->delete();
-            return $this->json_response();
+            return $this->error('该资源已存在');
         }
+        return $this->success();
+    }
+
+    public function update($id)
+    {
+        $element = Element::findOrFail($id);
+        if (Element::checkUnique()) {
+            $element->update(request_intersect([
+                'name', 'code', 'method', 'path',
+            ]));
+        } else {
+            return $this->error('该资源已存在');
+        }
+
+        return $this->success();
+    }
+
+    public function delete($id)
+    {
+        $element = Element::findOrFail($id);
+        $element->delete();
+        return $this->success();
     }
 }
