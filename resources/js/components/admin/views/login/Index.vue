@@ -8,26 +8,26 @@
                             <img src="/favicon.ico" alt="">
                             <div class="title">
                                 <a>
-                                    <span>Laravel-vue  </span><span class="subtitle">spa</span>
+                                    <span>{{ config.title }}  </span><span class="subtitle">{{ config.subheading }}</span>
                                 </a>
                             </div>
                         </div>
-                        <b-form @submit="onSubmit" class="login-form">
-                            <b-form-input v-model="form.email" :state="emailState"
-                                          aria-describedby="input-live-help email-feedback" placeholder="登录邮箱" trim/>
+
+                        <b-form class="login-form">
+                            <b-form-input v-model="form.email" :state="emailState" aria-describedby="input-live-help email-feedback" placeholder="登录邮箱" trim/>
                             <b-form-invalid-feedback id="email-feedback">
                                 {{ error.email }}
                             </b-form-invalid-feedback>
-                            <b-form-input type="password" v-model="form.password" :state="passwordState"
-                                          aria-describedby="input-live-help password-feedback" placeholder="登录密码"
-                                          trim/>
+                            <b-form-input type="password" v-model="form.password" :state="passwordState" aria-describedby="input-live-help password-feedback" placeholder="登录密码" trim/>
                             <b-form-invalid-feedback id="password-feedback">
                                 {{ error.password }}
                             </b-form-invalid-feedback>
+
                             <b-button @click="onSubmit" block variant="outline-primary" :disabled="disabled">
                                 <span v-if="loading" class="spinner-border spinner-border-sm"></span>
-                                {{ text }}
+                                登录
                             </b-button>
+
                             <b-row class="rember-box">
                                 <b-col>
                                     <b-form-checkbox v-model="form.status">
@@ -45,10 +45,10 @@
                     <div v-else>
                         <div class="title forget-wrap-title">
                             <a>
-                                <span>Laravel-vue  </span><span class="subtitle">spa</span>
+                                <span>{{ config.title }}  </span><span class="subtitle">{{ config.subheading }}</span>
                             </a>
                         </div>
-                        <b-form @submit="onForgetSubmit" class="forget-form">
+                        <b-form class="forget-form">
                             <b-form-input v-model="forgetForm.email" :state="forgetEmailState"
                                           aria-describedby="input-live-help forget-email-feedback" placeholder="登录邮箱"
                                           trim/>
@@ -68,9 +68,8 @@
                                     </b-button>
                                 </b-col>
                                 <b-col class="text-right">
-                                    <b-button type="submit" block variant="outline-primary" :disabled="disabled">
-                                        <span v-if="loading" class="spinner-border spinner-border-sm"></span>
-                                        {{ text }}
+                                    <b-button @click="onForgetSubmit" block variant="outline-primary" :disabled="forgetDisabled">
+                                        忘记密码
                                     </b-button>
                                 </b-col>
                             </b-row>
@@ -86,16 +85,18 @@
 </template>
 
 <script>
-    import {login} from '../../api/login'
-    import storage from '../../utils/storage'
+    import {login} from '../../api/login';
+    import storage from '../../utils/storage';
+    import config from '../../config/config';
 
     export default {
         name: 'Login',
         data() {
             return {
-                text: '登录',
+                config: config,
                 loading: false,
                 disabled: false,
+                forgetDisabled: false,
                 switchLeft: false,
                 notForget: true,
                 alerts: [],
@@ -176,7 +177,7 @@
                 let email = reg.test(this.form.email);
                 email ?
                     (this.error.email = null, this.emailState = true) :
-                    (this.error.email = '请输入正确的邮箱地址', this.emailState = false, this.restForm());
+                    (this.error.email = '请输入正确的邮箱地址', this.emailState = this.loading =  this.disabled = false);
                 return email;
             },
             checkPassword: function () {
@@ -184,38 +185,29 @@
                 let password = value === null ? false : (value.length >= 6 && value.length <= 32);
                 password ?
                     (this.error.password = null, this.passwordState = true) :
-                    (this.passwordState = false, this.error.password = '密码应为长度 6 - 32 位的字符串', this.restForm());
+                    (this.passwordState = this.loading =  this.disabled = false, this.error.password = '密码应为长度 6 - 32 位的字符串');
                 return password;
             },
             onSubmit: function () {
-                this.loginSubmit();
-                if (this.checkEmail() && this.checkPassword()) {
+                this.loading =  this.disabled = true;
+                let email = this.checkEmail(), pwd = this.checkPassword();
+                if (email && pwd) {
                     login(this.form).then(res => {
+                        this.loading =  this.disabled = false;
                         this.$toast.success('欢迎回来', 'Success');
                         this.$store.dispatch('ClearRoutes');
                         let data = {'user-info': res.data, 'token': res.data.api_token};
                         this.form.status === true ? storage.set(data) : (storage.remove(), storage.sessionSet(data));
                         this.$router.push({path: this.redirect || '/'})
                     }).catch(error => {
+                        this.loading =  this.disabled = false;
                         this.$toast.error(error.response.data.message, 'Error');
-                        this.restForm();
                     })
                 }
             },
-            onForgetSubmit: function (evt) {
-                evt.preventDefault();
+            onForgetSubmit: function () {
                 console.log(this.forgetForm)
             },
-            loginSubmit: function () {
-                this.loading = true;
-                this.disabled = true;
-                this.text = '登录中...';
-            },
-            restForm: function () {
-                this.loading = false;
-                this.disabled = false;
-                this.text = '登录';
-            }
         }
     }
 </script>

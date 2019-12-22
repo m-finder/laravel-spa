@@ -12613,9 +12613,8 @@ h3 {
 }
 
 .default {
-  background: none;
+  background: #ffffff;
 }
-
 .bg-dark-blue {
   background: url(../images/bg.svg), radial-gradient(farthest-side ellipse at 10% 0, #9aacbf 20%, #36455a), no-repeat, fixed;
   background-size: cover;

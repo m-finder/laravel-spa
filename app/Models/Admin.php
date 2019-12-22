@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 class Admin extends Authenticatable
 {
@@ -15,7 +14,7 @@ class Admin extends Authenticatable
     ];
 
     protected $hidden = [
-        'password', 'api_token',
+        'password'
     ];
 
     public function scopeName($query, $name)

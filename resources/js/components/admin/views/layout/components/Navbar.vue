@@ -13,7 +13,7 @@
                 <svg-vue class="nav-status " icon="refresh"/>
             </button>
 
-            <bread-crumb class="mr-auto p-0 " :list="list" :homePage="'Home'" :homeUrl="'/dashboard'"/>
+            <bread-crumb class="mr-auto p-0 " :list="list" :homePage="config.homePage" :homeUrl="config.homeUrl"/>
 
             <b-navbar class="justify-content-end p-0 bv-d-md-down-none">
                 <b-navbar-nav>
@@ -44,6 +44,8 @@
     import storage from '../../../utils/storage'
     import BreadCrumb from '../../../components/breadcrumb/Index'
     import Theme from './theme'
+    import config from "../../../config/config";
+
 
     const clickoutside = {
         bind(el, binding, vnode) {
@@ -76,7 +78,8 @@
         data() {
             return {
                 userInfo: storage.get('user-info') || storage.sessionGet('user-info'),
-                showSideBar: false
+                showSideBar: false,
+                config: config
             }
         },
         directives: {clickoutside},

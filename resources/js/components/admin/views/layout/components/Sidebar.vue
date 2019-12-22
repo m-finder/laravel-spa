@@ -5,7 +5,7 @@
                 <b-navbar-brand>
                     <img :src="'/favicon.ico'" class="logo d-inline-block align-bottom" alt="">
                     <span v-if="isCollapse">
-                    M-laravel-spa
+                    {{ config.title }} {{ config.subheading }}
                 </span>
                 </b-navbar-brand>
             </div>
@@ -76,11 +76,17 @@
 <script>
     import {mapGetters} from 'vuex'
     import SitebarItem from './SidebarItem'
+    import config from '../../../config/config';
 
     export default {
         name: 'Sidebar',
         components: {
             'sitebar-item': SitebarItem,
+        },
+        data(){
+            return {
+                config: config
+            }
         },
         computed: {
             ...mapGetters([

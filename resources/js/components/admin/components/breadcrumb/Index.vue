@@ -35,11 +35,11 @@
         },
         methods: {
             isDashboard(route) {
-                const name = route && route.name
+                const name = route && route.name;
                 return name ? name.trim().toLocaleLowerCase() === (this.homePage).toLocaleLowerCase() :  false
             },
             getName(item) {
-                return item.meta && item.meta.title ? item.meta.title : item.name || null
+                return item.path == '' ? this.homePage : item.meta && item.meta.title ? item.meta.title : item.name || null
             },
             isLast(index) {
                 return index === this.list.length - 1
