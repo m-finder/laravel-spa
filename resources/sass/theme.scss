@@ -6,11 +6,6 @@
     }
 }
 
-.bg-dark-blue {
-    background: url(../images/bg.svg), radial-gradient(farthest-side ellipse at 10% 0, $light-blue 20%, $dark-blue), no-repeat, fixed;
-    background-size: cover;
-}
-
 .bg-light-blue {
     background: url(../images/bg.svg), radial-gradient(farthest-side ellipse at 10% 0, #e1e5e8 10%, $light-blue), no-repeat, fixed;
     background-size: cover;
@@ -26,20 +21,12 @@
     background-size: cover;
 }
 
-.bg-blue {
-    background: url(../images/bg.svg), radial-gradient(farthest-side ellipse at 10% 0, #e1e5e8 10%, $blue), no-repeat, fixed;
-    background-size: cover;
-}
 
 .bg-indigo {
     background: url(../images/bg.svg), radial-gradient(farthest-side ellipse at 10% 0, #e1e5e8 10%, $indigo), no-repeat, fixed;
     background-size: cover;
 }
 
-.bg-red {
-    background: url(../images/bg.svg), radial-gradient(farthest-side ellipse at 10% 0, #e1e5e8 10%, $red), no-repeat, fixed;
-    background-size: cover;
-}
 
 .bg-orange {
     background: url(../images/bg.svg), radial-gradient(farthest-side ellipse at 10% 0, #e1e5e8 10%, $orange), no-repeat, fixed;
@@ -98,6 +85,12 @@
 }
 .border {
     border: 1px solid rgba(0,0,0,.1)!important;
+}
+.table thead th{
+    border-bottom: none;
+}
+.table th, .table td{
+    border-top: none;
 }
 th {
     color: #495057;

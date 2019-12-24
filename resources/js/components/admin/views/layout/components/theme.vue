@@ -18,9 +18,6 @@
                 <div class="theme-btn default" @click="setTheme('default')">
                     <div class="sidebar-container"></div>
                 </div>
-                <div class="theme-btn bg-dark-blue" @click="setTheme('bg-dark-blue')">
-                    <div class="sidebar-container"></div>
-                </div>
                 <div class="theme-btn bg-light-blue" @click="setTheme('bg-light-blue')">
                     <div class="sidebar-container"></div>
                 </div>
@@ -30,16 +27,10 @@
                 <div class="theme-btn bg-light-red" @click="setTheme('bg-light-red')">
                     <div class="sidebar-container"></div>
                 </div>
-                <div class="theme-btn bg-blue" @click="setTheme('bg-blue')">
-                    <div class="sidebar-container"></div>
-                </div>
                 <div class="theme-btn bg-indigo" @click="setTheme('bg-indigo')">
                     <div class="sidebar-container"></div>
                 </div>
                 <div class="theme-btn bg-purple" @click="setTheme('bg-purple')">
-                    <div class="sidebar-container"></div>
-                </div>
-                <div class="theme-btn bg-red" @click="setTheme('bg-red')">
                     <div class="sidebar-container"></div>
                 </div>
                 <div class="theme-btn bg-pink" @click="setTheme('bg-pink')">
@@ -97,23 +88,27 @@
 
 <style lang="scss" scoped>
     .theme-box {
-        width: 310px;
+        width: 311px;
         height: calc(100vh - 90px);
         position: fixed;
         right: -350px;
         bottom: 0;
-        background: rgba(255, 255, 255, .8);
+        background: #ffffff;
+        border: 1px solid #dcdcdc;
         z-index: 1027;
         padding: 15px;
         transition: all 0.2s;
 
         .close-btn {
+            border-left: 1px solid #dcdcdc;
+            border-top: 1px solid #dcdcdc;
+            border-bottom: 1px solid #dcdcdc;
             position: absolute;
             left: -35px;
             top: 0;
             width: 35px;
             height: 35px;
-            background: rgba(255, 255, 255, .8);
+            background: #ffffff;
             text-align: center;
             line-height: 35px;
             cursor: pointer;
