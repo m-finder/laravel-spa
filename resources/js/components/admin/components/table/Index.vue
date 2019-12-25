@@ -1,7 +1,7 @@
 <template>
     <div>
-        <b-table hover :items="items" :fields="fields" :sort-by.sync="sortBy" :sort-desc.sync="sort"
-                 :busy.sync="isBusy" responsive="sm" outlined ref="table" show-empty>
+        <b-table class="text-nowrap" responsive hover :items="items" :fields="fields" :sort-by.sync="sortBy" :sort-desc.sync="sort"
+                 :busy.sync="isBusy" outlined ref="table" show-empty>
 
             <div slot="table-busy" class="text-center text-danger my-2">
                 <b-spinner class="align-middle"></b-spinner>

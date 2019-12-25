@@ -1,5 +1,5 @@
 <template>
-    <section class="text-center sidebar-container" :class="{ 'side-bar-close' : !isCollapse }">
+    <section class="text-center sidebar-container bv-d-md-down-none" display="lg" :class="{ 'side-bar-close' : !isCollapse }">
         <div class="sidebar-wrapper">
             <div class="header">
                 <b-navbar-brand>

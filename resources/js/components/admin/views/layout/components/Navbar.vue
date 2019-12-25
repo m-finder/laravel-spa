@@ -1,7 +1,7 @@
 <template>
     <section class="nav-wrap">
         <div class="header navbar">
-            <button class="d-lg-none navbar-toggler" type="button" display="md" mobile @click="toggleSideBar">
+            <button class="d-lg-none navbar-toggler" type="button" display="md" mobile @click="toggleMobileSideBar">
                 <svg-vue class="nav-status " icon="menu"/>
             </button>
 
@@ -9,20 +9,20 @@
                 <svg-vue class="nav-status " icon="menu"/>
             </button>
 
-            <button class="bv-d-lg-none navbar-toggler" type="button" display="md" @click="refresh">
+            <button class="navbar-toggler bv-d-md-down-none" display="md" type="button" @click="refresh">
                 <svg-vue class="nav-status " icon="refresh"/>
             </button>
 
-            <bread-crumb class="mr-auto p-0 " :list="list" :homePage="config.homePage" :homeUrl="config.homeUrl"/>
+            <bread-crumb class="mr-auto p-0 bv-d-md-down-none" display="md" :list="list" :homePage="config.homePage" :homeUrl="config.homeUrl"/>
 
-            <b-navbar class="justify-content-end p-0 bv-d-md-down-none">
+            <b-navbar class="justify-content-end p-0">
                 <b-navbar-nav>
-                    <b-nav-item>
+                    <b-nav-item class="bv-d-md-down-none">
                         <svg-vue icon="message"/>
                         <b-badge pill variant="danger">5</b-badge>
                     </b-nav-item>
 
-                    <b-nav-item-dropdown class="bv-d-md-down-none ml-2 mr-2" right>
+                    <b-nav-item-dropdown class=" ml-2 mr-2" right>
                         <template v-slot:button-content>
                             <img :src="'/images/avatar.png'" class="img-avatar" alt=""/>
                         </template>
@@ -106,6 +106,9 @@
                 storage.remove('token') && storage.sessionRemove('token');
                 this.$store.dispatch('ClearRoutes');
                 this.$router.push({path: '/login'})
+            },
+            toggleMobileSideBar(){
+                this.$store.dispatch('app/openSideBar')
             },
             toggleSideBar() {
                 this.$store.dispatch('app/toggleSideBar')

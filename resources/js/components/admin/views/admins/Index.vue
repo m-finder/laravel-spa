@@ -7,12 +7,12 @@
                         <h3 class="card-title mb-0">用户列表</h3>
                     </div>
                     <div class="card-body">
-                        <div class="card-tools mb-3">
+                        <div class="card-tools">
 
                             <div class="btn-group mr-3" v-has="'admin:list'">
                                 <form model="form">
                                     <div class="row">
-                                        <div class="col-6">
+                                        <div class="col-md-6 col-sm-12 mb-3">
                                             <div class="input-group input-group-sm">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">用户名</span>
@@ -20,7 +20,7 @@
                                                 <b-form-input type="text" v-model="form.name" placeholder="输入用户名"/>
                                             </div>
                                         </div>
-                                        <div class="col-6">
+                                        <div class="col-md-6 col-sm-12 mb-3">
                                             <div class="input-group input-group-sm">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">邮箱</span>
@@ -39,11 +39,11 @@
                                 </form>
                             </div>
 
-                            <div class="btn-group mr-3" v-has="'admin:add'">
+                            <div class="btn-group mr-3 mb-3" v-has="'admin:add'">
                                 <b-button class="btn-sm" variant="primary" @click="openAddModal">添加用户</b-button>
                             </div>
 
-                            <div class="btn-group mr-3" v-has="'admin:list'">
+                            <div class="btn-group mr-3 mb-3" v-has="'admin:list'">
                                 <b-button class="btn-sm" variant="primary" @click="refresh">刷新列表</b-button>
                             </div>
                         </div>

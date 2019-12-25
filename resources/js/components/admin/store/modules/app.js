@@ -20,6 +20,10 @@ const mutations = {
         storage.set({'sidebarStatus': 1});
         state.sidebar.opened = false
     },
+    OPEN_SIDEBAR: (state)=>{
+        storage.set({'sidebarStatus': 0});
+        state.sidebar.opened = true
+    },
     CHANGE_THEME: (state, theme) => {
         storage.set({'theme': theme});
         state.theme = theme
@@ -30,6 +34,9 @@ const mutations = {
 const actions = {
     toggleSideBar({commit}) {
         commit('TOGGLE_SIDEBAR')
+    },
+    openSideBar({commit}) {
+        commit('OPEN_SIDEBAR')
     },
     changeTheme({commit}, theme) {
         commit('CHANGE_THEME', theme)

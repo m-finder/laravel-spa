@@ -9,12 +9,12 @@
 
                     <div class="card-body">
 
-                        <div class="card-tools mb-3">
+                        <div class="card-tools">
 
                             <div class="btn-group  mr-3" v-has="'role:list'">
                                 <form model="form">
                                     <div class="row">
-                                        <div class="col-6">
+                                        <div class="col-md-6 col-sm-12 mb-3">
                                             <div class="input-group input-group-sm">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">角色名</span>
@@ -22,7 +22,7 @@
                                                 <b-form-input type="text" v-model="form.name" placeholder="输入角色名"/>
                                             </div>
                                         </div>
-                                        <div class="col-6">
+                                        <div class="col-md-6 col-sm-12 mb-3">
                                             <div class="input-group input-group-sm">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">角色别名</span>
@@ -41,11 +41,11 @@
                                 </form>
                             </div>
 
-                            <div class="btn-group mr-3">
+                            <div class="btn-group mr-3 mb-3">
                                 <b-button v-has="'role:add'" class="btn-sm" variant="primary" @click="openAddModal">添加角色</b-button>
                             </div>
 
-                            <div class="btn-group" v-has="'role:list'">
+                            <div class="btn-group mb-3" v-has="'role:list'">
                                 <b-button class="btn-sm" variant="primary" @click="refresh">刷新列表</b-button>
                             </div>
                         </div>

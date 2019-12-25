@@ -4,8 +4,8 @@
             <h3 class="card-title mb-0">资源列表</h3>
         </div>
         <div class="card-body">
-            <div class="card-tools mb-3">
-                <div class="btn-group mr-3">
+            <div class="card-tools">
+                <div class="btn-group mr-3 mb-3">
                     <b-button v-has="'element:add'" class="btn-sm" variant="primary" @click="add">添加资源</b-button>
                 </div>
             </div>

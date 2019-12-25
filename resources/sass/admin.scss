@@ -63,4 +63,9 @@ svg {
     height: 32px;
 }
 
+@media (max-width: 991.98px){
+    .main-container, .app-main{
+        width: 100vw!important;
+    }
+}
 
