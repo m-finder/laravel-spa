@@ -46,4 +46,10 @@
     .main-container-open{
         width: calc(100vw - 68px)!important;
     }
+
+    @media (max-width: 991.98px){
+        .main-container-open{
+            width: calc(100vw)!important;
+        }
+    }
 </style>

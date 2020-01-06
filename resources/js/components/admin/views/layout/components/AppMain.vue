@@ -44,6 +44,12 @@
         width: calc(100vw - 68px)!important;
     }
 
+    @media (max-width: 991.98px){
+        .app-main-close {
+            width: 100vw!important;
+        }
+    }
+
     .fade-enter-active, .fade-leave-active {
         transition-duration: 0.3s;
         transition-property: opacity;

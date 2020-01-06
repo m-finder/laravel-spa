@@ -2,7 +2,7 @@
     <section class="content container-fluid">
         <div class="row justify-content-center p-3">
 
-            <div class="col-4">
+            <div class="col-md-4 col-sm-12 mt-3">
                 <div class="card card-primary card-outline">
                     <div class="card-header">
                         <h3 class="card-title mb-0">菜单列表</h3>
@@ -33,7 +33,7 @@
                 </div>
             </div>
             <!--      资源列表      -->
-            <div class="col-8">
+            <div class="col-md-8 col-sm-12 mt-3">
                 <transition name="fade" mode="out-in">
                     <elements :menu-id="form.id"/>
                 </transition>

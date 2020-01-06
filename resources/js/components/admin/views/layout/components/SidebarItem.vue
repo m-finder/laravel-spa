@@ -39,17 +39,18 @@
 </script>
 <style lang="scss" scoped>
     .nav-link {
-        &:hover{
-            svg{
+        &:hover {
+            svg {
                 fill: #1d68a7;
             }
         }
     }
 
-    .dropdown-toggle{
+    .dropdown-toggle {
         position: relative;
         width: 200px;
         transition: padding-left .2s;
+
         &::after {
             display: block;
             position: absolute;
@@ -59,6 +60,7 @@
             transform: rotate(90deg);
             transition: all 0.2s;
         }
+
         span {
             transition: all .2s;
             position: absolute;
@@ -74,7 +76,7 @@
 
         .nav-item {
             .nav-link {
-                padding-left:25px;
+                padding-left: 25px;
             }
 
             span {
@@ -95,6 +97,39 @@
 
         .dropdown-toggle::after {
             transform: rotate(0deg);
+        }
+    }
+
+    @media (max-width: 991.98px) {
+        .side-bar-close {
+
+            .nav-item {
+                .nav-link {
+                    padding-left: 15px;
+                }
+
+                span {
+                    left: 40px;
+                }
+            }
+
+            .dropdown-toggle::after {
+                display: block;
+            }
+        }
+        .dropdown-toggle {
+            color: rgba(255,255,255,.7);
+            svg {
+                fill: rgba(255,255,255,.7);
+            }
+
+            &:hover {
+                color: #fff;
+
+                svg {
+                    fill: #fff;
+                }
+            }
         }
     }
 </style>
