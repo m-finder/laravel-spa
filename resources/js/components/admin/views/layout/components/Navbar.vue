@@ -48,52 +48,6 @@
     import Theme from './theme'
     import config from "../../../config/config";
 
-
-    const themeClose = {
-        bind(el, binding, vnode) {
-            function documentHandler(e) {
-                let theme = document.getElementsByClassName('theme-box')[0];
-                if (el.contains(e.target) || theme.contains(e.target)) {
-                    return false;
-                }
-                if (binding.expression) {
-                    binding.value(e);
-                }
-            }
-
-            el.__vueClickOutside__ = documentHandler;
-            document.addEventListener('click', documentHandler);
-        },
-        unbind(el, binding) {
-            document.removeEventListener('click', el.__vueClickOutside__);
-            delete el.__vueClickOutside__;
-        },
-    };
-
-    const menuClose = {
-        bind(el, binding, vnode) {
-            function documentHandler(e) {
-                let tag = document.getElementsByClassName('navbar-toggler')[0],
-                    tag2 = document.getElementsByClassName('dropdown-toggle')[0],
-                    tag3 = document.getElementsByClassName('pc-navbar')[0];
-
-                if (el.contains(e.target) || tag.contains(e.target) || tag2.contains(e.target)|| tag3.contains(e.target)) {
-                    return false;
-                }
-                if (binding.expression) {
-                    binding.value(e);
-                }
-            }
-
-            el.__vueClickOutside__ = documentHandler;
-            document.addEventListener('click', documentHandler);
-        },
-        unbind(el, binding) {
-            document.removeEventListener('click', el.__vueClickOutside__);
-            delete el.__vueClickOutside__;
-        },
-    };
-
     export default {
         name: 'Navbar',
         components: {
@@ -115,7 +69,7 @@
                 return this.sidebar.opened
             },
             isMobile() {
-                return this.sidebar.mobile
+                return this.sidebar.mobileOpened
             },
             name() {
                 return this.$route.name
@@ -150,15 +104,11 @@
             menuClose: {
                 bind(el, binding, vnode) {
                     function documentHandler(e) {
-                        let tag = document.getElementsByClassName('navbar-toggler')[0],
-                            tag2 = document.getElementsByClassName('dropdown-toggle')[0],
-                            tag3 = document.getElementsByClassName('pc-navbar')[0];
-
-                        if (el.contains(e.target) || tag.contains(e.target) || tag2.contains(e.target)|| tag3.contains(e.target)) {
+                        let tag = document.getElementsByClassName('mobile-side-bar')[0].getElementsByClassName('dropdown-toggle')[0];
+                        if (el.contains(e.target) || tag.contains(e.target)) {
                             return false;
                         }
-                        console.log(vnode.context.isMobile)
-                        if (binding.expression && vnode.context.isMobile) {
+                        if (binding.expression) {
                             binding.value(e);
                         }
                     }

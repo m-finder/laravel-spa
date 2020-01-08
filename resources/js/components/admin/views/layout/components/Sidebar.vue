@@ -20,7 +20,7 @@
                                     v-if="onlyOneShowingChildren(item.children) && !item.hidden && !item.children[0].hidden"
                                     :to="item.children[0].path" :id="item.children[0].path">
                                 <svg-vue :icon="item.children[0].icon || 'smile'"/>
-                                <b-tooltip v-if="!isCollapse  && !isMobile" :target="item.children[0].path"
+                                <b-tooltip v-if="!isCollapse" :target="item.children[0].path"
                                            placement="right"
                                            boundary="window" triggers="hover">
                                     {{ getTitle(item.children[0]) }}
@@ -76,14 +76,14 @@
             </div>
         </section>
         <!--   手机版     -->
-        <section class="text-center sidebar-container bv-d-md-down-none" display="sm" :class="{ 'side-bar-close' : !isCollapse, 'mobile': isMobile }">
+        <section class="text-center sidebar-container mobile-side-bar d-none " display="sm" :class="{ 'mobile-side-bar-close' : !isMobileCollapse }">
             <div class="sidebar-wrapper">
                 <div class="header">
                     <b-navbar-brand>
                         <img :src="'/favicon.ico'" class="logo d-inline-block align-bottom" alt="">
-                        <span v-if="isCollapse || isMobile">
-                        {{ config.title }} {{ config.subheading }}
-                    </span>
+                        <span>
+                            {{ config.title }} {{ config.subheading }}
+                        </span>
                     </b-navbar-brand>
                 </div>
 
@@ -96,27 +96,18 @@
                                     v-if="onlyOneShowingChildren(item.children) && !item.hidden && !item.children[0].hidden"
                                     :to="item.children[0].path" :id="item.children[0].path">
                                 <svg-vue :icon="item.children[0].icon || 'smile'"/>
-                                <b-tooltip v-if="!isCollapse  && !isMobile" :target="item.children[0].path"
-                                           placement="right"
-                                           boundary="window" triggers="hover">
-                                    {{ getTitle(item.children[0]) }}
-                                </b-tooltip>
                                 <span>{{ getTitle(item.children[0]) }}</span>
                             </b-nav-item>
                             <!-- 没有显示的子菜单 -->
                             <b-nav-item v-else-if="noShowingChildren(item.children) && !item.hidden"
                                         :to="item.path" :id="item.path">
                                 <svg-vue :icon="item.icon || 'smile'"/>
-                                <b-tooltip v-if="!isCollapse" :target="item.path" placement="right"
-                                           boundary="window" triggers="hover">
-                                    {{ getTitle(item) }}
-                                </b-tooltip>
                                 <span>{{ getTitle(item) }}</span>
                             </b-nav-item>
 
                             <sitebar-item v-else-if="!item.hidden" :name="getTitle(item)" :icon="item.icon"
                                           :href="item.path" :id="item.path">
-                                <b-nav v-if="isCollapse || isMobile" vertical class="nav-dropdown-items">
+                                <b-nav vertical class="nav-dropdown-items">
                                     <template v-for="(children, i) in item.children">
                                         <b-nav-item v-if="!children.hidden" :to="children.path">
                                             <svg-vue :icon="children.icon || 'smile'"/>
@@ -124,26 +115,12 @@
                                         </b-nav-item>
                                     </template>
                                 </b-nav>
-                                <b-tooltip v-if="!isCollapse && !isMobile" :target="item.path" placement="right"
-                                           boundary="window" triggers="hover">
-                                    <b-nav vertical class="tooltip-nav">
-                                        <template v-for="(children, i) in item.children">
-                                            <b-nav-item v-if="!children.hidden" :to="children.path">
-                                                {{ getTitle(children) }}
-                                            </b-nav-item>
-                                        </template>
-                                    </b-nav>
-                                </b-tooltip>
                             </sitebar-item>
                         </template>
 
                         <template v-else>
                             <b-nav-item v-if="!item.hidden" :to="item.path" :id="item.path">
                                 <svg-vue :icon="item.icon || 'smile'"/>
-                                <b-tooltip v-if="!isCollapse  && !isMobile" :target="item.path" placement="right"
-                                           boundary="window" triggers="hover">
-                                    {{ getTitle(item) }}
-                                </b-tooltip>
                                 <span>{{ getTitle(item) }}</span>
                             </b-nav-item>
                         </template>
@@ -177,8 +154,8 @@
             isCollapse() {
                 return this.sidebar.opened
             },
-            isMobile() {
-                return this.sidebar.mobile
+            isMobileCollapse() {
+                return this.sidebar.mobileOpened
             },
         },
         methods: {
@@ -354,16 +331,16 @@
                 color: #fff;
             }
         }
-        .mobile.sidebar-container {
+        .mobile-side-bar {
             display: block !important;
             background: #4E5465!important;
             z-index: 999999;
             left: 0;
         }
-        .side-bar-close, .side-bar-close .header, .side-bar-close .nav-item, .side-bar-close .nav-item .nav-link {
+        .mobile-side-bar-close, .mobile-side-bar-close .header, .mobile-side-bar-close .nav-item, .mobile-side-bar-close .nav-item .nav-link {
             width: 200px;
         }
-        .side-bar-close {
+        .mobile-side-bar-close {
             left: -250px!important;
             .header {
                 text-align: left;

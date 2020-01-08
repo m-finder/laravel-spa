@@ -3,14 +3,13 @@ import storage from '../../utils/storage'
 const state = {
     sidebar: {
         opened: !+storage.get('sidebarStatus'),
-        mobile: storage.get('mobile'),
+        mobileOpened: !!+storage.get('mobileOpened'),
     },
     theme: storage.get('theme') || 'bd-light-blue'
 }
 
 const mutations = {
     TOGGLE_SIDEBAR: state => {
-        storage.set({'mobile': false});
         state.sidebar.opened = !state.sidebar.opened;
         if (state.sidebar.opened) {
             storage.set({'sidebarStatus': 0})
@@ -19,19 +18,16 @@ const mutations = {
         }
     },
     TOGGLE_MOBILE_SIDEBAR: state => {
-        state.sidebar.opened = !state.sidebar.opened;
-        state.sidebar.mobile = true;
-        storage.set({'mobile': true});
-
-        if (state.sidebar.opened) {
-            storage.set({'sidebarStatus': 0});
+        state.sidebar.mobileOpened = !state.sidebar.mobileOpened;
+        if (state.sidebar.mobileOpened) {
+            storage.set({'mobileOpened': 0});
         } else {
-            storage.set({'sidebarStatus': 1});
+            storage.set({'mobileOpened': 1});
         }
     },
     CLOSE_MOBILE_SIDEBAR: state => {
-        state.sidebar.opened = false;
-        storage.set({'sidebarStatus': 1});
+        state.sidebar.mobileOpened = 0;
+        storage.set({'mobileOpened': 0});
     },
     CLOSE_SIDEBAR: (state, withoutAnimation) => {
         storage.set({'sidebarStatus': 1});
