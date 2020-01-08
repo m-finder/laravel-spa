@@ -42,10 +42,10 @@
             </div>
         </div>
 
-        <div slot="modal-footer" class="w-100">
+        <template slot="modal-footer" class="w-100 modal-footer">
             <b-button variant="primary" size="sm" @click="resetModal">取消</b-button>
             <b-button v-has="'admin:add'" variant="danger" size="sm" @click="submitCreate">确认</b-button>
-        </div>
+        </template>
     </b-modal>
 </template>
 

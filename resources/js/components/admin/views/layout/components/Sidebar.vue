@@ -186,7 +186,6 @@
         width: 200px;
         background: rgba(0, 0, 0, .1);
         height: 100%;
-        z-index: 999999;
 
         .sidebar-wrapper {
             height: 100%;

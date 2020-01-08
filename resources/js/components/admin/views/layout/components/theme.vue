@@ -105,7 +105,7 @@
             border-bottom: 1px solid #dcdcdc;
             position: absolute;
             left: -35px;
-            top: 0;
+            top: -1px;
             width: 35px;
             height: 35px;
             background: #ffffff;
