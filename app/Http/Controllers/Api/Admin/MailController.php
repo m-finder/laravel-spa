@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Api\ApiController;
-use App\Mail\AdminRestPassword;
+use App\Mail\AdminResetPassword;
 use App\Models\Admin;
 use App\Models\Code;
 use Illuminate\Http\Request;
@@ -23,7 +23,7 @@ class MailController extends ApiController
                 'type' => self::RESET_PASSWORD
             ]);
         }
-        Mail::to($email)->send(new AdminRestPassword($code));
+        Mail::to($email)->send(new AdminResetPassword($code));
         return $this->success();
     }
 }

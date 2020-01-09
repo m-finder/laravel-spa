@@ -1,8 +1,8 @@
 <?php
 
-//Route::get('/demo', function () {
-//    return new App\Mail\AdminRestPassword();
-//});
+Route::get('/demo', function () {
+    return new App\Mail\AdminResetPassword(rand(100000, 999999));
+});
 
 Route::get('/admin', function () {
     return view('admin');

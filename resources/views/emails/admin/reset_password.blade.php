@@ -8,6 +8,6 @@
 @endcomponent
 
 -----
-如非本人操作，可能您的账号存在安全风险，请立即修改密码。<br>
+如非本人操作，请忽略本邮件。<br>
 {{--{{ config('app.name') }}--}}
 @endcomponent

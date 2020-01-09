@@ -7,7 +7,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class AdminRestPassword extends Mailable
+class AdminResetPassword extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -29,7 +29,7 @@ class AdminRestPassword extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.admin.reset_password')->with([
+        return $this->subject('密码重置')->markdown('emails.admin.reset_password')->with([
             'code' => $this->code,
         ]);
     }
