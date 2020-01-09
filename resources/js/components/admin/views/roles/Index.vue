@@ -1,8 +1,10 @@
 <template>
     <section class="content container-fluid">
-        <div class="row justify-content-center p-3">
-            <div class="col-12">
+        <b-row class="justify-content-center p-3">
+            <b-col cols="12">
+
                 <div class="card card-primary card-outline">
+
                     <div class="card-header">
                         <h3 class="card-title mb-0">角色列表</h3>
                     </div>
@@ -10,34 +12,32 @@
                     <div class="card-body">
 
                         <div class="card-tools">
-
                             <div class="btn-group  mr-3" v-has="'role:list'">
                                 <form model="form">
-                                    <div class="row">
-                                        <div class="col-md-6 col-sm-12 mb-3">
+                                    <b-row>
+                                        <b-col md="6" class="mb-3">
                                             <div class="input-group input-group-sm">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">角色名</span>
                                                 </div>
                                                 <b-form-input type="text" v-model="form.name" placeholder="输入角色名"/>
                                             </div>
-                                        </div>
-                                        <div class="col-md-6 col-sm-12 mb-3">
+                                        </b-col>
+
+                                        <b-col md="6" class="mb-3">
                                             <div class="input-group input-group-sm">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">角色别名</span>
                                                 </div>
-                                                <b-form-input type="text" v-model="form.alias"
-                                                              placeholder="输入角色别名"/>
+                                                <b-form-input type="text" v-model="form.alias" placeholder="输入角色别名"/>
                                                 <div class="input-group-append">
-                                                    <button type="button" @click="getList()"
-                                                            class="btn btn-primary">
+                                                    <button type="button" @click="getList()" class="btn btn-primary">
                                                         <svg-vue icon="search"/>
                                                     </button>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
+                                        </b-col>
+                                    </b-row>
                                 </form>
                             </div>
 
@@ -60,8 +60,8 @@
 
                     </div>
                 </div>
-            </div>
-        </div>
+            </b-col>
+        </b-row>
 
         <create :title="'添加角色'" :is-create="isCreate" v-has="'role:add'"/>
         <edit :title="'编辑角色'" :id="selectForm.id" :is-edit="isEdit" v-has="'role:edit'"/>

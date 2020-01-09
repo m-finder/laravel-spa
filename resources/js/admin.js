@@ -16,11 +16,17 @@ import VueIziToast from 'vue-izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 import _import from './components/admin/router/_import';
 import Layout from './components/admin/views/layout/Layout'
+import { ValidationObserver, ValidationProvider, extend } from 'vee-validate';
+import validate from './components/admin/utils/validate'
 
+// vee-validate Register it globally
+Vue.component('ValidationProvider', ValidationProvider);
+Vue.component('ValidationObserver', ValidationObserver);
 NProgress.configure({showSpinner: false});
 Vue.use(BootstrapVue);
 Vue.use(SvgVue);
 
+// VueIziToast
 let defaultAlertOptions = {
     position: 'topCenter',
     timeout: 10000,

@@ -12437,7 +12437,6 @@ h3 {
   }
 }
 .login-page {
-  background-color: #f1f2f7;
   display: -webkit-box;
   display: flex;
   -webkit-box-pack: center;
@@ -12609,7 +12608,7 @@ h3 {
   height: 100%;
 }
 
-.rember-box {
+.remember-box {
   margin-top: 20px;
 }
 

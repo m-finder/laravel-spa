@@ -14,9 +14,9 @@
         </div>
 
         <div v-if="menus">
-            <div class="row p-3">
+            <b-row class="p-3">
                 <template v-for="(item,i) in menus">
-                    <div class="col-6">
+                    <b-col cols="6">
                         <div class="card mb-3">
                             <h5 class="card-title border-bottom pl-2 pb-1 mt-2 mb-2 ">
                                 <b-form-checkbox :value="item.id" switch @change="toggleMenu($event, item.id)"
@@ -42,9 +42,9 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </b-col>
                 </template>
-            </div>
+            </b-row>
         </div>
 
         <template slot="modal-footer" class="w-100 modal-footer">

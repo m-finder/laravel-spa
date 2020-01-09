@@ -30,6 +30,7 @@
         "echarts": "^4.5.0",
         "laravel-mix-svg-vue": "^0.2.3",
         "nprogress": "^0.2.0",
+        "vee-validate": "^3.2.1",
         "vue-echarts": "^4.0.4",
         "vue-image-crop-upload": "^2.5.0",
         "vue-izitoast": "^1.2.1",

@@ -1,12 +1,13 @@
 <template>
     <section class="content container-fluid">
-        <div class="row justify-content-center p-3">
+        <b-row class="justify-content-center p-3">
 
-            <div class="col-md-4 col-sm-12 mt-3">
+            <b-col md="4" class="mt-3">
                 <div class="card card-primary card-outline">
                     <div class="card-header">
                         <h3 class="card-title mb-0">菜单列表</h3>
                     </div>
+
                     <div class="card-body">
                         <div class="card-tools mb-3">
                             <div class="btn-group mr-3">
@@ -31,14 +32,15 @@
                                      @contextMenuItemSelect="menuItemSelected" :renameNodeOnDblClick="false"/>
                     </div>
                 </div>
-            </div>
+            </b-col>
+
             <!--      资源列表      -->
-            <div class="col-md-8 col-sm-12 mt-3">
+            <b-col md="8" class="mt-3">
                 <transition name="fade" mode="out-in">
                     <elements :menu-id="form.id"/>
                 </transition>
-            </div>
-        </div>
+            </b-col>
+        </b-row>
 
         <create :title="'添加菜单'" :is-create="isCreate" :parent-nodes="parentNodes" v-has="'menu:add'"/>
         <edit :title="'编辑菜单'" :id="form.id" :isEdit="isEdit" v-has="'menu:edit'"/>

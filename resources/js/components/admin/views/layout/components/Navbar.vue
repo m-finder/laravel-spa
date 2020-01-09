@@ -132,7 +132,6 @@
             logout() {
                 storage.remove('user-info') && storage.sessionRemove('user-info');
                 storage.remove('token') && storage.sessionRemove('token');
-                this.$store.dispatch('ClearRoutes');
                 this.$router.push({path: '/login'})
             },
             toggleMobileSideBar() {

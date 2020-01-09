@@ -1,41 +1,42 @@
 <template>
     <section class="content container-fluid">
-        <div class="row justify-content-center p-3">
-            <div class="col-12">
+
+        <b-row class="justify-content-center p-3">
+            <b-col cols="12">
+
                 <div class="card card-primary card-outline">
                     <div class="card-header">
                         <h3 class="card-title mb-0">用户列表</h3>
                     </div>
+
                     <div class="card-body">
                         <div class="card-tools">
 
                             <div class="btn-group mr-3" v-has="'admin:list'">
                                 <form model="form">
-                                    <div class="row">
-                                        <div class="col-md-6 col-sm-12 mb-3">
+                                    <b-row>
+                                        <b-col md="6" class="mb-3">
                                             <div class="input-group input-group-sm">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">用户名</span>
                                                 </div>
                                                 <b-form-input type="text" v-model="form.name" placeholder="输入用户名"/>
                                             </div>
-                                        </div>
-                                        <div class="col-md-6 col-sm-12 mb-3">
+                                        </b-col>
+                                        <b-col md="6" class="mb-3">
                                             <div class="input-group input-group-sm">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">邮箱</span>
                                                 </div>
-                                                <b-form-input type="email" v-model="form.email"
-                                                              placeholder="输入用户邮箱"/>
+                                                <b-form-input type="email" v-model="form.email" placeholder="输入用户邮箱"/>
                                                 <div class="input-group-append">
-                                                    <button type="button" @click="getList()"
-                                                            class="btn btn-primary">
+                                                    <button type="button" @click="getList()" class="btn btn-primary">
                                                         <svg-vue icon="search"/>
                                                     </button>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
+                                        </b-col>
+                                    </b-row>
                                 </form>
                             </div>
 
@@ -47,6 +48,7 @@
                                 <b-button class="btn-sm" variant="primary" @click="refresh">刷新列表</b-button>
                             </div>
                         </div>
+
 
                         <data-table :is-busy="isBusy" :items="items" :fields="fields" :notice="notice" :total="total" :limit="form.limit" :page="form.page">
                             <template v-slot:cell(avatar)="data">
@@ -62,10 +64,11 @@
                                 <b-button v-if="row.item.id != 1" v-has="'admin:delete'" variant="link" class="text-danger mr-1" @click="openDeleteModal(row.item)">删除</b-button>
                             </template>
                         </data-table>
+
                     </div>
                 </div>
-            </div>
-        </div>
+            </b-col>
+        </b-row>
 
         <create :title="'添加用户'" :is-create="isCreate" v-has="'admin:add'"/>
         <edit :id="selectForm.id" :title="'编辑用户'" :is-edit="isEdit" v-has="'admin:edit'"/>

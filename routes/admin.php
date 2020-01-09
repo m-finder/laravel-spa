@@ -1,10 +1,15 @@
 <?php
 
+//Route::get('/demo', function () {
+//    return new App\Mail\AdminRestPassword();
+//});
+
 Route::get('/admin', function () {
     return view('admin');
 });
 
 Route::post('/admin-api/login', 'Api\Admin\LoginController@login');
+Route::post('/admin-api/send/mail/reset/password', 'Api\Admin\MailController@resetPassword');
 
 Route::prefix('admin-api')
     ->namespace('\App\Http\Controllers\Api\Admin')
