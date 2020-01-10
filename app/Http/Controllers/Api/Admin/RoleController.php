@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Api\ApiController;
+use App\Http\Requests\RoleRequest;
 use App\Models\Admin;
 use App\Models\Role;
 use App\Models\RoleElement;
@@ -22,15 +23,15 @@ class RoleController extends ApiController
 
     public function all()
     {
-        $roles = Role::get();
+        $roles = Role::query()->get();
         return $this->success($roles);
     }
 
     public function auth($id)
     {
-        Role::findOrFail($id);
-        $menus = RolePermission::select('permission_id')->where('role_id', $id)->get()->toArray();
-        $elements = RoleElement::select('element_id')->where('role_id', $id)->get()->toArray();
+        Role::query()->findOrFail($id);
+        $menus = RolePermission::query()->select('permission_id')->where('role_id', $id)->get()->toArray();
+        $elements = RoleElement::query()->select('element_id')->where('role_id', $id)->get()->toArray();
         return $this->success([
             'menus' => array_column($menus, 'permission_id'),
             'elements' => array_column($elements, 'element_id')
@@ -39,15 +40,15 @@ class RoleController extends ApiController
 
     public function setAuth($id)
     {
-        Role::findOrFail($id);
+        Role::query()->findOrFail($id);
         $menus = request('menus');
         $elements = request('elements');
 
         try {
             DB::transaction(function () use ($id, $menus, $elements) {
                 # 清空原数据
-                RolePermission::where('role_id', $id)->delete();
-                RoleElement::where('role_id', $id)->delete();
+                RolePermission::query()->where('role_id', $id)->delete();
+                RoleElement::query()->where('role_id', $id)->delete();
 
                 # 菜单整理
                 $menu_filter = ['role_id', 'permission_id'];
@@ -60,8 +61,8 @@ class RoleController extends ApiController
                 array_walk($elements, function (&$value) use ($id, $element_filter) {
                     $value = array_combine($element_filter, [$id, $value]);
                 });
-                RolePermission::insert($menus);
-                RoleElement::insert($elements);
+                RolePermission::query()->insert($menus);
+                RoleElement::query()->insert($elements);
             });
 
             return $this->success();
@@ -73,46 +74,38 @@ class RoleController extends ApiController
 
     public function detail($id)
     {
-        $detail = Role::findOrFail($id);
+        $detail = Role::query()->findOrFail($id);
         return $this->success($detail);
     }
 
-    public function update($id)
+    public function update($id, RoleRequest $request)
     {
-        $role = Role::findOrFail($id);
-        if (Role::checkUnique()) {
-            $role->update(request_intersect([
-                'name', 'alias'
-            ]));
-        } else {
-            return $this->error('该角色已存在，请更换角色名或别名');
-        }
+        $role = Role::query()->findOrFail($id);
+        $role->update(request_intersect([
+            'name', 'alias'
+        ]));
         return $this->success();
     }
 
-    public function create()
+    public function create(RoleRequest $request)
     {
         $role = new Role();
-        if (Role::checkUnique()) {
-            $role->create(request_intersect([
-                'name', 'alias'
-            ]));
-        } else {
-            return $this->error('该角色已存在，请更换角色名或别名');
-        }
+        $role->query()->create(request_intersect([
+            'name', 'alias'
+        ]));
         return $this->success();
     }
 
     public function delete($id)
     {
-        $role = Role::findOrFail($id);
+        $role = Role::query()->findOrFail($id);
         if ($id == 1) return $this->error('该角色内置，不可删除');
-        if(Admin::where('role_id', $id)->count()){
+        if(Admin::query()->where('role_id', $id)->count()){
             return $this->error('请先删除该角色下的用户');
         }
         # 清除该角色所属权限
-        RolePermission::where('role_id', $id)->delete();
-        RoleElement::where('role_id', $id)->delete();
+        RolePermission::query()->where('role_id', $id)->delete();
+        RoleElement::query()->where('role_id', $id)->delete();
         $role->delete();
         return $this->success();
     }

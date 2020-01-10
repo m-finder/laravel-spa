@@ -26,7 +26,7 @@
                     </b-row>
                 </validation-provider>
 
-                <validation-provider name="重置密码" rules="required|alpha_dash|min:6|max:32" v-slot="{ errors }"
+                <validation-provider name="重置密码" rules="required|min:6|max:32" v-slot="{ errors }"
                                      vid="confirmation">
                     <b-form-input type="password" v-model="form.password" placeholder="重置密码" trim/>
                     <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
@@ -57,7 +57,8 @@
 
 <script>
     import config from '../../config/config';
-    import {sendMail} from '../../api/login'
+    import {sendMail, resetPasswordByMail} from '../../api/login'
+
     export default {
         name: "Rest",
         data() {
@@ -85,7 +86,7 @@
             },
             countDown() {
                 this.$refs.email.validate().then(res => {
-                    if(res.valid){
+                    if (res.valid) {
                         this.sendMail();
                         if (!this.canClick) return;
                         this.canClick = false;
@@ -103,13 +104,30 @@
                     }
                 })
             },
-            sendMail(){
+            sendMail() {
                 sendMail(this.form.email).then(res => {
-                    console.log(res)
+                    this.$toast.success('邮件已发送，请确认查收。', 'Success');
+                }).catch(error => {
+                    console.log(error);
+                    this.canClick = true;
+                    this.$toast.error(error.response.data.message, 'Error');
                 })
             },
             onSubmit: function () {
-                console.log(this.form)
+                this.$refs.form.validate().then(valid => {
+                    if (valid) {
+                        this.loading = true;
+                        resetPasswordByMail(this.form).then(res => {
+                            this.$toast.success('密码重置成功', 'Success');
+                            this.wrapSwitch();
+                            this.loading = false;
+                        }).catch(error => {
+                            this.loading = false;
+                            console.log(error);
+                            this.$toast.error(error.response.data.message, 'Error');
+                        })
+                    }
+                });
             },
         }
     }

@@ -12,7 +12,7 @@ class ApiAuthenticate
     {
         $url = str_replace($request->route()->getPrefix(), '','/'. $request->route()->uri);
         $url_replace = preg_replace("/\{.*\}/", '{*}', $url);
-        if (Auth::user()->checkAuth($url_replace)) {
+        if (Auth::user()->hasAuth($url_replace)) {
             return $next($request);
         }
         throw new \Exception('您没有访问该对象权限。');

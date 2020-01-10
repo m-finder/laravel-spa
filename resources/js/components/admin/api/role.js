@@ -1,4 +1,4 @@
-import request from '../utils/request';
+import request,{getFormData} from '../utils/request';
 
 export function getData(query) {
     return request({
@@ -29,6 +29,7 @@ export function setAuth(id, data) {
         data: data
     })
 }
+
 export function getDetail(id) {
     return request({
         url: '/admin-api/roles/' + id + '/detail',
@@ -53,9 +54,11 @@ export function updateData(data) {
 }
 
 export function createData(data) {
+    let form_data = getFormData(data);
     return request({
+        headers: {'Content-Type': 'multipart/form-data'},
         url: '/admin-api/roles/create',
         method: 'post',
-        data: data
+        data: form_data
     })
 }

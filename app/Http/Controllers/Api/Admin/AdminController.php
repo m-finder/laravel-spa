@@ -43,10 +43,12 @@ class AdminController extends ApiController {
 
     public function update($id) {
         $admin = Admin::findOrFail($id);
-        if (Admin::checkUnique()) {
-            $admin->update(request_intersect([
+        if (Admin::isUnique()) {
+            $data = request_intersect([
                 'role_id', 'name', 'email', 'password'
-            ]));
+            ]);
+            $data['password'] = Hash::make($data['password']);
+            $admin->update($data);
         } else {
             return $this->error('该用户已存在，请更换用户名或登录邮箱。');
         }
@@ -56,7 +58,7 @@ class AdminController extends ApiController {
 
     public function create() {
         $admin = new Admin();
-        if (Admin::checkUnique()) {
+        if (Admin::isUnique()) {
             $data = request_intersect([
                 'role_id', 'name', 'email', 'password'
             ]);

@@ -10,38 +10,67 @@ class Admin extends Authenticatable
     protected $guard_name = 'admin-api';
 
     protected $fillable = [
-        'role_id','name', 'email', 'password', 'avatar', 'api_token',
+        'role_id', 'name', 'email', 'password', 'avatar', 'api_token',
     ];
 
     protected $hidden = [
         'password'
     ];
 
+    /**
+     * 昵称检索
+     * @param $query
+     * @param $name
+     * @return mixed
+     */
     public function scopeName($query, $name)
     {
-        return !is_null($name) ? $query->where('name', $name) : $query;
+        return is_null($name) ? $query : $query->where('name', $name);
     }
 
+    /**
+     * 邮箱检索
+     * @param $query
+     * @param $email
+     * @return mixed
+     */
     public function scopeEmail($query, $email)
     {
-        return !is_null($email) ? $query->where('email', $email) : $query;
+        return is_null($email) ? $query : $query->where('email', $email);
     }
 
-    public function role(){
+    /**
+     * 对应角色
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function role()
+    {
         return $this->hasOne(Role::class, 'id', 'role_id');
     }
 
-    public static function checkUnique(){
-        $admin = self::where(function ($query){
+    /**
+     * 唯一性检测，可能会改到 request
+     * @return bool
+     */
+    public static function isUnique()
+    {
+        $admin = self::where(function ($query) {
             $query->where('name', request('name'))->orWhere('email', request('email'));
         })->where('id', '!=', request('id'))->first();
-        return is_null($admin) ? true : false;
+        return is_null($admin);
     }
 
-    public function checkAuth($path){
+    /**
+     * 权限检测
+     * @param $path
+     * @return mixed
+     */
+    public function hasAuth($path)
+    {
         $role_id = Auth::user()->role->id;
         $element = Element::where('path', $path)->first();
         $has = RoleElement::where('element_id', $element->id)->where('role_id', $role_id)->count();
         return $has;
     }
+
 }

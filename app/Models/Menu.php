@@ -13,11 +13,17 @@ class Menu extends Model
 
     protected $appends = ['meta'];
 
-    public function elements(){
+    public function elements()
+    {
         return $this->hasMany(Element::class, 'menu_id', 'id');
     }
 
-    public function getMetaAttribute(){
+    /**
+     * 追加数据，用于前端路由
+     * @return array
+     */
+    public function getMetaAttribute()
+    {
         return $this->attributes['meta'] = [
             'title' => $this->title,
             'affix' => $this->affix,

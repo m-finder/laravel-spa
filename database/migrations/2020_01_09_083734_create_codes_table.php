@@ -17,6 +17,7 @@ class CreateCodesTable extends Migration
             $table->bigIncrements('id');
             $table->string('email')->index();
             $table->string('code')->index();
+            $table->integer('is_used')->nullable()->default(0);
             $table->timestamps();
         });
     }

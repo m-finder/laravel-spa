@@ -8,8 +8,12 @@ Route::get('/admin', function () {
     return view('admin');
 });
 
-Route::post('/admin-api/login', 'Api\Admin\LoginController@login');
-Route::post('/admin-api/send/mail/reset/password', 'Api\Admin\MailController@resetPassword');
+Route::prefix('admin-api')->group(function (){
+    Route::post('/login', 'Api\Admin\LoginController@login');
+    Route::post('/send/mail/reset/password', 'Api\Admin\MailController@resetPassword');
+    Route::post('/reset/password/by/mail', 'Api\Admin\LoginController@resetPassword');
+});
+
 
 Route::prefix('admin-api')
     ->namespace('\App\Http\Controllers\Api\Admin')

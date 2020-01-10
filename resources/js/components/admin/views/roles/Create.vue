@@ -1,27 +1,28 @@
 <template>
     <b-modal centered :title="title" v-model="show" @hidden="resetModal">
-        <div class="col-lg-12">
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text">角色名称-英</span>
-                </div>
-                <input type="text" name="name" v-model="form.name"
-                       class="form-control" placeholder="角色名称">
-            </div>
-        </div>
-        <div class="col-lg-12">
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text">角色别名-中</span>
-                </div>
-                <input type="text" name="alias" v-model="form.alias"
-                       class="form-control" placeholder="角色别名">
-            </div>
-        </div>
+        <validation-observer ref="form">
+            <b-col cols="12">
+                <validation-provider vid="name" name="角色名称" rules="required" v-slot="{ errors }">
+                    <b-input-group prepend="角色名称-英">
+                        <b-input type="text" v-model="form.name" placeholder="角色名称" trim/>
+                        <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
+                    </b-input-group>
+                </validation-provider>
+            </b-col>
+
+            <b-col cols="12">
+                <validation-provider vid="alias" name="角色别名" rules="required" v-slot="{ errors }">
+                    <b-input-group prepend="角色别名-中">
+                        <b-input type="text" v-model="form.alias" placeholder="角色别名" trim/>
+                        <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
+                    </b-input-group>
+                </validation-provider>
+            </b-col>
+        </validation-observer>
 
         <template slot="modal-footer" class="w-100 modal-footer">
             <b-button variant="primary" size="sm" @click="resetModal">取消</b-button>
-            <b-button  v-has="'role:add'" variant="danger" size="sm" @click="submitCreate">确认</b-button>
+            <b-button v-has="'role:add'" variant="danger" size="sm" @click="submitCreate">确认</b-button>
         </template>
     </b-modal>
 </template>
@@ -57,25 +58,18 @@
             }
         },
         methods: {
-            checkForm() {
-                if (!this.form.name) {
-                    this.$toast.warning('请输入角色名称', 'Warning');
-                    return false;
-                }
-                if (!this.form.alias) {
-                    this.$toast.warning('请输入角色别名', 'Warning');
-                    return false;
-                }
-                return true;
-            },
             submitCreate() {
-                if (this.checkForm()) {
-                    createData(this.form).then(res => {
-                        this.$toast.success('添加成功。', 'Success');
-                        this.$parent.getList();
-                        this.resetModal()
-                    })
-                }
+                this.$refs.form.validate().then(valid => {
+                    if (valid) {
+                        createData(this.form).then(res => {
+                            this.$toast.success('添加成功。', 'Success');
+                            this.$parent.getList();
+                            this.resetModal()
+                        }).catch(error => {
+                            this.$refs.form.setErrors(error.response.data.errors);
+                        })
+                    }
+                })
             },
             resetModal() {
                 this.form = Object.assign({}, defaultForm);

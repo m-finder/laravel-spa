@@ -16,7 +16,7 @@
                     <b-form-invalid-feedback >{{ errors[0] }}</b-form-invalid-feedback>
                 </validation-provider>
 
-                <validation-provider name="登录密码" rules="required|alpha_dash|min:6|max:32" v-slot="{ errors }">
+                <validation-provider name="登录密码" rules="required|min:6|max:32" v-slot="{ errors }">
                     <b-form-input type="password" v-model="form.password" placeholder="登录密码" trim/>
                     <b-form-invalid-feedback >{{ errors[0] }}</b-form-invalid-feedback>
                 </validation-provider>

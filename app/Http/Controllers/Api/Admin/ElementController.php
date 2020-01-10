@@ -26,7 +26,7 @@ class ElementController extends ApiController
     public function create()
     {
         $model = new Element();
-        if (Element::checkUnique()) {
+        if (Element::isUnique()) {
             $model->create(request_intersect([
                 'menu_id', 'name', 'code', 'method', 'path',
             ]));
@@ -39,7 +39,7 @@ class ElementController extends ApiController
     public function update($id)
     {
         $element = Element::findOrFail($id);
-        if (Element::checkUnique()) {
+        if (Element::isUnique()) {
             $element->update(request_intersect([
                 'name', 'code', 'method', 'path',
             ]));

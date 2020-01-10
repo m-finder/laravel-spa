@@ -18,9 +18,9 @@
                                         <b-col md="6" class="mb-3">
                                             <div class="input-group input-group-sm">
                                                 <div class="input-group-prepend">
-                                                    <span class="input-group-text">角色名</span>
+                                                    <span class="input-group-text">角色名称</span>
                                                 </div>
-                                                <b-form-input type="text" v-model="form.name" placeholder="输入角色名"/>
+                                                <b-form-input type="text" v-model="form.name" placeholder="输入角色名称"/>
                                             </div>
                                         </b-col>
 
@@ -113,7 +113,7 @@
                 selectForm: Object.assign({}, defaultForm),
                 fields: [
                     {label: 'ID', key: 'id', sortable: true},
-                    {label: '角色名', key: 'name', sortable: false},
+                    {label: '角色名称', key: 'name', sortable: false},
                     {label: '角色别名', key: 'alias', sortable: false},
                     {label: '创建时间', key: 'created_at', sortable: true},
                     {label: '操作', key: 'actions', sortable: false}
