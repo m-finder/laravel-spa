@@ -32,8 +32,8 @@
                     <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
                 </validation-provider>
 
-                <validation-provider name="确认密码" rules="confirmed:confirmation" v-slot="{ errors }">
-                    <b-form-input type="password" v-model="confirmation" placeholder="确认密码" trim/>
+                <validation-provider name="确认密码" rules="required|confirmed:confirmation" v-slot="{ errors }">
+                    <b-form-input type="password" v-model="form.confirmation" placeholder="确认密码" trim/>
                     <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
                 </validation-provider>
 
@@ -65,7 +65,6 @@
             return {
                 config: config,
                 loading: false,
-                confirmation: null,
                 content: '获取验证码',
                 totalTime: 60,
                 canClick: true,
@@ -73,6 +72,7 @@
                     email: null,
                     code: null,
                     password: null,
+                    confirmation: null,
                 }
             }
         },
@@ -87,8 +87,8 @@
             countDown() {
                 this.$refs.email.validate().then(res => {
                     if (res.valid) {
-                        this.sendMail();
                         if (!this.canClick) return;
+                        this.sendMail();
                         this.canClick = false;
                         this.content = this.totalTime + 's后重发';
                         let clock = window.setInterval(() => {
@@ -108,7 +108,6 @@
                 sendMail(this.form.email).then(res => {
                     this.$toast.success('邮件已发送，请确认查收。', 'Success');
                 }).catch(error => {
-                    console.log(error);
                     this.canClick = true;
                     this.$toast.error(error.response.data.message, 'Error');
                 })
@@ -122,8 +121,8 @@
                             this.wrapSwitch();
                             this.loading = false;
                         }).catch(error => {
+                            console.log(error.response.data.message)
                             this.loading = false;
-                            console.log(error);
                             this.$toast.error(error.response.data.message, 'Error');
                         })
                     }

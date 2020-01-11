@@ -26,31 +26,29 @@ class RoleRequest extends FormRequest
      */
     public function rules()
     {
-        $rules =  [
-
-        ];
 
         switch ($this->method()) {
             case 'POST':
-                $rules['name'] = 'required|max:255|unique:roles';
-                $rules['alias'] = 'required|max:255|unique:roles';
-                break;
+                return [
+                    'name'  => 'required|max:255|unique:roles',
+                    'alias' => 'required|max:255|unique:roles'
+                ];
             case 'PUT':
                 $id = $this->route('id');
-                $rules['name'] = [
-                    'required',
-                    'max:255',
-                    Rule::unique('roles')->ignore($id)
+                return [
+                    'name' => [
+                        'required',
+                        'max:255',
+                        Rule::unique('roles')->ignore($id)
+                    ],
+                    'alias' => [
+                        'required',
+                        'max:255',
+                        Rule::unique('roles')->ignore($id)
+                    ],
                 ];
-                $rules['alias'] = [
-                    'required',
-                    'max:255',
-                    Rule::unique('roles')->ignore($id)
-                ];
-                break;
+            default: break;
         }
-
-        return $rules;
     }
 
     public function attributes()

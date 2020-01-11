@@ -18,17 +18,17 @@
                                         <b-col md="6" class="mb-3">
                                             <div class="input-group input-group-sm">
                                                 <div class="input-group-prepend">
-                                                    <span class="input-group-text">用户名</span>
+                                                    <span class="input-group-text">用户昵称</span>
                                                 </div>
-                                                <b-form-input type="text" v-model="form.name" placeholder="输入用户名"/>
+                                                <b-form-input type="text" v-model="form.name" placeholder="输入用户昵称"/>
                                             </div>
                                         </b-col>
                                         <b-col md="6" class="mb-3">
                                             <div class="input-group input-group-sm">
                                                 <div class="input-group-prepend">
-                                                    <span class="input-group-text">邮箱</span>
+                                                    <span class="input-group-text">登录邮箱</span>
                                                 </div>
-                                                <b-form-input type="email" v-model="form.email" placeholder="输入用户邮箱"/>
+                                                <b-form-input type="email" v-model="form.email" placeholder="输入登录邮箱"/>
                                                 <div class="input-group-append">
                                                     <button type="button" @click="getList()" class="btn btn-primary">
                                                         <svg-vue icon="search"/>
@@ -116,9 +116,9 @@
                 form: Object.assign({}, form),
                 fields: [
                     {label: 'ID', key: 'id', sortable: true},
-                    {label: '昵称', key: 'name', sortable: false},
-                    {label: '角色', key: 'role', sortable: false},
-                    {label: '邮箱', key: 'email', sortable: false},
+                    {label: '用户昵称', key: 'name', sortable: false},
+                    {label: '所属角色', key: 'role', sortable: false},
+                    {label: '登录邮箱', key: 'email', sortable: false},
                     {label: '头像', key: 'avatar', sortable: false},
                     {label: '创建时间', key: 'created_at', sortable: true},
                     {label: '操作', key: 'actions', sortable: false}

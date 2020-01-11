@@ -49,18 +49,6 @@ class Admin extends Authenticatable
     }
 
     /**
-     * 唯一性检测，可能会改到 request
-     * @return bool
-     */
-    public static function isUnique()
-    {
-        $admin = self::where(function ($query) {
-            $query->where('name', request('name'))->orWhere('email', request('email'));
-        })->where('id', '!=', request('id'))->first();
-        return is_null($admin);
-    }
-
-    /**
      * 权限检测
      * @param $path
      * @return mixed

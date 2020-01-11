@@ -1,46 +1,59 @@
 <template>
     <b-modal centered :title="title" v-model="show" @hidden="resetModal">
-        <div class="col-lg-12">
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text">用户名称</span>
-                </div>
-                <input type="text" name="name" v-model="form.name"
-                       class="form-control" placeholder="角色名称">
-            </div>
-        </div>
-        <div class="col-lg-12">
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text">登录邮箱</span>
-                </div>
-                <input type="email" name="email"  v-model="form.email"
-                       class="form-control" placeholder="登录邮箱">
-            </div>
-        </div>
-        <div class="col-lg-12">
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text">登录密码</span>
-                </div>
-                <input type="password" name="password"  v-model="form.password" class="form-control" placeholder="登录密码">
-            </div>
-        </div>
-        <div class="col-lg-12">
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text">角色绑定</span>
-                </div>
-                <b-form-select v-model="form.role_id">
-                    <template v-slot:first>
-                        <option :value="null" disabled>-- 请选择角色进行绑定 --</option>
-                    </template>
-                    <template v-for="(role, i) in roles">
-                        <option :value="role.id">{{role.alias}}</option>
-                    </template>
-                </b-form-select>
-            </div>
-        </div>
+        <validation-observer ref="form">
+            <b-col cols="12">
+                <validation-provider vid="name" name="用户名称" rules="required" v-slot="{ errors }">
+                    <b-input-group prepend="用户名称">
+                        <b-input type="text" v-model="form.name" placeholder="用户名称" trim/>
+                        <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
+                    </b-input-group>
+                </validation-provider>
+            </b-col>
+            <b-col cols="12">
+                <validation-provider vid="email" name="登录邮箱" rules="required|email" v-slot="{ errors }">
+                    <b-input-group prepend="登录邮箱">
+                        <b-input type="email" v-model="form.email" placeholder="登录邮箱" trim/>
+                        <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
+                    </b-input-group>
+                </validation-provider>
+            </b-col>
+
+            <b-col cols="12">
+                <validation-provider vid="password" name="登录密码" rules="required|min:6|max:32" v-slot="{ errors }">
+                    <b-input-group prepend="登录密码">
+                        <b-input type="password" v-model="form.password" placeholder="登录密码" trim/>
+                        <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
+                    </b-input-group>
+                </validation-provider>
+            </b-col>
+
+            <b-col cols="12">
+                <validation-provider name="确认密码" rules="required|confirmed:password" v-slot="{ errors }">
+                    <b-input-group prepend="确认密码">
+                        <b-input type="password" v-model="form.confirmation" placeholder="确认密码" trim/>
+                        <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
+                    </b-input-group>
+                </validation-provider>
+            </b-col>
+
+            <b-col cols="12">
+                <validation-provider vid="role_id" name="所属角色" rules="required" v-slot="{ errors }">
+                    <b-input-group prepend="所属角色">
+                        <b-form-select v-model="form.role_id">
+                            <template v-slot:first>
+                                <option :value="null" disabled>-- 请选择所属角色进行绑定 --</option>
+                            </template>
+                            <template v-for="(role, i) in roles">
+                                <option :value="role.id">{{role.alias}}</option>
+                            </template>
+                        </b-form-select>
+                        <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
+                    </b-input-group>
+                </validation-provider>
+            </b-col>
+
+        </validation-observer>
+
 
         <template slot="modal-footer" class="w-100 modal-footer">
             <b-button variant="primary" size="sm" @click="resetModal">取消</b-button>
@@ -58,6 +71,7 @@
         email: null,
         password: null,
         role_id: null,
+        confirmation: null,
     };
     export default {
         name: "AdminCreate",
@@ -79,54 +93,29 @@
             }
         },
         watch: {
-            isCreate(value){
+            isCreate(value) {
                 this.show = value;
                 this.getRole();
             }
         },
         methods: {
-            getRole(){
+            getRole() {
                 getAll().then(res => {
                     this.roles = res.data;
                 })
             },
-            checkForm() {
-                if(!this.form.name){
-                    this.$toast.warning('请输入用户名', 'Warning');
-                    return false;
-                }
-                if(!this.form.role_id){
-                    this.$toast.warning('请选择绑定角色', 'Warning');
-                    return false;
-                }
-                if(!this.form.email){
-                    this.$toast.warning('请输入登录邮箱', 'Warning');
-                    return false;
-                }
-                let reg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-                let email = reg.test(this.form.email);
-                if(!email){
-                    this.$toast.warning('请输入正确的登录邮箱', 'Warning');
-                    return false;
-                }
-                if(!this.form.password){
-                    this.$toast.warning('请输入登录密码', 'Warning');
-                    return false;
-                }
-                if(this.form.password.length > 32 || this.form.password.length<6){
-                    this.$toast.warning('密码应为长度 6 - 32 位的字符串', 'Warning');
-                    return false;
-                }
-                return true;
-            },
             submitCreate() {
-                if (this.checkForm()) {
-                    createData(this.form).then(res => {
-                        this.$toast.success('添加成功。', 'Success');
-                        this.$parent.getList();
-                        this.resetModal()
-                    })
-                }
+                this.$refs.form.validate().then(valid => {
+                    if (valid) {
+                        createData(this.form).then(res => {
+                            this.$toast.success('添加成功。', 'Success');
+                            this.$parent.getList();
+                            this.resetModal()
+                        }).catch(error => {
+                            this.$refs.form.setErrors(error.response.data.errors);
+                        })
+                    }
+                })
             },
             resetModal() {
                 this.form = Object.assign({}, defaultForm);
