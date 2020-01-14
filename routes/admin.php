@@ -11,7 +11,7 @@ Route::get('/admin', function () {
 Route::prefix('admin-api')->group(function (){
     Route::post('/login', 'Api\Admin\LoginController@login');
     Route::post('/send/mail/reset/password', 'Api\Admin\MailController@resetPassword');
-    Route::post('/reset/password/by/mail', 'Api\Admin\LoginController@resetPassword');
+    Route::post('/reset/password/by/mail', 'Api\Admin\AdminController@resetPasswordByMail');
 });
 
 
@@ -19,6 +19,7 @@ Route::prefix('admin-api')
     ->namespace('\App\Http\Controllers\Api\Admin')
     ->middleware(['auth:admin-api'])->group(function () {
         Route::get('/admins/auth', 'AdminController@adminAuth');
+        Route::put('/admins/reset/password', 'AdminController@resetPassword');
     });
 
 Route::prefix('admin-api')
@@ -30,6 +31,7 @@ Route::prefix('admin-api')
         Route::get('/admins/{id}/detail', 'AdminController@detail');
         Route::put('/admins/{id}/update', 'AdminController@update');
         Route::delete('/admins/{id}/delete', 'AdminController@delete');
+
 
         Route::get('/menus/list', 'MenuController@lists');
         Route::get('/menus/all', 'MenuController@all');

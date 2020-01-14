@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Requests\AdminRequest;
+use App\Http\Requests\AdminResetPasswordRequest;
 use App\Models\Admin;
+use App\Models\Code;
 use App\Models\Element;
 use App\Models\Menu;
 use App\Models\RoleElement;
 use App\Models\RolePermission;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Api\ApiController;
 use Illuminate\Support\Facades\Auth;
@@ -17,6 +20,11 @@ use Illuminate\Support\Str;
 
 class AdminController extends ApiController
 {
+
+    /**
+     * 验证码过期时间
+     */
+    const CODE_EXPIRED_TIME = 30;
 
     public function lists()
     {
@@ -78,6 +86,49 @@ class AdminController extends ApiController
         $admin = Admin::query()->findOrFail($id);
         if ($id == 1) return $this->error('该用户内置，不可删除。');
         $admin->delete();
+        return $this->success();
+    }
+
+    /**
+     * 忘记密码
+     */
+    public function resetPasswordByMail()
+    {
+        $data = request_intersect([
+            'email', 'code', 'password'
+        ]);
+
+        $code = Code::query()->where('email', $data['email'])
+            ->where('is_used', 0)
+            ->orderBy('id', 'desc')->first();
+        if ($this->isCodeExpired($code)) {
+            return $this->error('无效的验证码。');
+        }
+
+        if (is_null($admin = Admin::query()->where('email', $data['email'])->first())) {
+            return $this->error('无效的邮箱。');
+        }
+
+        $admin->update(['password' => Hash::make($data['password'])]);
+        $code->update(['is_used' => 1]);
+        return $this->success();
+    }
+
+    public function isCodeExpired($code = null)
+    {
+        return is_null($code) || $code->created_at < Carbon::now()->subMinute(self::CODE_EXPIRED_TIME);
+    }
+
+
+    public function resetPassword(){
+        $admin = Auth::user();
+        $data = request_intersect([
+            'original_password', 'password'
+        ]);
+        if (!Hash::check($data['original_password'], $admin->password)) {
+            return $this->error('原始密码错误。');
+        }
+        $admin->update(['password' => Hash::make($data['password'])]);
         return $this->success();
     }
 }

@@ -112,7 +112,7 @@
                             this.$parent.getList();
                             this.resetModal()
                         }).catch(error => {
-                            this.$refs.form.setErrors(error.response.data.errors);
+                            this.$refs.form.setErrors(error.response.data.errors || {});
                         })
                     }
                 })
@@ -121,6 +121,7 @@
                 this.form = Object.assign({}, defaultForm);
                 this.show = false;
                 this.$parent.isCreate = false;
+                this.$refs.form.reset();
             }
         }
     }

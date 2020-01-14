@@ -121,7 +121,7 @@
                             this.wrapSwitch();
                             this.loading = false;
                         }).catch(error => {
-                            console.log(error.response.data.message)
+                            console.log(error.response.data.message);
                             this.loading = false;
                             this.$toast.error(error.response.data.message, 'Error');
                         })

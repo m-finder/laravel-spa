@@ -38,21 +38,31 @@ export const baseRouters = [
             },
         ]
     },
-    // {
-    //     path: '/',
-    //     name: 'Home',
-    //     component: Layout,
-    //     redirect: '/dashboard',
-    //     children: [
-    //         {
-    //             path: '/dashboard',
-    //             meta: {title: '首页', affix: true},
-    //             icon: 'dashboard',
-    //             name: 'Dashboard',
-    //             component: () => import('../views/dashboard/Index')
-    //         },
-    //     ]
-    // },
+    {
+        path: '/reset',
+        name: '个人设置',
+        component: Layout,
+        hidden: true,
+        redirect: '/reset/info',
+        children: [
+            {
+                path: 'info',
+                meta: {title: '资料设置'},
+                icon: 'role',
+                name: 'Info',
+                hidden: true,
+                component: () => import('../views/reset/Info')
+            },
+            {
+                path: 'password',
+                meta: {title: '密码设置'},
+                icon: 'credits',
+                name: 'Password',
+                hidden: true,
+                component: () => import('../views/reset/Password')
+            },
+        ]
+    },
 ];
 
 

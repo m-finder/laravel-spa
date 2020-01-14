@@ -44,3 +44,12 @@ export function createData(data) {
         data: data
     })
 }
+
+export function resetPassword(data) {
+    return request({
+        url: '/admin-api/admins/reset/password',
+        method: 'put',
+        data: data
+    })
+}
+
