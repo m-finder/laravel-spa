@@ -55,7 +55,7 @@
 </template>
 
 <script>
-    import {resetPassword} from '../../api/admin';
+    import {updatePassword} from '../../api/admin';
 
     const defaultForm = {
         original_password: null,
@@ -76,7 +76,7 @@
                 this.$refs.form.validate().then(valid => {
                     if (valid) {
                         this.loading = true;
-                        resetPassword(this.form).then(res => {
+                        updatePassword(this.form).then(res => {
                             this.$toast.success('修改成功。', 'Success');
                             this.form = Object.assign({}, defaultForm);
                             this.loading = false;

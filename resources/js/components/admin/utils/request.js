@@ -10,7 +10,7 @@ const service = axios.create({
 service.interceptors.request.use(
     config => {
         // do something before request is sent
-        const token = storage.get('token');
+        const token = storage.get('token')||storage.sessionGet('token');
         if (token) {
             config.headers['Accept'] = 'application/json';
             config.headers['Authorization'] = 'Bearer ' + token;

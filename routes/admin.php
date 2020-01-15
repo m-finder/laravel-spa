@@ -1,6 +1,6 @@
 <?php
 
-Route::get('/demo', function () {
+Route::get('/email', function () {
     return new App\Mail\AdminResetPassword(rand(100000, 999999));
 });
 
@@ -20,6 +20,9 @@ Route::prefix('admin-api')
     ->middleware(['auth:admin-api'])->group(function () {
         Route::get('/admins/auth', 'AdminController@adminAuth');
         Route::put('/admins/reset/password', 'AdminController@resetPassword');
+        Route::post('/admins/avatar/upload', 'AdminController@avatarUpload');
+        Route::get('/admins/detail/by/auth', 'AdminController@detailByAuth');
+        Route::put('/admins/reset/info', 'AdminController@resetInfo');
     });
 
 Route::prefix('admin-api')
@@ -31,7 +34,6 @@ Route::prefix('admin-api')
         Route::get('/admins/{id}/detail', 'AdminController@detail');
         Route::put('/admins/{id}/update', 'AdminController@update');
         Route::delete('/admins/{id}/delete', 'AdminController@delete');
-
 
         Route::get('/menus/list', 'MenuController@lists');
         Route::get('/menus/all', 'MenuController@all');

@@ -16,6 +16,7 @@ use App\Http\Controllers\Api\ApiController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class AdminController extends ApiController
@@ -129,6 +130,24 @@ class AdminController extends ApiController
             return $this->error('原始密码错误。');
         }
         $admin->update(['password' => Hash::make($data['password'])]);
+        return $this->success();
+    }
+
+    public function detailByAuth(){
+        return $this->success(Auth::user()) ;
+    }
+
+    public function avatarUpload(Request $request){
+        $path = $request->file('avatar')->store('public/avatars');
+        return $this->success(Storage::url($path));
+    }
+
+    public function resetInfo(){
+        $data = request_intersect([
+            'name', 'avatar'
+        ]);
+        $admin = Auth::user();
+        $admin->update($data);
         return $this->success();
     }
 }

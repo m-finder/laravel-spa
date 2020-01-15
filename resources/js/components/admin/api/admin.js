@@ -45,9 +45,24 @@ export function createData(data) {
     })
 }
 
-export function resetPassword(data) {
+export function updatePassword(data) {
     return request({
         url: '/admin-api/admins/reset/password',
+        method: 'put',
+        data: data
+    })
+}
+
+export function getDetailByAuth() {
+    return request({
+        url: '/admin-api/admins/detail/by/auth',
+        method: 'get',
+    })
+}
+
+export function updateInfo(data) {
+    return request({
+        url: '/admin-api/admins/reset/info',
         method: 'put',
         data: data
     })

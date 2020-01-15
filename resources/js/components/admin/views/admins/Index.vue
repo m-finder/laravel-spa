@@ -52,7 +52,7 @@
 
                         <data-table :is-busy="isBusy" :items="items" :fields="fields" :notice="notice" :total="total" :limit="form.limit" :page="form.page">
                             <template v-slot:cell(avatar)="data">
-                                <img :src="getAvatar(data.value) " class="img-circle row-user-avatar" alt="用户头像">
+                                <img :src="data.value || '/images/avatar.png'" class="img-circle row-user-avatar" alt="用户头像">
                             </template>
 
                             <template v-slot:cell(role)="row">
@@ -150,9 +150,6 @@
                     this.isBusy = false;
                     this.notice = '系统出错';
                 });
-            },
-            getAvatar(avatar) {
-                return '/' + avatar;
             },
             openDeleteModal(data) {
                 this.selectForm = data;

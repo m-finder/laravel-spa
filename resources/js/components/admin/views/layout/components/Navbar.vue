@@ -19,14 +19,14 @@
 
             <b-navbar class="justify-content-end p-0">
                 <b-navbar-nav>
-                    <b-nav-item class="bv-d-md-down-none">
-                        <svg-vue icon="message"/>
-                        <b-badge pill variant="danger">5</b-badge>
-                    </b-nav-item>
+<!--                    <b-nav-item class="bv-d-md-down-none">-->
+<!--                        <svg-vue icon="message"/>-->
+<!--                        <b-badge pill variant="danger">5</b-badge>-->
+<!--                    </b-nav-item>-->
 
                     <b-nav-item-dropdown class=" ml-2 mr-2" right>
                         <template v-slot:button-content>
-                            <img :src="'/images/avatar.png'" class="img-avatar" alt=""/>
+                            <img :src="userInfo.avatar || '/images/avatar.png'" class="img-avatar" alt=""/>
                         </template>
                         <b-dropdown-item to="/reset/info">资料设置</b-dropdown-item>
                         <b-dropdown-item to="/reset/password">密码设置</b-dropdown-item>
