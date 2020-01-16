@@ -37,7 +37,8 @@
                             </div>
                         </div>
 
-                        <data-table :is-busy="isBusy" :items="items" :fields="fields" :notice="notice" :total="total" :limit="form.limit" :page="form.page"/>
+                        <data-table :is-busy="isBusy" :items="items" :fields="fields" :notice="notice" :total="total"
+                                    :limit="form.limit" :page="form.page" :sort-direction="form.sort"/>
 
                     </div>
                 </div>
@@ -55,6 +56,7 @@
         user: null,
         limit: 20,
         page: 1,
+        sort: 'desc'
     };
 
     export default {
@@ -70,7 +72,7 @@
                 notice: '暂无数据',
                 form: Object.assign({}, form),
                 fields: [
-                    {label: 'ID', key: 'id', sortable: true},
+                    {label: 'ID', key: 'id', sortable: true, sortDirection: 'last'},
                     {label: '操作邮箱', key: 'user', sortable: false},
                     {label: '请求地址', key: 'request_url', sortable: false},
                     {label: '请求内容', key: 'request_content', sortable: false},
