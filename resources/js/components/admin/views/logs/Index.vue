@@ -38,7 +38,7 @@
                         </div>
 
                         <data-table :is-busy="isBusy" :items="items" :fields="fields" :notice="notice" :total="total"
-                                    :limit="form.limit" :page="form.page" :sort-direction="form.sort"/>
+                                    :limit="form.limit" :page="form.page" :sort-desc="true"/>
 
                     </div>
                 </div>
@@ -55,8 +55,7 @@
     const form = {
         user: null,
         limit: 20,
-        page: 1,
-        sort: 'desc'
+        page: 1
     };
 
     export default {

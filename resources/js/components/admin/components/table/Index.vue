@@ -1,7 +1,7 @@
 <template>
     <div>
-        <b-table class="text-nowrap" responsive hover :items="items" :fields="fields" :sort-by.sync="sortBy" :sort-desc.sync="sort"
-                 :busy.sync="isBusy" :sort-direction="sort" outlined ref="table" show-empty>
+        <b-table class="text-nowrap" responsive hover :items="items" :fields="fields" :sort-by.sync="sortBy"
+                 :sort-desc.sync="sort" :busy.sync="isBusy" outlined ref="table" show-empty>
 
             <div slot="table-busy" class="text-center text-danger my-2">
                 <b-spinner class="align-middle"></b-spinner>
@@ -55,7 +55,7 @@
                 type: Boolean,
                 default: true
             },
-            sort: {
+            sortDirection: {
                 type: String,
                 default: 'asc'
             },
@@ -76,16 +76,19 @@
                 default: 20
             }
         },
-        data(){
+        data() {
             return {
                 currentPage: this.page,
                 sort: this.sortDesc
             }
         },
         watch: {
-            currentPage(value){
+            currentPage(value) {
                 this.$parent.form.page = value;
             }
+        },
+        created(){
+            console.log(this.sortDirection)
         }
     }
 </script>
