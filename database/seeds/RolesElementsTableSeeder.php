@@ -37,6 +37,8 @@ class RolesElementsTableSeeder extends Seeder
             ['element_id' => 22, 'role_id' => 1],
             ['element_id' => 23, 'role_id' => 1],
             ['element_id' => 24, 'role_id' => 1],
+            ['element_id' => 25, 'role_id' => 1],
+            ['element_id' => 26, 'role_id' => 1],
         ];
 
         RoleElement::insert($data);

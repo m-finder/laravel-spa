@@ -212,5 +212,13 @@ class ElementsTableSeeder extends Seeder
         $db->path = '/elements/{*}/detail';
         $db->save();
 
+        $db = new \App\Models\Element();
+        $db->name = '日志列表';
+        $db->menu_id = 9;
+        $db->code = 'logs:list';
+        $db->method =  'get';
+        $db->path = '/logs/list';
+        $db->save();
+
     }
 }

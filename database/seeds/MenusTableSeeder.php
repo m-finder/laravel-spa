@@ -94,5 +94,15 @@ class MenusTableSeeder extends Seeder
         $db->icon = 'discount';
         $db->component = '/icons/Index';
         $db->save();
+
+        $db = new \App\Models\Menu();
+        $db->id = 9;
+        $db->parent_id = 7;
+        $db->name = 'log';
+        $db->title = '操作日志';
+        $db->path = '/base/logs';
+        $db->icon = 'history';
+        $db->component = '/logs/Index';
+        $db->save();
     }
 }

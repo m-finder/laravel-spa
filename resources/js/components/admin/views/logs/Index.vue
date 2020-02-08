@@ -76,7 +76,6 @@
                     {label: '请求地址', key: 'request_url', sortable: false},
                     {label: '请求内容', key: 'request_content', sortable: false},
                     {label: '创建时间', key: 'created_at', sortable: true},
-                    {label: '操作', key: 'actions', sortable: false}
                 ]
             }
         },
