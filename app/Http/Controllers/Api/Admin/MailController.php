@@ -18,7 +18,7 @@ class MailController extends ApiController
         $email = request('email');
         $code = rand(100000, 999999);
        try{
-           if(Admin::where('email', $email)->firstOrFail()){
+           if(Admin::query()->where('email', $email)->firstOrFail()){
                Code::create([
                    'email' => $email,
                    'code' => $code,

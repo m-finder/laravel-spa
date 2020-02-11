@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Api\ApiController;
+use App\Http\Requests\MenuRequest;
 use App\Models\Element;
 use App\Models\Menu;
 use Illuminate\Http\Request;
@@ -16,47 +17,47 @@ class MenuController extends ApiController
 
     public function lists() {
         $page = request('limit', 20);
-        $menus = Menu::name(request('name'))->paginate($page);
+        $menus = Menu::query()->name(request('name'))->paginate($page);
         return $this->success($menus);
     }
 
     public function all() {
-        $menus = Menu::orderBy('order_num', 'asc')->get();
+        $menus = Menu::query()->orderBy('order_num', 'asc')->get();
         return $this->success(make_tree($menus->toArray()));
     }
 
     public function allWithElements(){
-        $menu = Menu::orderBy('order_num', 'asc')->with('elements')->get();
+        $menu = Menu::query()->orderBy('order_num', 'asc')->with('elements')->get();
         return $this->success($menu);
     }
 
     public function parents() {
-        $menus = Menu::where('parent_id', 0)->get();
+        $menus = Menu::query()->where('parent_id', 0)->get();
         return $this->success($menus);
     }
 
     public function detail($id) {
-        $detail = Menu::findOrFail($id);
+        $detail = Menu::query()->findOrFail($id);
         return $this->success($detail);
     }
 
-    public function update($id)
+    public function update(MenuRequest $request, $id)
     {
-        $menu = Menu::findOrFail($id);
+        $menu = Menu::query()->findOrFail($id);
         $menu->update(request_intersect([
             'parent_id', 'name', 'title', 'path', 'icon', 'component', 'redirect', 'order', 'hidden', 'affix'
         ]));
         return $this->success($menu);
     }
 
-    public function create()
+    public function create(MenuRequest $request)
     {
         $model = new Menu();
         $data = request_intersect([
             'parent_id', 'name', 'title', 'path', 'icon', 'component', 'redirect', 'order', 'hidden', 'affix'
         ]);
         $data['icon'] = is_null($data['icon']) ? 'smile' : $data['icon'];
-        $menu = $model->firstOrCreate($data);
+        $menu = $model->query()->firstOrCreate($data);
 
         return $this->success($menu);
     }
@@ -66,12 +67,12 @@ class MenuController extends ApiController
         if ($id == 1){
             return $this->error($msg = '该菜单内置，不可删除。');
         }
-        $menu = Menu::findOrFail($id);
+        $menu = Menu::query()->findOrFail($id);
 
-        if (Menu::where('parent_id', $id)->count()) {
+        if (Menu::query()->where('parent_id', $id)->count()) {
             return $this->error($msg = '请先删除该菜单下的子菜单。');
         }
-        if (Element::where('menu_id', $id)->count()) {
+        if (Element::query()->where('menu_id', $id)->count()) {
             return $this->error($msg = '请先删除该菜单下的资源。');
         }
 

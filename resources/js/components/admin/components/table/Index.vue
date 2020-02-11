@@ -4,7 +4,7 @@
                  :sort-desc.sync="sort" :busy.sync="isBusy" outlined ref="table" show-empty>
 
             <div slot="table-busy" class="text-center text-danger my-2">
-                <b-spinner class="align-middle"></b-spinner>
+                <b-spinner class="align-middle"/>
                 <strong>Loading...</strong>
             </div>
 
@@ -18,7 +18,7 @@
             </template>
 
             <template v-for="slotName in Object.keys($scopedSlots)" v-slot:[slotName]="slotScope">
-                <slot :name="slotName" v-bind="slotScope"></slot>
+                <slot :name="slotName" v-bind="slotScope"/>
             </template>
 
         </b-table>
@@ -87,9 +87,6 @@
                 this.$parent.form.page = value;
             }
         },
-        created(){
-            console.log(this.sortDirection)
-        }
     }
 </script>
 

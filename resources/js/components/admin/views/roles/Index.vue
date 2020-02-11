@@ -4,7 +4,6 @@
             <b-col cols="12">
 
                 <div class="card card-primary card-outline">
-
                     <div class="card-header">
                         <h3 class="card-title mb-0">角色列表</h3>
                     </div>

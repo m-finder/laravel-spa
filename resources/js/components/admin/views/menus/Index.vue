@@ -16,8 +16,13 @@
                         </div>
 
                         <div v-if="loading" class="text-center text-danger my-2">
-                            <b-spinner class="align-middle"></b-spinner>
+                            <b-spinner class="align-middle"/>
                             <strong>Loading...</strong>
+                        </div>
+                        <div v-else>
+                            <b-tree-view v-if="items && items.length" :nodeLabelProp="'title'" :data="items"
+                                         :contextMenuItems="menus" @nodeSelect="nodeSelect" :nodesDraggable="false"
+                                         @contextMenuItemSelect="menuItemSelected" :renameNodeOnDblClick="false"/>
                         </div>
 
                         <div v-if="empty" class="text-center text-danger my-2">
@@ -26,10 +31,6 @@
                             </p>
                             <h6>暂无数据</h6>
                         </div>
-
-                        <b-tree-view v-if="items && items.length" :nodeLabelProp="'title'" :data="items"
-                                     :contextMenuItems="menus" @nodeSelect="nodeSelect" :nodesDraggable="false"
-                                     @contextMenuItemSelect="menuItemSelected" :renameNodeOnDblClick="false"/>
                     </div>
                 </div>
             </b-col>

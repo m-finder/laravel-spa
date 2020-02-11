@@ -1,52 +1,60 @@
 <template>
-    <b-modal centered :title="title" v-model="show" @hidden="resetModal">
-        <div class="col-lg-12">
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text">资源名称</span>
-                </div>
-                <b-form-input v-model="form.name" placeholder="请输入资源名称"/>
-            </div>
-        </div>
-        <div class="col-lg-12">
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text">资源编号</span>
-                </div>
-                <b-form-input v-model="form.code" placeholder="请输入资源编号"/>
-            </div>
-        </div>
-        <div class="col-lg-12">
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text">请求方法</span>
-                </div>
-                <b-form-select v-model="form.method">
-                    <template v-slot:first>
-                        <option :value="null" disabled>-- 请选择请求方法 --</option>
-                    </template>
-                    <option value="get">GET</option>
-                    <option value="post">POST</option>
-                    <option value="put">PUT</option>
-                    <option value="deleet">DELETE</option>
-                </b-form-select>
-            </div>
-        </div>
-        <div class="col-lg-12">
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text">请求路径</span>
-                </div>
-                <b-form-input v-model="form.path" placeholder="请求路径"/>
-            </div>
-        </div>
+    <validation-observer ref="form">
+        <b-modal centered :title="title" v-model="show" @hidden="resetModal">
 
+            <validation-provider vid="name" name="资源名称" rules="required" v-slot="{ errors }">
+                <b-col cols="12">
+                    <b-input-group prepend="资源名称">
+                        <b-input type="text" :disabled="disabled" v-model="form.name" placeholder="请输入资源名称" trim/>
+                        <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
+                    </b-input-group>
+                </b-col>
+            </validation-provider>
 
-        <template slot="modal-footer" class="w-100 modal-footer">
-            <b-button variant="primary" size="sm" @click="resetModal">取消</b-button>
-            <b-button v-has="'element:add'" variant="danger" size="sm" @click="submitCreate">确认</b-button>
-        </template>
-    </b-modal>
+            <validation-provider vid="code" name="资源编号" rules="required" v-slot="{ errors }">
+                <b-col cols="12">
+                    <b-input-group prepend="资源编号">
+                        <b-input type="text" :disabled="disabled" v-model="form.code" placeholder="请输入资源编号" trim/>
+                        <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
+                    </b-input-group>
+                </b-col>
+            </validation-provider>
+
+            <validation-provider vid="method" name="请求方法" rules="required" v-slot="{ errors }">
+                <b-col cols="12">
+                    <b-input-group prepend="请求方法">
+                        <b-form-select :disabled="disabled" v-model="form.method">
+                            <template v-slot:first>
+                                <option :value="null" disabled>-- 请选择请求方法 --</option>
+                            </template>
+                            <option value="get">GET</option>
+                            <option value="post">POST</option>
+                            <option value="put">PUT</option>
+                            <option value="delete">DELETE</option>
+                        </b-form-select>
+                        <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
+                    </b-input-group>
+                </b-col>
+            </validation-provider>
+
+            <validation-provider vid="path" name="请求路径" rules="required" v-slot="{ errors }">
+                <b-col cols="12">
+                    <b-input-group prepend="请求路径">
+                        <b-input type="text" :disabled="disabled" v-model="form.path" placeholder="请输入请求路径" trim/>
+                        <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
+                    </b-input-group>
+                </b-col>
+            </validation-provider>
+
+            <template slot="modal-footer" class="w-100 modal-footer">
+                <b-button variant="primary" :disabled="disabled" size="sm" @click="resetModal">取消</b-button>
+                <b-button v-has="'element:add'" :disabled="disabled" variant="danger" size="sm" @click="submitCreate">
+                    <span v-if="disabled" class="spinner-border spinner-border-sm"/>
+                    确认
+                </b-button>
+            </template>
+        </b-modal>
+    </validation-observer>
 </template>
 
 <script>
@@ -64,7 +72,8 @@
         data() {
             return {
                 form: Object.assign({}, defaultForm),
-                show: false
+                show: false,
+                disabled: false
             }
         },
         props: {
@@ -85,45 +94,31 @@
                 this.form.menu_id = this.menuId;
                 this.show = value;
             }
-
         },
         methods: {
-            checkForm() {
-                if (!this.form.menu_id) {
-                    this.$toast.warning('菜单数据获取失败，请重试', 'Warning');
-                    return false;
-                }
-                if (!this.form.name) {
-                    this.$toast.warning('请输入资源名称', 'Warning');
-                    return false;
-                }
-                if (!this.form.code) {
-                    this.$toast.warning('请输入资源编号', 'Warning');
-                    return false;
-                }
-                if (!this.form.method) {
-                    this.$toast.warning('请选择请求方法', 'Warning');
-                    return false;
-                }
-                if (!this.form.path) {
-                    this.$toast.warning('请输入请求路径', 'Warning');
-                    return false;
-                }
-                return true;
-            },
             submitCreate() {
-                if (this.checkForm()) {
+                this.disabled = true;
+                this.$refs.form.validate().then(valid => {
+                    if (!valid) {
+                        this.disabled = false;
+                        return false;
+                    }
                     createData(this.form).then(res => {
                         this.$toast.success('添加成功。', 'Success');
                         this.$parent.getList();
                         this.resetModal();
+                    }).catch(error => {
+                        this.disabled = false;
+                        this.$refs.form.setErrors(error.response.data.errors || {});
                     })
-                }
+                })
             },
             resetModal() {
                 this.form = Object.assign({}, defaultForm);
-                this.show = false;
-                this.$parent.isCreate = false;
+                this.$nextTick(() => {
+                    this.$refs.form.reset();
+                });
+                this.disabled = this.show = this.$parent.isCreate = false;
             }
         }
     }

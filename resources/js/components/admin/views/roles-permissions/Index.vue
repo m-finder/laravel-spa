@@ -2,7 +2,7 @@
     <b-modal centered size="xl" :title="title" v-model="show" @hidden="resetModal">
 
         <div v-if="loading" class="text-center text-danger my-2">
-            <b-spinner class="align-middle"></b-spinner>
+            <b-spinner class="align-middle"/>
             <strong>Loading...</strong>
         </div>
 
@@ -48,8 +48,11 @@
         </div>
 
         <template slot="modal-footer" class="w-100 modal-footer">
-            <b-button variant="primary" size="sm" @click="resetModal">取消</b-button>
-            <b-button v-has="'role:setAuth'" :disabled="disabled" variant="danger" size="sm" @click="submitAssign">确认</b-button>
+            <b-button variant="primary" :disabled="disabled" size="sm" @click="resetModal">取消</b-button>
+            <b-button v-has="'role:setAuth'" :disabled="disabled" variant="danger" size="sm" @click="submitAssign">
+                <span v-if="disabled" class="spinner-border spinner-border-sm"/>
+                确认
+            </b-button>
         </template>
     </b-modal>
 </template>

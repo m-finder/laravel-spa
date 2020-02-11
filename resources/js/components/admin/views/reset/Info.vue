@@ -14,7 +14,7 @@
                             <b-row>
                                 <b-col cols="12">
                                     <b-col cols="12">
-                                        <img class="avatar" :src="getAvatar()"/>
+                                        <img class="avatar" alt="" :src="getAvatar()"/>
                                     </b-col>
                                     <b-col cols="12" class="mt-3">
                                         <b-button @click="toggle" variant="outline-success">上传头像</b-button>
@@ -23,20 +23,18 @@
                             </b-row>
 
                             <b-col cols="12" class="mt-3">
-                                <validation-provider vid="name" name="用户名称" rules="required"
-                                                     v-slot="{ errors }">
+                                <validation-provider vid="name" name="用户名称" rules="required" v-slot="{ errors }">
                                     <b-input-group prepend="用户名称">
-                                        <b-input type="text" v-model="form.name" placeholder="用户名称" trim/>
+                                        <b-input type="text" :disabled="disabled" v-model="form.name" placeholder="用户名称" trim/>
                                         <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
                                     </b-input-group>
                                 </validation-provider>
                             </b-col>
 
                             <b-col cols="12" class="mt-3">
-                                <validation-provider vid="name" name="登录邮箱" rules="required"
-                                                     v-slot="{ errors }">
+                                <validation-provider vid="name" name="登录邮箱" rules="required" v-slot="{ errors }">
                                     <b-input-group prepend="登录邮箱">
-                                        <b-input v-model="form.email" disabled="disabled" readonly="readonly"
+                                        <b-input :disabled="disabled" v-model="form.email" disabled="disabled" readonly="readonly"
                                                  placeholder="登录邮箱" trim/>
                                         <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
                                     </b-input-group>
@@ -44,8 +42,8 @@
                             </b-col>
                         </validation-observer>
 
-                        <b-button @click="submit" variant="outline-primary" :disabled="loading">
-                            <span v-if="loading" class="spinner-border spinner-border-sm"></span>
+                        <b-button @click="submit" variant="outline-primary" :disabled="disabled">
+                            <span v-if="disabled" class="spinner-border spinner-border-sm"/>
                             确认修改
                         </b-button>
 
@@ -86,22 +84,22 @@
                 },
                 show: false,
                 form: Object.assign({}, defaultForm),
-                loading: false,
+                disabled: false,
             }
         },
         methods: {
             submit() {
                 this.$refs.form.validate().then(valid => {
                     if (valid) {
-                        this.loading = true;
+                        this.disabled = true;
                         updateInfo(this.form).then(res => {
                             this.$toast.success('修改成功。', 'Success');
-                            this.loading = false;
+                            this.disabled = false;
                             this.$refs.form.reset();
                             this.storageSave(this.form)
                         }).catch(error => {
                             this.$refs.form.setErrors(error.response.data.errors || {});
-                            this.loading = false;
+                            this.disabled = false;
                         })
                     }
                 })
@@ -114,7 +112,7 @@
                 this.show = !show;
             },
             getAvatar() {
-                return this.form.avatar || '/images/avatar.png';
+                return this.form.avatar || '/images/avatar.jpg';
             },
             cropSuccess(data, field, key) {
                 this.form.avatar = data;

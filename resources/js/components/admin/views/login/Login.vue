@@ -12,17 +12,17 @@
         <validation-observer ref="form">
             <b-form class="login-form">
                 <validation-provider name="登录邮箱" rules="required|email" v-slot="{ errors }">
-                    <b-form-input type="email" v-model="form.email" placeholder="登录邮箱" trim/>
+                    <b-form-input type="email" :disabled="disabled" v-model="form.email" placeholder="登录邮箱" trim/>
                     <b-form-invalid-feedback >{{ errors[0] }}</b-form-invalid-feedback>
                 </validation-provider>
 
                 <validation-provider name="登录密码" rules="required|min:6|max:32" v-slot="{ errors }">
-                    <b-form-input type="password" v-model="form.password" placeholder="登录密码" trim/>
+                    <b-form-input type="password" :disabled="disabled" v-model="form.password" placeholder="登录密码" trim/>
                     <b-form-invalid-feedback >{{ errors[0] }}</b-form-invalid-feedback>
                 </validation-provider>
 
-                <b-button @click="onSubmit" block variant="outline-primary" :disabled="loading">
-                    <span v-if="loading" class="spinner-border spinner-border-sm"></span>
+                <b-button @click="onSubmit" block variant="outline-primary" :disabled="disabled">
+                    <span v-if="disabled" class="spinner-border spinner-border-sm"/>
                     登录
                 </b-button>
 
@@ -51,7 +51,7 @@
         data() {
             return {
                 config: config,
-                loading: false,
+                disabled: false,
                 form: {
                     email: null,
                     password: null,
@@ -92,15 +92,15 @@
             onSubmit: function () {
                 this.$refs.form.validate().then(valid => {
                     if (valid){
-                        this.loading = true;
+                        this.disabled = true;
                         login(this.form).then(res => {
-                            this.loading = false;
+                            this.disabled = false;
                             this.$toast.success('欢迎回来', 'Success');
                             let data = {'user-info': res.data, 'token': res.data.api_token};
                             this.form.status === true ? storage.set(data) : (storage.remove(), storage.sessionSet(data));
                             this.$router.push({path: this.redirect || '/'})
                         }).catch(error => {
-                            this.loading = false;
+                            this.disabled = false;
                             this.$toast.error(error.response.data.message, 'Error');
                         })
                     }

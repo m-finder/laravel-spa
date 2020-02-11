@@ -17,7 +17,7 @@ class AdminsTableSeeder extends Seeder
         $db->name = 'wu';
         $db->role_id = 1;
         $db->email = 'yf-wu@qq.com';
-        $db->avatar =  '/images/avatar.png';
+        $db->avatar =  '/images/avatar.jpg';
         $db->password = Hash::make('111111');
         $db->api_token = (string) Str::uuid();
         $db->save();

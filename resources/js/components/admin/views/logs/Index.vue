@@ -94,7 +94,6 @@
             },
             getList() {
                 this.isBusy = true;
-                console.log(this.form)
                 getData(this.form).then(res => {
                     this.isBusy = false;
                     this.currentPage = res.data.current_page;

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Api\ApiController;
+use App\Http\Requests\ElementRequest;
 use App\Models\Element;
 use Illuminate\Support\Facades\Log;
 
@@ -13,21 +14,21 @@ class ElementController extends ApiController
     public function lists()
     {
         $page = request('limit', 20);
-        $elements = Element::menuId()->paginate($page);
+        $elements = Element::query()->menuId()->paginate($page);
         return $this->success($elements);
     }
 
     public function detail($id)
     {
-        $detail = Element::findOrFail($id);
+        $detail = Element::query()->findOrFail($id);
         return $this->success($detail);
     }
 
-    public function create()
+    public function create(ElementRequest $request)
     {
         $model = new Element();
         if (Element::isUnique()) {
-            $model->create(request_intersect([
+            $model->query()->create(request_intersect([
                 'menu_id', 'name', 'code', 'method', 'path',
             ]));
         } else {
@@ -36,9 +37,9 @@ class ElementController extends ApiController
         return $this->success();
     }
 
-    public function update($id)
+    public function update(ElementRequest $request, $id)
     {
-        $element = Element::findOrFail($id);
+        $element = Element::query()->findOrFail($id);
         if (Element::isUnique()) {
             $element->update(request_intersect([
                 'name', 'code', 'method', 'path',
@@ -52,7 +53,7 @@ class ElementController extends ApiController
 
     public function delete($id)
     {
-        $element = Element::findOrFail($id);
+        $element = Element::query()->findOrFail($id);
         $element->delete();
         return $this->success();
     }

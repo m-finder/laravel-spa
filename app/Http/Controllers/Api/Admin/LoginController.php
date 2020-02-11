@@ -15,7 +15,7 @@ class LoginController extends ApiController
     public function login()
     {
         $password = request('password');
-        $admin = Admin::where('email', request('email'))->first();
+        $admin = Admin::query()->where('email', request('email'))->first();
 
         if (is_null($admin)) {
             return $this->error('用户不存在。');

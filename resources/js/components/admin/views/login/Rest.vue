@@ -8,14 +8,14 @@
         <validation-observer ref="form">
             <b-form class="forget-form">
                 <validation-provider ref="email" name="登录邮箱" rules="required|email" v-slot="{ errors }">
-                    <b-form-input type="email" v-model="form.email" placeholder="登录邮箱" trim/>
+                    <b-form-input type="email" :disabled="disabled" v-model="form.email" placeholder="登录邮箱" trim/>
                     <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
                 </validation-provider>
 
                 <validation-provider name="验证码" rules="required|alpha_dash" v-slot="{ errors }">
                     <b-row>
                         <b-col cols="7">
-                            <b-form-input type="text" v-model="form.code" placeholder="验证码" trim/>
+                            <b-form-input type="text" :disabled="disabled" v-model="form.code" placeholder="验证码" trim/>
                             <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
                         </b-col>
                         <b-col cols="5">
@@ -28,24 +28,24 @@
 
                 <validation-provider name="重置密码" rules="required|min:6|max:32" v-slot="{ errors }"
                                      vid="confirmation">
-                    <b-form-input type="password" v-model="form.password" placeholder="重置密码" trim/>
+                    <b-form-input type="password" :disabled="disabled" v-model="form.password" placeholder="重置密码" trim/>
                     <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
                 </validation-provider>
 
                 <validation-provider name="确认密码" rules="required|confirmed:confirmation" v-slot="{ errors }">
-                    <b-form-input type="password" v-model="form.confirmation" placeholder="确认密码" trim/>
+                    <b-form-input type="password" :disabled="disabled" v-model="form.confirmation" placeholder="确认密码" trim/>
                     <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
                 </validation-provider>
 
-                <b-row class="rember-box">
+                <b-row class="remember-box">
                     <b-col>
                         <b-button type="button" block @click="wrapSwitch()" variant="outline-primary">
                             返回
                         </b-button>
                     </b-col>
                     <b-col class="text-right">
-                        <b-button @click="onSubmit" block variant="outline-primary" :disabled="loading">
-                            <span v-if="loading" class="spinner-border spinner-border-sm"></span>
+                        <b-button @click="onSubmit" block variant="outline-primary" :disabled="disabled">
+                            <span v-if="disabled" class="spinner-border spinner-border-sm"/>
                             提交
                         </b-button>
                     </b-col>
@@ -64,7 +64,7 @@
         data() {
             return {
                 config: config,
-                loading: false,
+                disabled: false,
                 content: '获取验证码',
                 totalTime: 60,
                 canClick: true,
@@ -115,14 +115,14 @@
             onSubmit: function () {
                 this.$refs.form.validate().then(valid => {
                     if (valid) {
-                        this.loading = true;
+                        this.disabled = true;
                         resetPasswordByMail(this.form).then(res => {
                             this.$toast.success('密码重置成功', 'Success');
                             this.wrapSwitch();
-                            this.loading = false;
+                            this.disabled = false;
                         }).catch(error => {
                             console.log(error.response.data.message);
-                            this.loading = false;
+                            this.disabled = false;
                             this.$toast.error(error.response.data.message, 'Error');
                         })
                     }

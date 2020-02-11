@@ -17,7 +17,7 @@ class RoleController extends ApiController
     public function lists()
     {
         $page = request('limit', 20);
-        $roles = Role::name()->alias()->paginate($page);
+        $roles = Role::query()->name()->alias()->paginate($page);
         return $this->success($roles);
     }
 
